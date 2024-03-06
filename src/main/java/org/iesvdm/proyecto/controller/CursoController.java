@@ -10,7 +10,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/cursos")
+@RequestMapping("/v1/api/cursos")
 public class CursoController {
     private final CursoService cursoService;
 

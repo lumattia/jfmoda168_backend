@@ -3,24 +3,33 @@ package org.iesvdm.proyecto.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.iesvdm.proyecto.domain.Estudiante;
 import org.iesvdm.proyecto.service.EstudianteService;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
+
 @Slf4j
 @RestController
-@RequestMapping("/estudiantes")
+@RequestMapping("/v1/api/estudiantes")
 public class EstudianteController {
     private final EstudianteService estudianteService;
-
     public EstudianteController(EstudianteService estudianteService) {
         this.estudianteService = estudianteService;
     }
-
-    @GetMapping({"","/"})
+    @GetMapping(value = {"","/"},params = {"!buscar","!ordenar","!pagina","!tamanio"})
     public List<Estudiante> all() {
         log.info("Accediendo a todas los estudiantes");
         return this.estudianteService.all();
+    }
+    @GetMapping({"","/"})
+    public Page<Estudiante> all(@RequestParam("buscar") Optional<String> buscar,
+                                @RequestParam("ordenar")Optional<String> ordenar,
+                                @RequestParam(value = "pagina",defaultValue = "0")int pagina,
+                                @RequestParam(value = "tamanio",defaultValue = "10")int tamanio) {
+        log.info("Accediendo a todas los estudiantes");
+        return this.estudianteService.allByFilter(buscar,ordenar,pagina,tamanio);
     }
     @PostMapping({"","/"})
     public Estudiante save(@RequestBody Estudiante estudiante) {
