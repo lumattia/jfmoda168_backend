@@ -18,7 +18,7 @@ public class EstudianteController {
     public EstudianteController(EstudianteService estudianteService) {
         this.estudianteService = estudianteService;
     }
-    @GetMapping(value = {"","/"},params = {"!buscar","!ordenar","!pagina","!tamanio"})
+    @GetMapping(value = {"","/"},params = {"!buscar","!ordenar"})
     public List<Estudiante> all() {
         log.info("Accediendo a todas los estudiantes");
         return this.estudianteService.all();
