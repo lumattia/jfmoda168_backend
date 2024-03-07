@@ -29,7 +29,7 @@ public class CursoService {
 
     public Curso replace(String id, Curso curso) {
 
-        return this.cursoRepository.findById(id).map( p -> (id.equals(curso.getNombreCurso())  ?
+        return this.cursoRepository.findById(id).map( p -> (id.equals(curso.getNombre())  ?
                         this.cursoRepository.save(curso) : null))
                 .orElseThrow(() -> new NotFoundException(id,"curso"));
 
@@ -37,7 +37,6 @@ public class CursoService {
 
     public void delete(String id) {
         this.cursoRepository.findById(id).map(c -> {
-                    c.getAsignaturas().forEach(a -> a.getCursos().remove(c));
                     this.cursoRepository.delete(c);
                     return c;})
                 .orElseThrow(() -> new NotFoundException(id,"curso"));

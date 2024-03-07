@@ -16,13 +16,8 @@ import java.util.Set;
 @Entity
 public class Asignatura {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
-    long id;
-    @Column(unique = true)
-    String nombreAsignatura;
-    @ManyToMany
-    Set<Curso> cursos;
-    @ManyToMany
-    Set<Profesor> profesores;
+    String nombre;
+    @OneToMany(mappedBy = "asignatura",cascade = CascadeType.ALL,orphanRemoval = true)
+    Set<Clase> clases;
 }

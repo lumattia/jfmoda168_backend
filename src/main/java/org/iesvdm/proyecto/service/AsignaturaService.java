@@ -29,7 +29,7 @@ public class AsignaturaService {
 
     public Asignatura replace(String id, Asignatura asignatura) {
 
-        return this.asignaturaRepository.findById(id).map( p -> (id.equals(asignatura.getNombreAsignatura())  ?
+        return this.asignaturaRepository.findById(id).map( p -> (id.equals(asignatura.getNombre())  ?
                         this.asignaturaRepository.save(asignatura) : null))
                 .orElseThrow(() -> new NotFoundException(id,"asignatura"));
 
@@ -37,8 +37,6 @@ public class AsignaturaService {
 
     public void delete(String id) {
         this.asignaturaRepository.findById(id).map(a -> {
-                    a.getCursos().forEach(c -> c.getAsignaturas().remove(a));
-                    a.getProfesores().forEach(p->p.getAsignaturas().remove(a));
                     this.asignaturaRepository.delete(a);
                     return a;})
                 .orElseThrow(() -> new NotFoundException(id,"asignatura"));
