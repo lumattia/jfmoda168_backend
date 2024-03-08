@@ -17,7 +17,10 @@ import java.util.Set;
 @Entity
 public class Curso {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
+    long id;
+    @Column(unique = true)
     String nombre;
     @OneToMany(mappedBy = "curso",cascade = CascadeType.ALL,orphanRemoval = true)
     Set<Clase> clases;

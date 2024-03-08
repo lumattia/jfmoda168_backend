@@ -19,19 +19,17 @@ import java.util.Set;
 @Entity
 @JsonSerialize(using = ClaseSerializer.class)
 @Table(uniqueConstraints={
-        @UniqueConstraint(columnNames = {"asignatura_nombre", "curso_nombre"})
+        @UniqueConstraint(columnNames = {"asignatura_id", "curso_id"})
 })
 public class Clase {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     private Long id;
-    @ManyToOne
-    @JoinColumn
+    @ManyToOne(optional = false)
     private Asignatura asignatura;
 
-    @ManyToOne
-    @JoinColumn
+    @ManyToOne(optional = false)
     private Curso curso;
     @ManyToMany
     Set<Profesor> profesores;

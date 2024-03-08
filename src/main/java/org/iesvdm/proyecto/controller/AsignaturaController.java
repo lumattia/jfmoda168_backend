@@ -29,17 +29,17 @@ public class AsignaturaController {
         return this.asignaturaService.save(asignatura);
     }
     @GetMapping("/{id}")
-    public Asignatura one(@PathVariable("id") String id) {
+    public Asignatura one(@PathVariable("id") long id) {
         return this.asignaturaService.one(id);
     }
     @PutMapping("/{id}")
-    public Asignatura replace(@PathVariable("id") String id, @RequestBody Asignatura pelicula) {
-        return this.asignaturaService.replace(id, pelicula);
+    public Asignatura replace(@PathVariable("id") long id, @RequestBody Asignatura asignatura) {
+        return this.asignaturaService.replace(id, asignatura);
     }
     @ResponseBody
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable("id") String id){
+    public void delete(@PathVariable("id") long id){
         this.asignaturaService.delete(id);
     }
 }

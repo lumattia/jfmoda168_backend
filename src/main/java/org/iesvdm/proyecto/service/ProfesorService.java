@@ -24,14 +24,14 @@ public class ProfesorService {
 
     public Profesor one(Long id) {
         return this.profesorRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException(id.toString(),"profesor"));
+                .orElseThrow(() -> new NotFoundException(id,"profesor"));
     }
 
     public Profesor replace(Long id, Profesor profesor) {
 
         return this.profesorRepository.findById(id).map( p -> (id.equals(profesor.getId())  ?
                         this.profesorRepository.save(profesor) : null))
-                .orElseThrow(() -> new NotFoundException(id.toString(),"profesor"));
+                .orElseThrow(() -> new NotFoundException(id,"profesor"));
 
     }
 
@@ -39,6 +39,6 @@ public class ProfesorService {
         this.profesorRepository.findById(id).map(e -> {
                     this.profesorRepository.delete(e);
                     return e;})
-                .orElseThrow(() -> new NotFoundException(id.toString(),"profesor"));
+                .orElseThrow(() -> new NotFoundException(id,"profesor"));
     }
 }

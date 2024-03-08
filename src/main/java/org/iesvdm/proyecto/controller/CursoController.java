@@ -29,17 +29,17 @@ public class CursoController {
         return this.cursoService.save(curso);
     }
     @GetMapping("/{id}")
-    public Curso one(@PathVariable("id") String id) {
+    public Curso one(@PathVariable("id") long id) {
         return this.cursoService.one(id);
     }
     @PutMapping("/{id}")
-    public Curso replace(@PathVariable("id") String id, @RequestBody Curso curso) {
+    public Curso replace(@PathVariable("id") long id, @RequestBody Curso curso) {
         return this.cursoService.replace(id, curso);
     }
     @ResponseBody
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable("id") String id){
+    public void delete(@PathVariable("id") long id){
         this.cursoService.delete(id);
     }
 }

@@ -23,13 +23,13 @@ public class ClaseService {
 
     public Clase one(Long id) {
         return this.claseRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException(id.toString(),"clase"));
+                .orElseThrow(() -> new NotFoundException(id,"clase"));
     }
 
     public Clase replace(Long id, Clase clase) {
         return this.claseRepository.findById(id).map( c -> (id.equals(clase.getId())  ?
                         this.claseRepository.save(clase) : null))
-                .orElseThrow(() -> new NotFoundException(id.toString(),"clase"));
+                .orElseThrow(() -> new NotFoundException(id,"clase"));
 
     }
 
@@ -37,7 +37,7 @@ public class ClaseService {
         this.claseRepository.findById(id).map(c -> {
                     this.claseRepository.delete(c);
                     return c;})
-                .orElseThrow(() -> new NotFoundException(id.toString(),"clase"));
+                .orElseThrow(() -> new NotFoundException(id,"clase"));
     }
 
 }

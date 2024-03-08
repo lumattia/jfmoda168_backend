@@ -16,7 +16,10 @@ import java.util.Set;
 @Entity
 public class Asignatura {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
+    long id;
+    @Column(unique = true)
     String nombre;
     @OneToMany(mappedBy = "asignatura",cascade = CascadeType.ALL,orphanRemoval = true)
     Set<Clase> clases;

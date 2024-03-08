@@ -22,20 +22,20 @@ public class CursoService {
         return this.cursoRepository.save(curso);
     }
 
-    public Curso one(String id) {
+    public Curso one(long id) {
         return this.cursoRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(id,"curso"));
     }
 
-    public Curso replace(String id, Curso curso) {
+    public Curso replace(long id, Curso curso) {
 
-        return this.cursoRepository.findById(id).map( p -> (id.equals(curso.getNombre())  ?
+        return this.cursoRepository.findById(id).map( c -> (id==curso.getId()  ?
                         this.cursoRepository.save(curso) : null))
                 .orElseThrow(() -> new NotFoundException(id,"curso"));
 
     }
 
-    public void delete(String id) {
+    public void delete(long id) {
         this.cursoRepository.findById(id).map(c -> {
                     this.cursoRepository.delete(c);
                     return c;})

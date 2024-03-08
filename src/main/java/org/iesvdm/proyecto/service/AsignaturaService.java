@@ -22,20 +22,20 @@ public class AsignaturaService {
         return this.asignaturaRepository.save(asignatura);
     }
 
-    public Asignatura one(String id) {
+    public Asignatura one(long id) {
         return this.asignaturaRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(id,"asignatura"));
     }
 
-    public Asignatura replace(String id, Asignatura asignatura) {
+    public Asignatura replace(long id, Asignatura asignatura) {
 
-        return this.asignaturaRepository.findById(id).map( p -> (id.equals(asignatura.getNombre())  ?
-                        this.asignaturaRepository.save(asignatura) : null))
+        return this.asignaturaRepository.findById(id).map( a -> (id==asignatura.getId())  ?
+                        this.asignaturaRepository.save(asignatura) : null)
                 .orElseThrow(() -> new NotFoundException(id,"asignatura"));
 
     }
 
-    public void delete(String id) {
+    public void delete(long id) {
         this.asignaturaRepository.findById(id).map(a -> {
                     this.asignaturaRepository.delete(a);
                     return a;})

@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.iesvdm.proyecto.domain.Estudiante;
 import org.iesvdm.proyecto.service.EstudianteService;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,18 +19,16 @@ public class EstudianteController {
     public EstudianteController(EstudianteService estudianteService) {
         this.estudianteService = estudianteService;
     }
-    @GetMapping(value = {"","/"},params = {"!buscar","!ordenar"})
+    @GetMapping(value = {"","/"},params = {"!buscar"})
     public List<Estudiante> all() {
         log.info("Accediendo a todas los estudiantes");
         return this.estudianteService.all();
     }
     @GetMapping({"","/"})
-    public Page<Estudiante> all(@RequestParam("buscar") Optional<String> buscar,
-                                @RequestParam("ordenar")Optional<String> ordenar,
-                                @RequestParam(value = "pagina",defaultValue = "0")int pagina,
-                                @RequestParam(value = "tamanio",defaultValue = "10")int tamanio) {
+    public Page<Estudiante> all(@RequestParam("buscar") String buscar,
+                                Pageable pageable) {
         log.info("Accediendo a todas los estudiantes");
-        return this.estudianteService.allByFilter(buscar,ordenar,pagina,tamanio);
+        return this.estudianteService.allByFilter(buscar,pageable);
     }
     @PostMapping({"","/"})
     public Estudiante save(@RequestBody Estudiante estudiante) {
