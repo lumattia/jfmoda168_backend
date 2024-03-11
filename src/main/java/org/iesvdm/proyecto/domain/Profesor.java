@@ -1,14 +1,8 @@
 package org.iesvdm.proyecto.domain;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.iesvdm.proyecto.serializer.ProfesorSerializer;
 
 import java.util.HashSet;
@@ -28,6 +22,6 @@ public class Profesor{
     String nombre;
     String apellido1;
     String apellido2;
-    @ManyToMany(mappedBy = "profesores",fetch = FetchType.EAGER)
-    Set<Clase> Clase;
+    @ManyToMany(mappedBy = "profesores")
+    Set<Clase> clases = new HashSet<>();
 }

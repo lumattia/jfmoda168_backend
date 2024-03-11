@@ -1,12 +1,8 @@
 package org.iesvdm.proyecto.domain;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-import java.util.HashSet;
 import java.util.Set;
 
 @Data
@@ -22,5 +18,6 @@ public class Asignatura {
     @Column(unique = true)
     String nombre;
     @OneToMany(mappedBy = "asignatura",cascade = CascadeType.ALL,orphanRemoval = true)
+    @ToString.Exclude
     Set<Clase> clases;
 }

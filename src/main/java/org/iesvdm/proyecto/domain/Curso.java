@@ -1,13 +1,8 @@
 package org.iesvdm.proyecto.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-import java.util.HashSet;
 import java.util.Set;
 
 @Data
@@ -23,5 +18,6 @@ public class Curso {
     @Column(unique = true)
     String nombre;
     @OneToMany(mappedBy = "curso",cascade = CascadeType.ALL,orphanRemoval = true)
+    @ToString.Exclude
     Set<Clase> clases;
 }

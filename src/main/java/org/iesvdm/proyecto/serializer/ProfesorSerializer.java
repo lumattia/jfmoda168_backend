@@ -22,9 +22,9 @@ public class ProfesorSerializer extends StdSerializer<Profesor> {
         jgen.writeStringField("nombre", profesor.getNombre());
         jgen.writeStringField("apellido1", profesor.getApellido1());
         jgen.writeStringField("apellido2", profesor.getApellido2());
-        if (profesor.getClase()!=null){
+        if (profesor.getClases()!=null){
             jgen.writeFieldName("clase");
-            jgen.writeObject(profesor.getClase().stream().map(clase -> clase.getCurso().getNombre()+" "+clase.getAsignatura().getNombre()).toList());
+            jgen.writeObject(profesor.getClases().stream().map(clase -> clase.getCurso().getNombre()+" "+clase.getAsignatura().getNombre()).toList());
         }
         jgen.writeEndObject();
 
