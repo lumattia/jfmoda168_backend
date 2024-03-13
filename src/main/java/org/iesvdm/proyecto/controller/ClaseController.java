@@ -19,9 +19,10 @@ public class ClaseController {
     }
 
     @GetMapping({"","/"})
-    public List<Clase> all() {
+    public List<Clase> all(@RequestParam(value = "curso",defaultValue = "") String curso,
+                           @RequestParam(value = "asignatura",defaultValue = "")  String asignatura) {
         log.info("Accediendo a todas las clases");
-        return this.claseService.all();
+        return this.claseService.all(curso,asignatura);
     }
     @PostMapping({"","/"})
     public Clase save(@RequestBody Clase clase) {

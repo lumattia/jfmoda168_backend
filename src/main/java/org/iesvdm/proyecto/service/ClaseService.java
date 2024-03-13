@@ -19,8 +19,8 @@ public class ClaseService {
         this.claseRepository = claseRepository;
     }
 
-    public List<Clase> all() {
-        return this.claseRepository.findAll();
+    public List<Clase> all(String curso,String asignatura) {
+        return this.claseRepository.findClaseByCurso_NombreContainingIgnoreCaseAndAsignatura_NombreContainingIgnoreCase(curso, asignatura);
     }
 
 

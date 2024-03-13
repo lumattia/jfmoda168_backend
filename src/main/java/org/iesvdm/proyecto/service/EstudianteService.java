@@ -15,12 +15,11 @@ public class EstudianteService {
     public EstudianteService(EstudianteRepository estudianteRepository ) {
         this.estudianteRepository = estudianteRepository;
     }
-
-    public List<Estudiante> all() {
-        return this.estudianteRepository.findAll();
+    public Page<Estudiante> all(Pageable pageable) {
+        return this.estudianteRepository.findAll(pageable);
     }
     public Page<Estudiante> allByFilter(String buscar, Pageable pageable) {
-        Page<Estudiante> page=this.estudianteRepository.findEstudiantesByNombreContainingIgnoreCase(buscar,pageable);
+        Page<Estudiante> page=this.estudianteRepository.buscarEstudiantesPorNombreApellido(buscar,pageable);
         return page;
     }
     public Estudiante save(Estudiante estudiante) {

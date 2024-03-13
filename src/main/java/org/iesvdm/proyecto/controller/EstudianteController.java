@@ -20,9 +20,9 @@ public class EstudianteController {
         this.estudianteService = estudianteService;
     }
     @GetMapping(value = {"","/"},params = {"!buscar"})
-    public List<Estudiante> all() {
+    public Page<Estudiante> all(Pageable pageable) {
         log.info("Accediendo a todas los estudiantes");
-        return this.estudianteService.all();
+        return this.estudianteService.all(pageable);
     }
     @GetMapping({"","/"})
     public Page<Estudiante> all(@RequestParam("buscar") String buscar,
