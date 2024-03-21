@@ -17,7 +17,7 @@ public class Curso {
     long id;
     @Column(unique = true)
     String nombre;
-    @OneToMany(mappedBy = "curso",cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToMany(mappedBy = "curso",cascade = CascadeType.ALL)
     @ToString.Exclude
     Set<Clase> clases;
 }

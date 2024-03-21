@@ -29,6 +29,6 @@ public class Clase {
 
     @ManyToOne(optional = false)
     private Curso curso;
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany
     Set<Profesor> profesores;
 }

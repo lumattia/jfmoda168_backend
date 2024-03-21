@@ -1,8 +1,5 @@
 package org.iesvdm.proyecto.service;
 
-import org.iesvdm.proyecto.domain.Estudiante;
-import org.iesvdm.proyecto.domain.Profesor;
-import org.iesvdm.proyecto.domain.Usuario;
 import org.iesvdm.proyecto.domain.Usuario;
 import org.iesvdm.proyecto.exeption.NotFoundException;
 import org.iesvdm.proyecto.repository.UsuarioRepository;
@@ -10,7 +7,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 @Service
 public class UsuarioService {
     private final UsuarioRepository usuarioRepository;
