@@ -2,11 +2,13 @@ package org.iesvdm.proyecto.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.iesvdm.proyecto.domain.Clase;
+import org.iesvdm.proyecto.domain.Profesor;
 import org.iesvdm.proyecto.service.ClaseService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @Slf4j
 @RestController
@@ -34,8 +36,12 @@ public class ClaseController {
         return this.claseService.one(id);
     }
     @PutMapping("/{id}")
-    public Clase replace(@PathVariable("id") long id, @RequestBody Clase pelicula) {
-        return this.claseService.replace(id, pelicula);
+    public Clase replace(@PathVariable("id") long id, @RequestBody Clase clase) {
+        return this.claseService.replace(id, clase);
+    }
+    @PostMapping("/{id}")
+    public Clase addProf(@PathVariable("id") long id, @RequestBody Set<Profesor> profesor) {
+        return this.claseService.add(id, profesor);
     }
     @ResponseBody
     @ResponseStatus(HttpStatus.NO_CONTENT)

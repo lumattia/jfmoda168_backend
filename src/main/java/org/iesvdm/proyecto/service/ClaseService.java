@@ -4,11 +4,13 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import org.iesvdm.proyecto.domain.Clase;
+import org.iesvdm.proyecto.domain.Profesor;
 import org.iesvdm.proyecto.exeption.NotFoundException;
 import org.iesvdm.proyecto.repository.ClaseRepository;
 import org.springframework.stereotype.Service;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class ClaseService {
@@ -28,9 +30,9 @@ public class ClaseService {
     public Clase save(Clase clase) {
         this.claseRepository.save(clase);
         this.em.refresh(clase);
-        clase.setProfesores(new HashSet<>(em.createQuery("select C.profesores from Clase C where C.id = :id")
-                .setParameter("id",clase.getId())
-                .getResultList()));
+        if (!clase.getProfesores().isEmpty()){
+            clase.setProfesores(getProfesores(clase.getId()));
+        }
         //NO PUEDO REFRESCAR COLECCION
         //this.em.refresh(clase.getProfesores());
         return clase;
@@ -47,12 +49,23 @@ public class ClaseService {
                 .orElseThrow(() -> new NotFoundException(id,"clase"));
 
     }
+    public Clase add(Long id, Set<Profesor> profesor) {
+        return this.claseRepository.findById(id).map( c -> {
+                    c.getProfesores().addAll(profesor);
+                    return claseRepository.save(c);
+                })
+                .orElseThrow(() -> new NotFoundException(id,"clase"));
 
+    }
     public void delete(Long id) {
         this.claseRepository.findById(id).map(c -> {
                     this.claseRepository.delete(c);
                     return c;})
                 .orElseThrow(() -> new NotFoundException(id,"clase"));
     }
-
+    private HashSet<Profesor> getProfesores(long id){
+        return new HashSet<>(em.createQuery("select C.profesores from Clase C where C.id = :id")
+                .setParameter("id",id)
+                .getResultList());
+    }
 }

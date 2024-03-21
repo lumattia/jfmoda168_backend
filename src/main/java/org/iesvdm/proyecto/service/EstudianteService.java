@@ -19,7 +19,7 @@ public class EstudianteService {
         return this.estudianteRepository.findAll(pageable);
     }
     public Page<Estudiante> allByFilter(String buscar, Pageable pageable) {
-        Page<Estudiante> page=this.estudianteRepository.buscarEstudiantesPorNombreApellido(buscar,pageable);
+        Page<Estudiante> page=this.estudianteRepository.findByNombreCompleto(buscar,pageable);
         return page;
     }
     public Estudiante save(Estudiante estudiante) {
