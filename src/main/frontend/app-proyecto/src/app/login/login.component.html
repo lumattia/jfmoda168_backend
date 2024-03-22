@@ -1,0 +1,43 @@
+<div class="container">
+  <div class="row justify-content-center vh-100">
+    <div class="col-sm-8 col-md-6 col-lg-4 col-xl-3 my-auto">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="text-center">Inicio de sesión</h3>
+        </div>
+        <div class="card-body">
+          <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input class="form-control" [ngClass]="{ 'is-invalid': f.submitted && form.email.errors }" id="email"
+                     type="email" name="email" placeholder="Ingrese su correo electrónico" required
+                      [(ngModel)]="form.email">
+              <div *ngIf="form.email.errors && f.submitted" class="invalid-feedback">
+                El email es requerido
+              </div>
+            </div>
+            <div class="form-group mb-2">
+              <label for="password">Password</label>
+              <input type="password" class="form-control" [ngClass]="{ 'is-invalid': f.submitted && form.password.errors }" id="password"
+                     placeholder="Ingrese su contraseña" name="password" [(ngModel)]="form.password" required minlength="6">
+              <div *ngIf="form.password.errors && f.submitted" class="invalid-feedback">
+                <div *ngIf="form.password.errors?.['required']">La password es requerida</div>
+                <div *ngIf="form.password.errors?.['minlength']">
+                  La password debe ser de al menos 6 caracteres
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <button class="btn btn-primary btn-block" style="margin-top: 2px;">
+                Login
+              </button>
+            </div>
+            <div *ngIf="isLoginFailed">
+              {{errorMessage}}
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

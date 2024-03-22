@@ -22,7 +22,8 @@ public class UsuarioSerializer extends StdSerializer<Usuario> {
     public void serialize(Usuario usuario, JsonGenerator jgen, SerializerProvider serializerProvider) throws IOException {
         jgen.writeStartObject();
         jgen.writeNumberField("id", usuario.getId());
-        jgen.writeStringField("nombre completo", (usuario.getNombre()+" "+usuario.getApellido1()+" "+usuario.getApellido2()).trim());
+        jgen.writeStringField("email", usuario.getEmail());
+        jgen.writeStringField("nombre_completo", (usuario.getNombre()+" "+usuario.getApellido1()+" "+usuario.getApellido2()).trim());
         jgen.writeStringField("rol", usuario.getRol());
         if (usuario instanceof Profesor) {
             Profesor profesor = (Profesor) usuario;

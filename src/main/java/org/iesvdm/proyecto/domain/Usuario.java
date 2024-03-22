@@ -3,6 +3,7 @@ package org.iesvdm.proyecto.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -28,7 +29,10 @@ public class Usuario {
     @Column(nullable = false)
     String apellido1;
     String apellido2="";
-    @JsonIgnore
+    @Column(nullable = false,unique = true)
+    @Email(regexp = "^[a-z0-9]+@g.educaand.es$")
+    String email;
+    @Column(nullable = false)//password="123456" encrypted:$2a$10$Ptp1ZRU7jLFs3uI8RQnYm.0sgVsSQ55EJiU48rrFQVPpdOtVroqvK
     String password;
     public String getRol() {
         DiscriminatorValue discriminatorValue = getClass().getAnnotation(DiscriminatorValue.class);

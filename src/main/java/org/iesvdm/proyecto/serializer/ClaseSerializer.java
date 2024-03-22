@@ -19,6 +19,7 @@ public class ClaseSerializer extends StdSerializer<Clase> {
     @Override
     public void serialize(Clase clase, JsonGenerator jgen, SerializerProvider serializerProvider) throws IOException {
         jgen.writeStartObject();
+        jgen.writeNumberField("id", clase.getId());
         jgen.writeStringField("nombre", clase.getAsignatura().getNombre()+" "+clase.getCurso().getNombre());
         if (clase.getProfesores()!=null){
             jgen.writeFieldName("profesores");
