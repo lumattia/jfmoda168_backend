@@ -22,8 +22,8 @@ public class ClaseController {
     }
 
     @GetMapping({"","/"})
-    public List<Clase> all(@RequestParam(value = "curso",defaultValue = "") String curso,
-                           @RequestParam(value = "asignatura",defaultValue = "")  String asignatura) {
+    public List<Clase> all(@RequestParam(value = "curso",defaultValue = "-1") long curso,
+                           @RequestParam(value = "asignatura",defaultValue = "-1")  long asignatura) {
         log.info("Accediendo a todas las clases");
         return this.claseService.all(curso,asignatura);
     }

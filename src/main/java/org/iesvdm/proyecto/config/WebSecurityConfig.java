@@ -64,10 +64,11 @@ public class WebSecurityConfig {
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 //.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED).and()
-                .authorizeHttpRequests().requestMatchers("/v1/api/**").permitAll()
+                .authorizeHttpRequests()
                 .requestMatchers("/v1/api/asignaturas/**").hasAnyAuthority("ADMINISTRADOR")
                 .requestMatchers("/v1/api/cursos/**").hasAnyAuthority("ADMINISTRADOR")
                 .requestMatchers("/v1/api/clases/**").hasAnyAuthority("ADMINISTRADOR")
+                .requestMatchers("/v1/api/**").permitAll()
                 .anyRequest().authenticated();
 
         http.authenticationProvider(authenticationProvider());

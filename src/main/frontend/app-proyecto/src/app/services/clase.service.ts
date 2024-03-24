@@ -28,13 +28,16 @@ export class ClaseService {
     const url = `${CLASEURL}/${id}`
     return this.http.get<Clase>(url);
   }
-  crearClase(c:any):Observable<Object>{
-    return this.http.post<Clase>(CLASEURL,c,HTTPOPTIONS)
+  filterClase(curso:number,asignatura:number):Observable<Object>{
+    const url = `${CLASEURL}?curso=${curso}&asignatura=${asignatura}`
+    return this.http.get<Clase>(url);
   }
-
-  actualizarUsuario(c:any):Observable<Object>{
-    const url = `${CLASEURL}/${c.id}`;
-    return this.http.put<Clase>(url, c, HTTPOPTIONS);
+  crearClase(curso:number,asignatura:number):Observable<Object>{
+    return this.http.post<Clase>(CLASEURL,
+        {
+          "curso":{"id":curso},
+          "asignatura":{"id":asignatura},
+        },HTTPOPTIONS)
   }
 
   deleteClase(c:any):Observable<any>{

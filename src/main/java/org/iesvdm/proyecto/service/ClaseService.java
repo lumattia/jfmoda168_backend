@@ -21,8 +21,15 @@ public class ClaseService {
         this.claseRepository = claseRepository;
     }
 
-    public List<Clase> all(String curso,String asignatura) {
-        return this.claseRepository.findClaseByCurso_NombreContainingIgnoreCaseAndAsignatura_NombreContainingIgnoreCase(curso, asignatura);
+    public List<Clase> all(long curso,long asignatura) {
+        if (curso!=-1 && asignatura!=-1)
+            return this.claseRepository.findClaseByCurso_IdAndAsignatura_Id(curso, asignatura);
+        else if (curso!=-1)
+            return this.claseRepository.findClaseByCurso_Id(curso);
+        else if(asignatura!=-1)
+            return this.claseRepository.findClaseByAsignatura_Id(asignatura);
+        else
+            return this.claseRepository.findAll();
     }
 
 

@@ -13,7 +13,9 @@ export const routes: Routes = [
       {path:'clases',component:ClasesComponent},
       {path:'cursos',component:CursosComponent},
       {path:'asignaturas',component:AsignaturasComponent},
-      {path:'usuarios',component:UsuariosComponent}]
+      {path:'usuarios',component:UsuariosComponent},
+      {path:'**',pathMatch:'full',redirectTo:'clases'}
+      ]
   },
 
   {path:'**',pathMatch:'full',redirectTo:'login'}
