@@ -19,7 +19,7 @@ export class AppComponent implements OnInit {
   isLoggedIn  = false;
   usuario:Usuario;
   constructor( private storageService: StorageService,private router: Router) {
-    this.usuario=storageService.getUser();
+    this.usuario=storageService.getUser().content;
   }
   logout() {
     this.storageService.clean();

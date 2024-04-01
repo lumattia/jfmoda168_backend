@@ -53,9 +53,10 @@ export class LoginComponent implements OnInit {
         // this.router.navigate(['index']).then(
         //   () => {console.log('Login OK, cargando index.')}
         // )
+        console.log(data)
       },
       error: err => {
-        this.errorMessage = err.error.message;
+        this.errorMessage = "usuario o contraseña incorrecta";
         this.isLoginFailed = true;
       }
     });

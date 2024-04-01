@@ -27,14 +27,15 @@
                 </div>
               </div>
             </div>
+            <div *ngIf="isLoginFailed" class="text-danger">
+              {{errorMessage}}
+            </div>
             <div class="form-group">
               <button class="btn btn-primary btn-block" style="margin-top: 2px;">
                 Login
               </button>
             </div>
-            <div *ngIf="isLoginFailed">
-              {{errorMessage}}
-            </div>
+
           </form>
         </div>
       </div>

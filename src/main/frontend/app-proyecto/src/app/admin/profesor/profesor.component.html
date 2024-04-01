@@ -1,0 +1,35 @@
+<table class="table table-striped">
+  <thead>
+  <tr>
+      <th scope="col" sortable="nombre" (sort)="onSort($event)">Nombre</th>
+      <th scope="col" sortable="apellido1" (sort)="onSort($event)">Apellidos</th>
+      <th scope="col" sortable="email" (sort)="onSort($event)">Correo</th>
+      <th class="text-end">+</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let profesor of profesores">
+      <td class="col overflow-hidden">{{profesor.nombre}}</td>
+        <td class="col overflow-hidden">{{profesor.apellido1}} {{profesor.apellido2}}</td>
+        <td class="col overflow-hidden">{{profesor.email}}</td>
+        <td class="col">
+          <div class="row justify-content-end">
+            <div class="col-1">
+              <a href="">
+                <i class="fa-solid fa-pen-to-square"></i>
+              </a>
+            </div>
+            <div class="col-1">
+              <a href="">
+                <i class="fa-solid fa-lock-open"></i>
+              </a>
+            </div>
+            <div class="col-1">
+              <a href="#" class="text-danger">x</a>
+            </div>
+          </div>
+        </td>
+    </tr>
+  </tbody>
+</table>
+<ngb-pagination *ngIf="profesores.length>pageSize" [collectionSize]="(collectionSize)!" [(page)]="page" [pageSize]="pageSize" (pageChange)="pageChanged()">

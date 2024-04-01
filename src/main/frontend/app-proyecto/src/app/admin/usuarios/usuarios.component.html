@@ -1,1 +1,42 @@
-<p>usuarios works!</p>
+<div class="container" style="min-width: 400px;">
+  <div class="row">
+    <div class="col me-auto"><h1>Usuarios</h1></div>
+    <div class="col">
+      <form class="d-flex" role="search">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" [(ngModel)]="searchTerm" name="searchTerm" type="submit">Search</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="accordion " id="accordionPanelsStayOpenExample">
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true"
+                aria-controls="panelsStayOpen-collapseOne">
+          <h2>Profesores</h2>
+        </button>
+      </h2>
+      <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
+        <div class="accordion-body">
+          <app-profesores [searchTerm]="searchTerm"></app-profesores>
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false"
+                aria-controls="panelsStayOpen-collapseTwo">
+          <h2>Alumnos</h2>
+        </button>
+      </h2>
+      <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse">
+        <div class="accordion-body">
+          <app-estudiante [estudiantes]="estudiantes"></app-estudiante>
+
+        </div>
+      </div>
+    </div>
+  </div>

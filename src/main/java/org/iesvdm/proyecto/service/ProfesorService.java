@@ -1,9 +1,12 @@
 package org.iesvdm.proyecto.service;
 
 import org.iesvdm.proyecto.domain.Profesor;
+import org.iesvdm.proyecto.domain.Usuario;
 import org.iesvdm.proyecto.exeption.NotFoundException;
 import org.iesvdm.proyecto.repository.ClaseRepository;
 import org.iesvdm.proyecto.repository.ProfesorRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,10 +20,13 @@ public class ProfesorService {
         this.claseRepository = claseRepository;
     }
 
-    public List<Profesor> all() {
-        return this.profesorRepository.findAll();
+    public Page<Profesor> all(Pageable pageable) {
+        return this.profesorRepository.findAll(pageable);
     }
-
+    public Page<Profesor> allByFilter(String buscar, Pageable pageable) {
+        Page<Profesor> page=this.profesorRepository.findByNombreCompleto(buscar,pageable);
+        return page;
+    }
     public Profesor save(Profesor profesor) {
         return this.profesorRepository.save(profesor);
     }

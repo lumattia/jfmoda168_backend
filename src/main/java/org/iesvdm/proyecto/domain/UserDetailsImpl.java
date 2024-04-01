@@ -1,10 +1,9 @@
-package org.iesvdm.proyecto.service;
+package org.iesvdm.proyecto.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.iesvdm.proyecto.domain.Usuario;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,7 +12,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
+
 @AllArgsConstructor
 @Data
 public class UserDetailsImpl implements UserDetails {
@@ -21,13 +20,15 @@ public class UserDetailsImpl implements UserDetails {
 
     private Long id;
 
-    private String nombre_completo;
+    private String nombre;
+    private String apellido1;
+    private String apellido2;
 
     private String email;
 
     @JsonIgnore
     private String password;
-
+    private boolean accountNonLocked;
     private Collection<? extends GrantedAuthority> authorities;
 
 
@@ -36,9 +37,12 @@ public class UserDetailsImpl implements UserDetails {
 
         return new UserDetailsImpl(
                 user.getId(),
-                ((user.getNombre()+" "+user.getApellido1()+" "+user.getApellido2()).trim()),
+                user.getNombre(),
+                user.getApellido1(),
+                user.getApellido2(),
                 user.getEmail(),
                 user.getPassword(),
+                !user.isBlocked(),
                 authorities);
     }
 
@@ -64,7 +68,7 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return accountNonLocked;
     }
 
     @Override

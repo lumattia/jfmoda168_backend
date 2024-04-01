@@ -7,11 +7,10 @@ import {Curso} from "../../interfaces/curso";
 @Component({
   selector: 'app-cursos',
   standalone: true,
-    imports: [
-        FormsModule,
-        NgForOf,
-        NgIf
-    ],
+  imports: [
+    FormsModule,
+    NgForOf,
+    NgIf],
   templateUrl: './cursos.component.html',
   styleUrl: './cursos.component.css'
 })

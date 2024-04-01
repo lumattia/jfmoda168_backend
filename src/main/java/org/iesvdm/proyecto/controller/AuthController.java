@@ -4,7 +4,7 @@ import jakarta.validation.Valid;
 import org.iesvdm.proyecto.domain.Usuario;
 import org.iesvdm.proyecto.repository.UsuarioRepository;
 import org.iesvdm.proyecto.security.TokenUtils;
-import org.iesvdm.proyecto.service.UserDetailsImpl;
+import org.iesvdm.proyecto.domain.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -50,9 +50,7 @@ public class AuthController {
         Map<String, Object> response = new HashMap<>();
 
         response.put("token", token);
-        response.put("id", userDetails.getId());
-        response.put("nombre_completo", userDetails.getUsername());
-        response.put("email", userDetails.getEmail());
+        response.put("content", userDetails);
         response.put("roles", roles);
 
         return ResponseEntity.ok(response);
@@ -73,3 +71,4 @@ public class AuthController {
     }
 
 }
+

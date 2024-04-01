@@ -39,7 +39,6 @@ export class ClaseService {
           "asignatura":{"id":asignatura},
         },HTTPOPTIONS)
   }
-
   deleteClase(c:any):Observable<any>{
     const url = `${CLASEURL}/${c}`
     return this.http.delete(url, HTTPOPTIONS)

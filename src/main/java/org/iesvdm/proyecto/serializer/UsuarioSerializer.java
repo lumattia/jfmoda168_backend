@@ -23,7 +23,9 @@ public class UsuarioSerializer extends StdSerializer<Usuario> {
         jgen.writeStartObject();
         jgen.writeNumberField("id", usuario.getId());
         jgen.writeStringField("email", usuario.getEmail());
-        jgen.writeStringField("nombre_completo", (usuario.getNombre()+" "+usuario.getApellido1()+" "+usuario.getApellido2()).trim());
+        jgen.writeStringField("nombre", usuario.getNombre());
+        jgen.writeStringField("apellido1", usuario.getApellido1());
+        jgen.writeStringField("apellido2", usuario.getApellido2());
         jgen.writeStringField("rol", usuario.getRol());
         if (usuario instanceof Profesor) {
             Profesor profesor = (Profesor) usuario;
@@ -32,7 +34,7 @@ public class UsuarioSerializer extends StdSerializer<Usuario> {
         }
         if (usuario instanceof Estudiante) {
             Estudiante estudiante = (Estudiante) usuario;
-            jgen.writeStringField("nicknName",estudiante.getNickName());
+            jgen.writeStringField("aula",estudiante.getAula());
         }
         jgen.writeEndObject();
     }

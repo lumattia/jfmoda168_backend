@@ -1,0 +1,35 @@
+<div class="row">
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">
+      <div class="row">
+        <div class="col-2">
+          <h4>Nombre</h4>
+        </div>
+        <div class="col-3">
+          <h4>Apellido</h4>
+        </div>
+        <div class="col-3">
+          <h4>Correo</h4>
+        </div>
+        <div class="col-2">
+          <h4>Aula</h4>
+        </div>
+        <div class="col-2 text-end text-danger">
+          <h4><a href="#">+</a></h4>
+        </div>
+      </div>
+    </li>
+    <li class="list-group-item" *ngFor="let estudiante of estudiantes">
+      <div class="row">
+        <div class="col-2 overflow-hidden">{{estudiante.nombre}}</div>
+        <div class="col-3 overflow-hidden">{{estudiante.apellido1}} {{estudiante.apellido2}}</div>
+        <div class="col-3 overflow-hidden">{{estudiante.email}}</div>
+        <div class="col-2  overflow-hidden">{{estudiante.aula}}</div>
+        <div class="col-2 text-end"><a href=""><i class="fa-solid fa-pen-to-square"></i></a> <a href=""><i
+          class="fa-solid fa-lock-open"></i></a> <a href="#"
+                                                    class="text-danger">x</a></div>
+      </div>
+    </li>
+  </ul>
+</div>
+

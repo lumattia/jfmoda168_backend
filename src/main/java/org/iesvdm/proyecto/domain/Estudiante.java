@@ -13,5 +13,5 @@ import lombok.NoArgsConstructor;
 @Data
 @DiscriminatorValue("ESTUDIANTE")
 public class Estudiante extends Usuario{
-    String nickName;
+    String aula;
 }

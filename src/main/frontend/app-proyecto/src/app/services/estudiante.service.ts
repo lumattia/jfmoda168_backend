@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpHeaders} from "@angular/common/http";
 import {catchError, Observable, throwError} from "rxjs";
-import {Curso} from "../interfaces/curso";
-const CURSOSURL="http://localhost:8080/v1/api/cursos"
+import {Estudiante} from "../interfaces/estudiante";
+const ESTUDIANTEURL="http://localhost:8080/v1/api/estudiantes"
 
 const HTTPOPTIONS = {
   headers: new HttpHeaders({
@@ -13,34 +13,34 @@ const HTTPOPTIONS = {
 @Injectable({
   providedIn: 'root'
 })
-export class CursoService {
+export class EstudianteService {
 
   constructor(private http:HttpClient) {
   }
 
   //Métodos (incluir tipos correctos en los argumentos)
-  getCursos():Observable<Object>{
-    return this.http.get(CURSOSURL);
+  getEstudiantes():Observable<Object>{
+    return this.http.get(ESTUDIANTEURL);
   }
-  getCurso(id:number):Observable<Object>{
-    const url = `${CURSOSURL}/${id}`
-    return this.http.get<Curso>(url);
+  getEstudiante(id:number):Observable<Object>{
+    const url = `${ESTUDIANTEURL}/${id}`
+    return this.http.get<Estudiante>(url);
   }
-  crearCurso(nombre:any):Observable<Object>{
-    return this.http.post<Curso>(CURSOSURL, {
+  crearEstudiante(nombre:any):Observable<Object>{
+    return this.http.post<Estudiante>(ESTUDIANTEURL, {
       nombre
     },HTTPOPTIONS)
   }
 
-  actualizarCurso(c:any):Observable<Object>{
-    const url = `${CURSOSURL}/${c.id}`;
-    return this.http.put<Curso>(url, c, HTTPOPTIONS);
+  actualizarEstudiante(e:any):Observable<Object>{
+    const url = `${ESTUDIANTEURL}/${e.id}`;
+    return this.http.put<Estudiante>(url, e, HTTPOPTIONS);
   }
 
-  deleteCurso(c:any):Observable<any>{
-    const url = `${CURSOSURL}/${c}`
+  deleteEstudiante(e:any):Observable<any>{
+    const url = `${ESTUDIANTEURL}/${e}`
     return this.http.delete(url, HTTPOPTIONS)
-        .pipe(catchError(this.handleError));
+      .pipe(catchError(this.handleError));
   }
   private handleError(error: HttpErrorResponse) {
     if (error.status === 0) {
@@ -50,7 +50,7 @@ export class CursoService {
       // The backend returned an unsuccessful response code.
       // The response body may contain clues as to what went wrong.
       console.error(
-          `Backend returned code ${error.status}, body was: `, error.error);
+        `Backend returned code ${error.status}, body was: `, error.error);
     }
     // Return an observable with a user-facing error message.
     return throwError(() => new Error('Something bad happened; please try again later.'));
