@@ -15,15 +15,7 @@ import {EstudianteService} from "../../services/estudiante.service";
 export class EstudianteComponent {
   @Input() estudiantes: Estudiante[] = [];
   nombreEstudiante: string = "";
-  estudianteABorrar: Estudiante = {
-    id: 0,
-    nombre: "",
-    apellido1: "",
-    apellido2: "",
-    email: "",
-    roles: [],
-    blocked: false,
-    aula: ""
+  estudianteABorrar: any = {
   }
   existeEstudiante: boolean = false;
 
@@ -55,7 +47,7 @@ export class EstudianteComponent {
 
   eliminarEstudiante(id: number) {
     this.estudianteService.deleteEstudiante(id).subscribe({
-      next: (data) => {
+      next: () => {
         this.estudiantes = this.estudiantes.filter(c => c.id != id)
       },
       error: (error) => {

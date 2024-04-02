@@ -1,15 +1,13 @@
-import {Component, Input, QueryList, ViewChildren} from '@angular/core';
-import {AsyncPipe, DecimalPipe, NgFor, NgIf} from "@angular/common";
+import {Component, Input} from '@angular/core';
+import {NgFor, NgIf} from "@angular/common";
 import {ProfesorService} from "../../services/profesor.service";
 import {Profesor} from "../../interfaces/profesor";
-import {NgbHighlight, NgbPaginationModule} from "@ng-bootstrap/ng-bootstrap";
-import {NgbdSortableHeader, SortEvent} from "../../utils/sortable.directive";
-import {FormsModule} from "@angular/forms";
+import {NgbPaginationModule} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-profesores',
   standalone: true,
-  imports: [NgFor, DecimalPipe, FormsModule, AsyncPipe, NgbHighlight, NgbdSortableHeader, NgbPaginationModule, NgIf],
+  imports: [NgFor, NgIf,NgbPaginationModule],
   templateUrl: './profesor.component.html',
   styleUrl: './profesor.component.css'
 })
@@ -26,9 +24,14 @@ export class ProfesorComponent {
 
 
 
-  onSort({ column, direction }: SortEvent) {
-    this.sortColumn = column;
-    this.sortDirection = direction;
+  onSort(column:string) {
+    if (this.sortColumn==column)
+      this.sortDirection = this.sortDirection =="asc"?"desc":"asc";
+    else{
+      this.sortColumn=column
+      this.sortDirection = "asc";
+    }
+    this.pageChanged()
   }
   constructor(private profesorService: ProfesorService) {
     this.pageChanged()
@@ -50,7 +53,7 @@ export class ProfesorComponent {
   }
   eliminarProfesor(id: number) {
     this.profesorService.deleteProfesor(id).subscribe({
-      next: (data) => {
+      next: () => {
         this.profesores = this.profesores.filter(c => c.id != id)
       },
       error: (error) => {

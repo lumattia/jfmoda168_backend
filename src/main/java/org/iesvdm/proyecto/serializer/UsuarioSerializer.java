@@ -23,17 +23,17 @@ public class UsuarioSerializer extends StdSerializer<Usuario> {
         jgen.writeStartObject();
         jgen.writeNumberField("id", usuario.getId());
         jgen.writeStringField("email", usuario.getEmail());
+        jgen.writeStringField("nombre_completo", usuario.getNombre()+" "+usuario.getApellido1()+" "+usuario.getApellido2());
         jgen.writeStringField("nombre", usuario.getNombre());
         jgen.writeStringField("apellido1", usuario.getApellido1());
         jgen.writeStringField("apellido2", usuario.getApellido2());
         jgen.writeStringField("rol", usuario.getRol());
-        if (usuario instanceof Profesor) {
-            Profesor profesor = (Profesor) usuario;
-            jgen.writeFieldName("clase");
+        jgen.writeBooleanField("blocked", usuario.isBlocked());
+        if (usuario instanceof Profesor profesor) {
+            jgen.writeFieldName("clases");
             jgen.writeObject(profesor.getClases().stream().map(clase -> clase.getCurso().getNombre() + " " + clase.getAsignatura().getNombre()).toList());
         }
-        if (usuario instanceof Estudiante) {
-            Estudiante estudiante = (Estudiante) usuario;
+        if (usuario instanceof Estudiante estudiante) {
             jgen.writeStringField("aula",estudiante.getAula());
         }
         jgen.writeEndObject();
