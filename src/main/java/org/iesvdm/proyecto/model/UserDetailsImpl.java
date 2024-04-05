@@ -1,4 +1,4 @@
-package org.iesvdm.proyecto.domain;
+package org.iesvdm.proyecto.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 

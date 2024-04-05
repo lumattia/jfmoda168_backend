@@ -1,10 +1,12 @@
 package org.iesvdm.proyecto.controller;
 
 import jakarta.validation.Valid;
-import org.iesvdm.proyecto.domain.Usuario;
+import org.iesvdm.proyecto.exeption.NotFoundException;
+import org.iesvdm.proyecto.model.Usuario;
 import org.iesvdm.proyecto.repository.UsuarioRepository;
 import org.iesvdm.proyecto.security.TokenUtils;
-import org.iesvdm.proyecto.domain.UserDetailsImpl;
+import org.iesvdm.proyecto.model.UserDetailsImpl;
+import org.iesvdm.proyecto.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -25,7 +27,7 @@ public class AuthController {
     AuthenticationManager authenticationManager;
 
     @Autowired
-    UsuarioRepository userRepository;
+    UsuarioService usuarioService;
 
     @Autowired
     PasswordEncoder encoder;
@@ -57,18 +59,22 @@ public class AuthController {
 
     }
 
-    @PostMapping("/register")
-    public ResponseEntity<?> registerUser(@Valid @RequestBody Usuario usuario) {
-        if (userRepository.existsByEmail(usuario.getEmail())) {
-            return ResponseEntity.badRequest().body("Error: Email ya en uso!");
+    @PostMapping("/crearAdmin")
+    public ResponseEntity<?> registerUser() {
+        try{
+            usuarioService.one(1L);
+            return ResponseEntity.badRequest().body("Error: no se ha podido crear el usuario administrador");
+        }catch (NotFoundException f){
+            Usuario u=new Usuario();
+            u.setId(1L);
+            u.setEmail("admin@g.educaand.es");
+            u.setNombre("admin");
+            u.setApellido1("admin");
+            u.setApellido2("admin");
+            u.setPassword(encoder.encode("123456"));
+            usuarioService.save(u);
+            return ResponseEntity.ok("Usuario registrado correctamente!");
         }
-
-        usuario.setPassword(encoder.encode(usuario.getPassword()));
-
-        userRepository.save(usuario);
-
-        return ResponseEntity.ok("Usuario registrado correctamente!");
     }
-
 }
 

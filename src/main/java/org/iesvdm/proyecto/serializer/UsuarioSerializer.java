@@ -3,9 +3,9 @@ package org.iesvdm.proyecto.serializer;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
-import org.iesvdm.proyecto.domain.Estudiante;
-import org.iesvdm.proyecto.domain.Profesor;
-import org.iesvdm.proyecto.domain.Usuario;
+import org.iesvdm.proyecto.model.Estudiante;
+import org.iesvdm.proyecto.model.Profesor;
+import org.iesvdm.proyecto.model.Usuario;
 
 import java.io.IOException;
 
@@ -23,7 +23,7 @@ public class UsuarioSerializer extends StdSerializer<Usuario> {
         jgen.writeStartObject();
         jgen.writeNumberField("id", usuario.getId());
         jgen.writeStringField("email", usuario.getEmail());
-        jgen.writeStringField("nombre_completo", usuario.getNombre()+" "+usuario.getApellido1()+" "+usuario.getApellido2());
+        jgen.writeStringField("nombre_completo", usuario.getNombreCompleto());
         jgen.writeStringField("nombre", usuario.getNombre());
         jgen.writeStringField("apellido1", usuario.getApellido1());
         jgen.writeStringField("apellido2", usuario.getApellido2());

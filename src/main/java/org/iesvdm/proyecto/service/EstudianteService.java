@@ -1,13 +1,11 @@
 package org.iesvdm.proyecto.service;
 
-import org.iesvdm.proyecto.domain.Estudiante;
+import org.iesvdm.proyecto.model.Estudiante;
 import org.iesvdm.proyecto.exeption.NotFoundException;
 import org.iesvdm.proyecto.repository.EstudianteRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class EstudianteService {

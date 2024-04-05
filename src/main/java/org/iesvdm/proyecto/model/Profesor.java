@@ -1,9 +1,7 @@
-package org.iesvdm.proyecto.domain;
+package org.iesvdm.proyecto.model;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
 import lombok.*;
-import org.iesvdm.proyecto.serializer.UsuarioSerializer;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -17,4 +15,6 @@ import java.util.Set;
 public class Profesor extends Usuario{
     @ManyToMany(mappedBy = "profesores")
     Set<Clase> clases = new HashSet<>();
+    @ManyToMany
+    Set<Aula> aulas;
 }

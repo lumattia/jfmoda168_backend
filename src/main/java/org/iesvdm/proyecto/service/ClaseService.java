@@ -3,8 +3,8 @@ package org.iesvdm.proyecto.service;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
-import org.iesvdm.proyecto.domain.Clase;
-import org.iesvdm.proyecto.domain.Profesor;
+import org.iesvdm.proyecto.model.Clase;
+import org.iesvdm.proyecto.model.Profesor;
 import org.iesvdm.proyecto.exeption.NotFoundException;
 import org.iesvdm.proyecto.repository.ClaseRepository;
 import org.springframework.stereotype.Service;
@@ -21,15 +21,8 @@ public class ClaseService {
         this.claseRepository = claseRepository;
     }
 
-    public List<Clase> all(long curso,long asignatura) {
-        if (curso!=-1 && asignatura!=-1)
-            return this.claseRepository.findClaseByCurso_IdAndAsignatura_Id(curso, asignatura);
-        else if (curso!=-1)
-            return this.claseRepository.findClaseByCurso_Id(curso);
-        else if(asignatura!=-1)
-            return this.claseRepository.findClaseByAsignatura_Id(asignatura);
-        else
-            return this.claseRepository.findAll();
+    public Set<Clase> all(Long curso,Long asignatura) {
+            return this.claseRepository.findFiltering(curso, asignatura);
     }
 
 

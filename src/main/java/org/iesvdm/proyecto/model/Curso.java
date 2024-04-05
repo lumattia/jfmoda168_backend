@@ -1,4 +1,4 @@
-package org.iesvdm.proyecto.domain;
+package org.iesvdm.proyecto.model;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -10,14 +10,14 @@ import java.util.Set;
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 @Entity
-public class Asignatura {
+public class Curso {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
-    long id;
+    private long id;
     @Column(unique = true)
-    String nombre;
-    @OneToMany(mappedBy = "asignatura",cascade = CascadeType.ALL)
+    private String nombre;
+    @OneToMany(mappedBy = "curso",cascade = CascadeType.ALL)
     @ToString.Exclude
-    Set<Clase> clases;
+    private Set<Clase> clases;
 }

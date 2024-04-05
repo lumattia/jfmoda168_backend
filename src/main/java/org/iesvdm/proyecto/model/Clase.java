@@ -1,4 +1,4 @@
-package org.iesvdm.proyecto.domain;
+package org.iesvdm.proyecto.model;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
@@ -24,11 +24,15 @@ public class Clase {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     private Long id;
+    @OneToMany(mappedBy = "clase",cascade = CascadeType.ALL,orphanRemoval = true)
+    private Set<Aula> aulas;
     @ManyToOne(optional = false)
     private Asignatura asignatura;
-
     @ManyToOne(optional = false)
     private Curso curso;
     @ManyToMany
-    Set<Profesor> profesores;
+    private Set<Profesor> profesores;
+    public String getRoute(){
+        return this.curso.getNombre()+" "+this.asignatura.getNombre();
+    }
 }

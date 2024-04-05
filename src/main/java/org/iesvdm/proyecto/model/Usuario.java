@@ -1,6 +1,5 @@
-package org.iesvdm.proyecto.domain;
+package org.iesvdm.proyecto.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -38,5 +37,8 @@ public class Usuario {
     public String getRol() {
         DiscriminatorValue discriminatorValue = getClass().getAnnotation(DiscriminatorValue.class);
         return discriminatorValue.value();
+    }
+    public String getNombreCompleto() {
+        return this.getNombre()+" "+this.getApellido1()+" "+this.getApellido2();
     }
 }

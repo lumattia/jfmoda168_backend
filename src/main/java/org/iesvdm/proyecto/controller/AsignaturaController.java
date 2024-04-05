@@ -1,7 +1,7 @@
 package org.iesvdm.proyecto.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import org.iesvdm.proyecto.domain.Asignatura;
+import org.iesvdm.proyecto.model.Asignatura;
 import org.iesvdm.proyecto.service.AsignaturaService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

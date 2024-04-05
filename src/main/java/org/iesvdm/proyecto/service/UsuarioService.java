@@ -1,10 +1,11 @@
 package org.iesvdm.proyecto.service;
 
-import org.iesvdm.proyecto.domain.Usuario;
+import org.iesvdm.proyecto.model.Usuario;
 import org.iesvdm.proyecto.exeption.NotFoundException;
 import org.iesvdm.proyecto.repository.UsuarioRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -25,6 +26,9 @@ public class UsuarioService {
     }
     public Usuario save(Usuario usuario) {
         return this.usuarioRepository.save(usuario);
+    }
+    public boolean existsByEmail(String email) {
+        return usuarioRepository.existsByEmail(email);
     }
 
     public Usuario one(Long id) {

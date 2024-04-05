@@ -1,7 +1,7 @@
 package org.iesvdm.proyecto.service;
 
-import org.iesvdm.proyecto.domain.Profesor;
-import org.iesvdm.proyecto.domain.Usuario;
+import org.iesvdm.proyecto.model.Aula;
+import org.iesvdm.proyecto.model.Profesor;
 import org.iesvdm.proyecto.exeption.NotFoundException;
 import org.iesvdm.proyecto.repository.ClaseRepository;
 import org.iesvdm.proyecto.repository.ProfesorRepository;
@@ -9,7 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.Set;
 
 @Service
 public class ProfesorService {
@@ -27,6 +27,10 @@ public class ProfesorService {
         Page<Profesor> page=this.profesorRepository.findByNombreCompleto(buscar,pageable);
         return page;
     }
+    public Set<Aula> allAulas(Long id) {
+        return this.profesorRepository.allAulas(id);
+    }
+
     public Profesor save(Profesor profesor) {
         return this.profesorRepository.save(profesor);
     }
