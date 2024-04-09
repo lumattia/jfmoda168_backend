@@ -18,11 +18,10 @@ public class AsignaturaController {
     public AsignaturaController(AsignaturaService asignaturaService) {
         this.asignaturaService = asignaturaService;
     }
-
     @GetMapping({"","/"})
-    public List<Asignatura> all() {
-        log.info("Accediendo a todas las asignaturas");
-        return this.asignaturaService.all();
+    public List<Asignatura> all(@RequestParam(value = "buscar",defaultValue = "") String buscar) {
+        log.info("Accediendo a todas los estudiantes");
+        return this.asignaturaService.allByFilter(buscar);
     }
     @PostMapping({"","/"})
     public Asignatura save(@RequestBody Asignatura asignatura) {

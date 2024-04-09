@@ -28,14 +28,14 @@ public class Tarea {
     @ManyToOne
     @JsonIgnore
     Tema tema;
-    @OneToMany(mappedBy = "tarea")
+    @OneToMany(mappedBy = "id.tarea")
     private Set<TareaEstudiante> tareaEstudiantes;
     @OneToOne(cascade = CascadeType.ALL,orphanRemoval = true)
-    Fase basico;
+    Fase basico=new Fase((short)1);
     @OneToOne(cascade = CascadeType.ALL,orphanRemoval = true)
-    Fase intermedio;
+    Fase intermedio=new Fase((short)2);
     @OneToOne(cascade = CascadeType.ALL,orphanRemoval = true)
-    Fase avanzado;
+    Fase avanzado=new Fase((short)3);
     public String getRoute(){
         return this.tema.getRoute()+" "+this.nombre;
     }

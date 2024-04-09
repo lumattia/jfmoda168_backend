@@ -6,6 +6,8 @@ import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import org.iesvdm.proyecto.model.*;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class TareaEstudianteSerializer extends StdSerializer<TareaEstudiante> {
     public TareaEstudianteSerializer() {
@@ -18,11 +20,13 @@ public class TareaEstudianteSerializer extends StdSerializer<TareaEstudiante> {
     @Override
     public void serialize(TareaEstudiante tareaEstudiante, JsonGenerator jgen, SerializerProvider serializerProvider) throws IOException {
         jgen.writeStartObject();
-        jgen.writeNumberField("id", tareaEstudiante.getId());
-        jgen.writeStringField("estudiante", tareaEstudiante.getEstudiante().getNombreCompleto());
-        jgen.writeStringField("tarea",tareaEstudiante.getTarea().getRoute());
-
-        jgen.writeStringField("fase",tareaEstudiante.getFase());
+        jgen.writeStringField("estudiante", tareaEstudiante.getId().getEstudiante().getNombreCompleto());
+        jgen.writeStringField("tarea",tareaEstudiante.getId().getTarea().getRoute());
+        Map<Byte,String> nivel=new HashMap<>();
+        nivel.put((byte) 1, "Facil");
+        nivel.put((byte) 2, "Intermedio");
+        nivel.put((byte) 3, "Difícil");
+        jgen.writeStringField("fase",nivel.get(tareaEstudiante.getFase()));
         jgen.writeNumberField("basico", tareaEstudiante.getPuntuacionBasica());
         jgen.writeNumberField("intermedio", tareaEstudiante.getPuntuacionIntermedia());
         jgen.writeNumberField("avanzado", tareaEstudiante.getPuntuacionAvanzada());

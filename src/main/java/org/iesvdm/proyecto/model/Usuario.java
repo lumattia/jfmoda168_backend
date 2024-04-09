@@ -33,7 +33,7 @@ public class Usuario {
     String email;
     @Column(nullable = false)//password="123456" encrypted:$2a$10$Ptp1ZRU7jLFs3uI8RQnYm.0sgVsSQ55EJiU48rrFQVPpdOtVroqvK
     String password;
-    boolean blocked;
+    boolean blocked=false;
     public String getRol() {
         DiscriminatorValue discriminatorValue = getClass().getAnnotation(DiscriminatorValue.class);
         return discriminatorValue.value();

@@ -17,7 +17,13 @@ public class Fase {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     long id;
+    @ManyToOne
+    Tarea tarea;
+    short nivel;
     String nombreArchivo;
     @OneToMany(mappedBy = "fase", cascade = CascadeType.ALL,orphanRemoval = true)
     Set<Pregunta> preguntas;
+    Fase(short nivel){
+        this.nivel=nivel;
+    }
 }

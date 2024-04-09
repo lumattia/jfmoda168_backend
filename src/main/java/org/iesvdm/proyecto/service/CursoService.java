@@ -17,6 +17,9 @@ public class CursoService {
     public List<Curso> all() {
         return this.cursoRepository.findAll();
     }
+    public List<Curso> allByFilter(String buscar) {
+        return this.cursoRepository.findCursosByNombreContainingIgnoreCase(buscar);
+    }
 
     public Curso save(Curso curso) {
         return this.cursoRepository.save(curso);

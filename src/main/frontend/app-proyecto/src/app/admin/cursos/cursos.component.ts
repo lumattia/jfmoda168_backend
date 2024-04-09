@@ -3,6 +3,8 @@ import {FormsModule} from "@angular/forms";
 import {NgForOf, NgIf} from "@angular/common";
 import {CursoService} from "../../services/curso.service";
 import {Curso} from "../../interfaces/curso";
+import {RouterLink} from "@angular/router";
+import {Asignatura} from "../../interfaces/asignatura";
 
 @Component({
   selector: 'app-cursos',
@@ -10,12 +12,15 @@ import {Curso} from "../../interfaces/curso";
   imports: [
     FormsModule,
     NgForOf,
-    NgIf],
+    NgIf,
+    RouterLink
+  ],
   templateUrl: './cursos.component.html',
   styleUrl: './cursos.component.css'
 })
 export class CursosComponent {
-    cursos: Curso[] = [];
+  searchTerm:string="";
+  cursos: Curso[] = [];
     nombreCurso:string="";
     cursoABorrar:Curso={
         id:0,
@@ -33,6 +38,16 @@ export class CursosComponent {
             }
         });
     }
+  buscar(){
+    this.cursoService.buscarAsignatura(this.searchTerm).subscribe({
+      next: (data:any) => {
+        this.cursos = (data as Asignatura[])
+      },
+      error: (error) => {
+        console.error(error);
+      }
+    })
+  }
     crearCurso() {
         this.existeCurso=this.cursos.filter(c=>c.nombre==this.nombreCurso).length==1
         if (!this.existeCurso){

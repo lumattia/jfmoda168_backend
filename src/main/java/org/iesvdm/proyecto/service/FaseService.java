@@ -1,6 +1,5 @@
 package org.iesvdm.proyecto.service;
 
-import org.iesvdm.proyecto.exeption.NotFoundException;
 import org.iesvdm.proyecto.model.Fase;
 import org.iesvdm.proyecto.repository.FaseRepository;
 import org.springframework.stereotype.Service;
@@ -11,8 +10,8 @@ public class FaseService {
     public FaseService(FaseRepository faseRepository) {
         this.faseRepository = faseRepository;
     }
-    public Fase one(long id) {
-        return this.faseRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException(id,"fase"));
+    public Fase one(long tareaId,short nivel) {
+        return this.faseRepository.findFaseByTarea_IdAndNivel(tareaId,nivel)
+                .orElseThrow(() -> new RuntimeException("Fase not found"));
     }
 }

@@ -1,35 +1,73 @@
-<div class="row">
-  <ul class="list-group list-group-flush">
-    <li class="list-group-item">
-      <div class="row">
-        <div class="col-2">
-          <h4>Nombre</h4>
-        </div>
-        <div class="col-3">
-          <h4>Apellido</h4>
-        </div>
-        <div class="col-3">
-          <h4>Correo</h4>
-        </div>
-        <div class="col-2">
-          <h4>Aula</h4>
-        </div>
-        <div class="col-2 text-end text-danger">
-          <h4><a href="#">+</a></h4>
-        </div>
-      </div>
-    </li>
-    <li class="list-group-item" *ngFor="let estudiante of estudiantes">
-      <div class="row">
-        <div class="col-2 overflow-hidden">{{estudiante.nombre}}</div>
-        <div class="col-3 overflow-hidden">{{estudiante.apellido1}} {{estudiante.apellido2}}</div>
-        <div class="col-3 overflow-hidden">{{estudiante.email}}</div>
-        <div class="col-2  overflow-hidden">{{estudiante.aula}}</div>
-        <div class="col-2 text-end"><a href=""><i class="fa-solid fa-pen-to-square"></i></a> <a href=""><i
-          class="fa-solid fa-lock-open"></i></a> <a href="#"
-                                                    class="text-danger">x</a></div>
-      </div>
-    </li>
-  </ul>
+<div class="col">
+  <form class="d-flex" role="search">
+    <input class="form-control me-2" [(ngModel)]="searchTerm" name="searchTerm" type="search" placeholder="Search" aria-label="Search">
+    <button class="btn btn-outline-success" (click)="pageChanged()" type="submit">Search</button>
+  </form>
 </div>
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th scope="col" (click)="onSort('nombre')">
+      Nombre <i *ngIf="sortColumn === 'nombre';else sort" class="fas" [ngClass]="sortDirection=='asc'?'fa-sort-up':'fa-sort-down'"></i>
+    </th>
+
+    <th scope="col" (click)="onSort('apellido1')">
+      Apellidos <i *ngIf="sortColumn === 'apellido1';else sort" class="fas" [ngClass]="sortDirection=='asc'?'fa-sort-up':'fa-sort-down'"></i>
+    </th>
+    <th scope="col" (click)="onSort('email')">
+      Correo <i *ngIf="sortColumn === 'email';else sort" class="fas" [ngClass]="sortDirection=='asc'?'fa-sort-up':'fa-sort-down'" ></i>
+    </th>
+    <th scope="col" (click)="onSort('aula')">
+      Aula <i *ngIf="sortColumn === 'aula';else sort" class="fas" [ngClass]="sortDirection=='asc'?'fa-sort-up':'fa-sort-down'" ></i>
+    </th>
+    <ng-template #sort>
+      <i class="fas fa-sort"></i>
+    </ng-template>
+    <th class="text-end">+</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let estudiante of estudiantes">
+    <td class="col overflow-hidden">{{estudiante.nombre}}</td>
+    <td class="col overflow-hidden">{{estudiante.apellido1}} {{estudiante.apellido2}}</td>
+    <td class="col overflow-hidden">{{estudiante.email}}</td>
+    <td class="col  overflow-hidden">{{estudiante.aula}}</td>
+    <td class="col">
+      <div class="row justify-content-end">
+        <div class="col-1">
+          <a>
+            <i class="fa-solid fa-pen-to-square"></i>
+          </a>
+        </div>
+        <div class="col-1">
+          <a (click)="cambiarEstado(estudiante)">
+            <i class="fa-solid" [ngClass]="estudiante.blocked?'fa-lock':'fa-lock-open'"></i>
+          </a>
+        </div>
+        <div class="col-1">
+          <a (click)="borrar(estudiante)" class="text-danger">x</a>
+        </div>
+      </div>
+    </td>
+  </tr>
+  </tbody>
+</table>
+<div class="modal fade" id="borrar" aria-labelledby="borrarLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="borrarLabel">Borrar Asignatura</h1>
+        <button type="button" class="btn z-3-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Seguro que quieres eliminar la clase: {{estudianteABorrar.nombre}}?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn z-3 btn z-3-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <button type="submit" data-bs-dismiss="modal" class="btn btn-primary" (click)="eliminarEstudiante(estudianteABorrar.id)">Eliminar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<ngb-pagination *ngIf="collectionSize>estudiantes.length" [collectionSize]="(collectionSize)!" [(page)]="page" [pageSize]="pageSize" (pageChange)="pageChanged()"/>
 

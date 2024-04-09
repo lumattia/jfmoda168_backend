@@ -20,9 +20,9 @@ public class CursoController {
     }
 
     @GetMapping({"","/"})
-    public List<Curso> all() {
+    public List<Curso> all(@RequestParam(value = "buscar",defaultValue = "") String buscar) {
         log.info("Accediendo a todas los cursos");
-        return this.cursoService.all();
+        return this.cursoService.allByFilter(buscar);
     }
     @PostMapping({"","/"})
     public Curso save(@RequestBody Curso curso) {

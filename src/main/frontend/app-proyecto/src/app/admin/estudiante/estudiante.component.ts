@@ -1,50 +1,67 @@
-import {Component, Input} from '@angular/core';
-import {NgForOf} from "@angular/common";
+import {Component, EventEmitter, Output} from '@angular/core';
+import {NgClass, NgForOf, NgIf} from "@angular/common";
 import {Estudiante} from "../../interfaces/estudiante";
 import {EstudianteService} from "../../services/estudiante.service";
-
+import {FormsModule} from "@angular/forms";
+import {NgbPagination} from "@ng-bootstrap/ng-bootstrap";
 @Component({
   selector: 'app-estudiante',
   standalone: true,
   imports: [
-    NgForOf
+    NgForOf,
+    FormsModule,
+    NgIf,
+    NgbPagination,
+    NgClass
   ],
   templateUrl: './estudiante.component.html',
   styleUrl: './estudiante.component.css'
 })
 export class EstudianteComponent {
-  @Input() estudiantes: Estudiante[] = [];
-  nombreEstudiante: string = "";
-  estudianteABorrar: any = {
-  }
-  existeEstudiante: boolean = false;
+  estudiantes:Estudiante[]=[];
+  page= 1;
+  pageSize:number=10;
+  searchTerm:string="";
+  @Output() bloquearODesbloquear = new EventEmitter<Estudiante>();
+  collectionSize:number=0;
+  estudianteABorrar:any={}
+
+  sortColumn= '';
+  sortDirection= '';
 
   constructor(private estudianteService: EstudianteService) {
+    this.pageChanged()
   }
-
-  crearEstudiante() {
-    this.existeEstudiante = this.estudiantes.filter(c => c.nombre == this.nombreEstudiante).length == 1
-    if (!this.existeEstudiante) {
-      this.estudianteService.crearEstudiante(this.nombreEstudiante).subscribe({
-        next: (data) => {
-          this.estudiantes.push(data as Estudiante)
-        },
-        error: (error) => {
-          console.error(error);
-        }
-      });
-      // Establecer un temporizador para cambiar existeEstudiante a false después de 2 segundos
-    } else {
-      setTimeout(() => {
-        this.existeEstudiante = false;
-      }, 1500);
+  onSort(column:string) {
+    if (this.sortColumn==column)
+      if (this.sortDirection=="desc")
+        this.sortColumn="";
+      else
+        this.sortDirection = this.sortDirection =="asc"?"desc":"asc";
+    else{
+      this.sortColumn=column
+      this.sortDirection = "asc";
     }
+    this.pageChanged()
   }
-
-  borrar(estudiante: Estudiante) {
-    this.estudianteABorrar = estudiante;
+  pageChanged(){
+    this.estudianteService.buscarEstudiante(this.searchTerm,this.page,this.pageSize,this.sortColumn,this.sortDirection).subscribe({
+      next: (data:any) => {
+        this.estudiantes = (data.content as Estudiante[])
+        this.page=data.pageable.pageNumber+1
+        this.collectionSize=data.totalElements
+      },
+      error: (error) => {
+        console.error(error);
+      }
+    })
   }
-
+  cambiarEstado(estudiante:Estudiante){
+    this.bloquearODesbloquear.emit(estudiante);
+  }
+  borrar(estudiante:Estudiante){
+    this.estudianteABorrar=estudiante;
+  }
   eliminarEstudiante(id: number) {
     this.estudianteService.deleteEstudiante(id).subscribe({
       next: () => {

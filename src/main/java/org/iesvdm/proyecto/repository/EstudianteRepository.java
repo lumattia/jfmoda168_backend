@@ -7,11 +7,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.Optional;
 import java.util.Set;
 
 public interface EstudianteRepository extends JpaRepository<Estudiante,Long> {
-    @Query("SELECT u FROM Usuario u WHERE CONCAT(u.nombre, ' ', u.apellido1, ' ', u.apellido2) LIKE %?1%")
+    @Query("SELECT e FROM Estudiante e WHERE CONCAT(e.nombre, ' ', e.apellido1, ' ', e.apellido2) LIKE %?1%")
     Page<Estudiante> findByNombreCompleto(String nombreCompleto, Pageable pageable);
     @Query("SELECT a FROM Aula a JOIN a.estudiantes e WHERE e.id = ?1")
     Set<Aula> allAulas(Long estudianteId);
+    Optional<Estudiante> findByEmail(String email);
+
 }

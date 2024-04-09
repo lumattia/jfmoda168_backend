@@ -18,6 +18,6 @@ public class Estudiante extends Usuario{
     String aula;
     @ManyToMany
     Set<Aula> aulas;
-    @OneToMany(mappedBy = "estudiante")
+    @OneToMany(mappedBy = "id.estudiante")
     private Set<TareaEstudiante> tareaEstudiantes;
 }

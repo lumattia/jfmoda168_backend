@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpErrorResponse, HttpHeaders} from "@angular/common/http";
+import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams} from "@angular/common/http";
 import {catchError, Observable, throwError} from "rxjs";
 import {Estudiante} from "../interfaces/estudiante";
 const ESTUDIANTEURL="http://localhost:8080/v1/api/estudiantes"
@@ -25,6 +25,15 @@ export class EstudianteService {
   getEstudiante(id:number):Observable<Object>{
     const url = `${ESTUDIANTEURL}/${id}`
     return this.http.get<Estudiante>(url);
+  }
+  buscarEstudiante(searchTerm:string,page:number,pageSize:number,sortColumn:string,sortDirection:string){
+    let options={
+      params:new HttpParams().set("buscar",searchTerm)
+        .set("page",page-1)
+        .set("size",pageSize)
+        .set("sort",sortColumn+","+sortDirection)
+    }
+    return this.http.get<Estudiante>(ESTUDIANTEURL,options)
   }
   crearEstudiante(nombre:any):Observable<Object>{
     return this.http.post<Estudiante>(ESTUDIANTEURL, {

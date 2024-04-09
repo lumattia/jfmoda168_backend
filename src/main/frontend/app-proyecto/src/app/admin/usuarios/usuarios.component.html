@@ -1,12 +1,6 @@
 <div class="container" style="min-width: 400px;">
   <div class="row">
     <div class="col me-auto"><h1>Usuarios</h1></div>
-    <div class="col">
-      <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" [(ngModel)]="searchTerm" name="searchTerm" type="submit">Search</button>
-      </form>
-    </div>
   </div>
 
   <div class="accordion " id="accordionPanelsStayOpenExample">
@@ -20,7 +14,7 @@
       </h2>
       <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
         <div class="accordion-body">
-          <app-profesores [searchTerm]="searchTerm"></app-profesores>
+          <app-profesores (bloquearODesbloquear)="bloquearODesbloquear($event)"></app-profesores>
         </div>
       </div>
     </div>

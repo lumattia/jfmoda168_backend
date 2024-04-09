@@ -11,6 +11,8 @@ export const routes: Routes = [
   {path:'login',component:LoginComponent},
   {path:'admin',component:AdminComponent, canActivate: [canActivate],children:[
       {path:'clases',component:ClasesComponent},
+      {path:'clases/:asignaturaId',component:ClasesComponent},
+      {path:'clases/:cursoId',component:ClasesComponent},
       {path:'cursos',component:CursosComponent},
       {path:'asignaturas',component:AsignaturasComponent},
       {path:'usuarios',component:UsuariosComponent},

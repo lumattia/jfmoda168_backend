@@ -3,19 +3,22 @@ import {FormsModule} from "@angular/forms";
 import {NgForOf, NgIf} from "@angular/common";
 import {AsignaturaService} from "../../services/asignatura.service";
 import {Asignatura} from "../../interfaces/asignatura";
+import {RouterLink} from "@angular/router";
 
 @Component({
     selector: 'app-asignaturas',
     standalone: true,
-    imports: [
-        FormsModule,
-        NgForOf,
-        NgIf
-    ],
+  imports: [
+    FormsModule,
+    NgForOf,
+    NgIf,
+    RouterLink
+  ],
     templateUrl: './asignaturas.component.html',
     styleUrl: './asignaturas.component.css'
 })
 export class AsignaturasComponent {
+    searchTerm:string="";
     asignaturas: Asignatura[] = [];
     nombreAsignatura:string="";
     asignaturaABorrar:Asignatura={
@@ -33,6 +36,16 @@ export class AsignaturasComponent {
                 console.error(error);
             }
         });
+    }
+    buscar(){
+      this.asignaturaService.buscarAsignatura(this.searchTerm).subscribe({
+        next: (data:any) => {
+          this.asignaturas = (data as Asignatura[])
+        },
+        error: (error) => {
+          console.error(error);
+        }
+      })
     }
     crearAsignatura() {
         this.existeAsignatura=this.asignaturas.filter(a=>a.nombre==this.nombreAsignatura).length==1

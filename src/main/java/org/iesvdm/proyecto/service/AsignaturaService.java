@@ -17,6 +17,9 @@ public class AsignaturaService {
     public List<Asignatura> all() {
         return this.asignaturaRepository.findAll();
     }
+    public List<Asignatura> allByFilter(String buscar) {
+        return this.asignaturaRepository.findAsignaturasByNombreContainingIgnoreCase(buscar);
+    }
 
     public Asignatura save(Asignatura asignatura) {
         return this.asignaturaRepository.save(asignatura);

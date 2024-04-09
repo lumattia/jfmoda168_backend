@@ -41,6 +41,10 @@ public class UsuarioController {
     public Usuario replace(@PathVariable("id") long id, @RequestBody Usuario usuario) {
         return this.usuarioService.replace(id, usuario);
     }
+    @PostMapping("/cambiarEstado/{id}")
+    public boolean cambiarEstado(@PathVariable("id") long id) {
+        return this.usuarioService.cambiarEstado(id);
+    }
     @ResponseBody
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")

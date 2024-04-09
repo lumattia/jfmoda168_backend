@@ -7,6 +7,7 @@ import {Asignatura} from "../../interfaces/asignatura";
 import {CursoService} from "../../services/curso.service";
 import {AsignaturaService} from "../../services/asignatura.service";
 import {FormsModule} from "@angular/forms";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-clases',
@@ -30,8 +31,13 @@ export class ClasesComponent {
     profesores:[]};
   constructor(private claseService: ClaseService,
               private cursoService:CursoService,
-              private asignaturaService:AsignaturaService) {
-    this.claseService.getClases().subscribe({
+              private asignaturaService:AsignaturaService,
+              private route:ActivatedRoute) {
+    this.route.queryParams.subscribe(params => {
+      this.asignaturaSeleccionado = params['asignaturaId']|| -1;
+      this.cursoSeleccionado = params['cursoId']|| -1;
+    });
+    this.claseService.filterClase(this.cursoSeleccionado,this.asignaturaSeleccionado).subscribe({
       next: (data) => {
         this.clases = (data as Clase[])
         this.cursoService.getCursos().subscribe(cursos=>this.cursos = (cursos as Curso[]));
@@ -42,8 +48,8 @@ export class ClasesComponent {
       }
     });
   }
-
   filtrarClases(){
+    console.log(this.cursoSeleccionado,this.asignaturaSeleccionado)
     this.claseService.filterClase(this.cursoSeleccionado,this.asignaturaSeleccionado).subscribe({
       next: (data) => {
         this.clases = (data as Clase[])

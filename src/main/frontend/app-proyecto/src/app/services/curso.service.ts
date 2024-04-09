@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpErrorResponse, HttpHeaders} from "@angular/common/http";
+import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams} from "@angular/common/http";
 import {catchError, Observable, throwError} from "rxjs";
 import {Curso} from "../interfaces/curso";
 const CURSOSURL="http://localhost:8080/v1/api/cursos"
@@ -26,17 +26,21 @@ export class CursoService {
     const url = `${CURSOSURL}/${id}`
     return this.http.get<Curso>(url);
   }
+  buscarAsignatura(searchTerm:string){
+    let options={
+      params:new HttpParams().set("buscar",searchTerm)
+    }
+    return this.http.get<Curso>(CURSOSURL,options)
+  }
   crearCurso(nombre:any):Observable<Object>{
     return this.http.post<Curso>(CURSOSURL, {
       nombre
     },HTTPOPTIONS)
   }
-
   actualizarCurso(c:any):Observable<Object>{
     const url = `${CURSOSURL}/${c.id}`;
     return this.http.put<Curso>(url, c, HTTPOPTIONS);
   }
-
   deleteCurso(c:any):Observable<any>{
     const url = `${CURSOSURL}/${c}`
     return this.http.delete(url, HTTPOPTIONS)

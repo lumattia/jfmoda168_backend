@@ -20,4 +20,8 @@ export class UsuarioService {
     const url = `${USUARIOURL}/${u.id}`;
     return this.http.put<Usuario>(url, u, HTTPOPTIONS);
   }
+  cambiarEstado(id:number):Observable<boolean>{
+    const url = `${USUARIOURL}/cambiarEstado/${id}`;
+    return this.http.post<boolean>(url, HTTPOPTIONS);
+  }
 }

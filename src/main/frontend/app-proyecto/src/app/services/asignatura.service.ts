@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpErrorResponse, HttpHeaders} from "@angular/common/http";
+import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams} from "@angular/common/http";
 import {catchError, Observable, throwError} from "rxjs";
 import {Asignatura} from "../interfaces/asignatura";
 import {Curso} from "../interfaces/curso";
@@ -27,6 +27,12 @@ export class AsignaturaService {
   getAsignatura(id:number):Observable<Object>{
     const url = `${ASIGNATURAURL}/${id}`
     return this.http.get<Asignatura>(url);
+  }
+  buscarAsignatura(searchTerm:string){
+    let options={
+      params:new HttpParams().set("buscar",searchTerm)
+    }
+    return this.http.get<Asignatura>(ASIGNATURAURL,options)
   }
   crearAsignatura(nombre:any):Observable<Object>{
     return this.http.post<Curso>(ASIGNATURAURL, {

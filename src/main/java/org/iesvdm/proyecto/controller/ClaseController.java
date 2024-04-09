@@ -7,7 +7,6 @@ import org.iesvdm.proyecto.service.ClaseService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Set;
 
 @Slf4j
@@ -22,7 +21,8 @@ public class ClaseController {
     }
 
     @GetMapping({"","/"})
-    public Set<Clase> all(Long curso, Long asignatura) {
+    public Set<Clase> all(@RequestParam(required = false, defaultValue = "-1") long curso,
+                          @RequestParam(required = false, defaultValue = "-1") long asignatura) {
         log.info("Accediendo a todas las clases");
         return this.claseService.all(curso,asignatura);
     }

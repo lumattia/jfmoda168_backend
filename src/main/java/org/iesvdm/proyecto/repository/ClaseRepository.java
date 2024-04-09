@@ -8,8 +8,8 @@ import java.util.Set;
 
 public interface ClaseRepository extends JpaRepository<Clase, Long> {
     @Query("SELECT c FROM Clase c " +
-            "WHERE (:cursoId IS NULL OR c.curso.id = :cursoId) " +
-            "AND (:asignaturaId IS NULL OR c.asignatura.id = :asignaturaId)")
+            "WHERE (:cursoId =-1 OR c.curso.id = :cursoId) " +
+            "AND (:asignaturaId =-1 OR c.asignatura.id = :asignaturaId)")
     Set<Clase> findFiltering(Long cursoId, Long asignaturaId);
 
 }

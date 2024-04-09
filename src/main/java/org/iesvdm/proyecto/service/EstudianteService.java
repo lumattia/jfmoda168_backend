@@ -17,8 +17,7 @@ public class EstudianteService {
         return this.estudianteRepository.findAll(pageable);
     }
     public Page<Estudiante> allByFilter(String buscar, Pageable pageable) {
-        Page<Estudiante> page=this.estudianteRepository.findByNombreCompleto(buscar,pageable);
-        return page;
+        return this.estudianteRepository.findByNombreCompleto(buscar,pageable);
     }
     public Estudiante save(Estudiante estudiante) {
         return this.estudianteRepository.save(estudiante);
@@ -28,7 +27,10 @@ public class EstudianteService {
         return this.estudianteRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(id,"estudiante"));
     }
-
+    public Estudiante one(String email) {
+        return this.estudianteRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Estudiante with Email: "+email+" not found"));
+    }
     public Estudiante replace(Long id, Estudiante estudiante) {
 
         return this.estudianteRepository.findById(id).map( p -> (id.equals(estudiante.getId())  ?
