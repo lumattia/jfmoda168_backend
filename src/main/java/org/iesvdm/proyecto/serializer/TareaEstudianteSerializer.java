@@ -3,7 +3,7 @@ package org.iesvdm.proyecto.serializer;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
-import org.iesvdm.proyecto.model.*;
+import org.iesvdm.proyecto.model.entity.TareaEstudiante;
 
 import java.io.IOException;
 import java.util.HashMap;

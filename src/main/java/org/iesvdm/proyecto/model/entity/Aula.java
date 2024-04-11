@@ -1,4 +1,4 @@
-package org.iesvdm.proyecto.model;
+package org.iesvdm.proyecto.model.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -30,6 +30,6 @@ public class Aula {
     private Set<Tema> temas;
     private boolean eliminado;
     public String getRoute(){
-        return this.clase.getRoute()+" "+this.grupo+" "+this.año;
+        return this.clase.getNombre()+" "+this.grupo+" "+this.año;
     }
 }

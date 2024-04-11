@@ -1,4 +1,4 @@
-package org.iesvdm.proyecto.model;
+package org.iesvdm.proyecto.model.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

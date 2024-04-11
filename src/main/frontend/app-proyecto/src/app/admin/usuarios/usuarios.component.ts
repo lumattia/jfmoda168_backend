@@ -3,7 +3,7 @@ import {ProfesorComponent} from "../profesor/profesor.component";
 import {EstudianteComponent} from "../estudiante/estudiante.component";
 import {FormsModule} from "@angular/forms";
 import {UsuarioService} from "../../services/usuario.service";
-import {Profesor} from "../../interfaces/profesor";
+import {ProfesorRow} from "../../interfaces/profesor";
 
 @Component({
   selector: 'app-usuarios',
@@ -19,7 +19,7 @@ import {Profesor} from "../../interfaces/profesor";
 export class UsuariosComponent {
   constructor(private usuarioService:UsuarioService) {
   }
-  bloquearODesbloquear(profesor:Profesor){
+  bloquearODesbloquear(profesor:ProfesorRow){
     console.log("A")
     this.usuarioService.cambiarEstado(profesor.id).subscribe({
       next: (b) => {

@@ -1,6 +1,6 @@
 package org.iesvdm.proyecto.service;
 
-import org.iesvdm.proyecto.model.Asignatura;
+import org.iesvdm.proyecto.model.entity.Asignatura;
 import org.iesvdm.proyecto.exeption.NotFoundException;
 import org.iesvdm.proyecto.repository.AsignaturaRepository;
 import org.springframework.stereotype.Service;

@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Output} from '@angular/core';
 import {NgClass, NgFor, NgIf} from "@angular/common";
 import {ProfesorService} from "../../services/profesor.service";
-import {Profesor} from "../../interfaces/profesor";
+import {ProfesorRow} from "../../interfaces/profesor";
 import {NgbPaginationModule} from "@ng-bootstrap/ng-bootstrap";
 import {FormsModule} from "@angular/forms";
 
@@ -13,11 +13,11 @@ import {FormsModule} from "@angular/forms";
   styleUrl: './profesor.component.css'
 })
 export class ProfesorComponent {
-  profesores:Profesor[]=[];
+  profesores:ProfesorRow[]=[];
   page= 1;
   pageSize:number=10;
   searchTerm:string="";
-  @Output() bloquearODesbloquear = new EventEmitter<Profesor>();
+  @Output() bloquearODesbloquear = new EventEmitter<ProfesorRow>();
   collectionSize:number=0;
   profesorABorrar:any={}
 
@@ -42,7 +42,7 @@ export class ProfesorComponent {
   pageChanged(){
     this.profesorService.buscarProfesor(this.searchTerm,this.page,this.pageSize,this.sortColumn,this.sortDirection).subscribe({
       next: (data:any) => {
-        this.profesores = (data.content as Profesor[])
+        this.profesores = (data.content as ProfesorRow[])
         this.page=data.pageable.pageNumber+1
         this.collectionSize=data.totalElements
       },
@@ -51,10 +51,10 @@ export class ProfesorComponent {
       }
     })
   }
-  cambiarEstado(profesor:Profesor){
+  cambiarEstado(profesor:ProfesorRow){
     this.bloquearODesbloquear.emit(profesor);
   }
-  borrar(profesor:Profesor){
+  borrar(profesor:ProfesorRow){
     this.profesorABorrar=profesor;
   }
   eliminarProfesor(id: number) {

@@ -1,9 +1,8 @@
 package org.iesvdm.proyecto.service;
 
 import org.iesvdm.proyecto.exeption.NotFoundException;
-import org.iesvdm.proyecto.model.Aula;
-import org.iesvdm.proyecto.model.Tarea;
-import org.iesvdm.proyecto.model.Tema;
+import org.iesvdm.proyecto.model.entity.Aula;
+import org.iesvdm.proyecto.model.entity.Tema;
 import org.iesvdm.proyecto.repository.AulaRepository;
 import org.springframework.stereotype.Service;
 

@@ -2,9 +2,11 @@ import { Component } from '@angular/core';
 import {FormsModule} from "@angular/forms";
 import {NgForOf, NgIf} from "@angular/common";
 import {CursoService} from "../../services/curso.service";
-import {Curso} from "../../interfaces/curso";
 import {RouterLink} from "@angular/router";
-import {Asignatura} from "../../interfaces/asignatura";
+import {Option} from "../../interfaces/option";
+import {MdbDropdownModule} from "mdb-angular-ui-kit/dropdown";
+import {ModalComponent} from "../../util/modal/modal.component";
+import {MdbModalModule, MdbModalRef, MdbModalService} from "mdb-angular-ui-kit/modal";
 
 @Component({
   selector: 'app-cursos',
@@ -13,35 +15,40 @@ import {Asignatura} from "../../interfaces/asignatura";
     FormsModule,
     NgForOf,
     NgIf,
-    RouterLink
+    RouterLink,
+    MdbModalModule,
+    MdbDropdownModule
   ],
   templateUrl: './cursos.component.html',
   styleUrl: './cursos.component.css'
 })
 export class CursosComponent {
+  modalRef: MdbModalRef<ModalComponent> | null = null;
   searchTerm:string="";
-  cursos: Curso[] = [];
+  cursos: Option[] = [];
     nombreCurso:string="";
-    cursoABorrar:Curso={
+    cursoABorrar:Option={
         id:0,
-        nombre:"",
-        clases:[]
+        nombre:""
     }
     existeCurso:boolean=false;
-    constructor(private cursoService: CursoService) {
-        this.cursoService.getCursos().subscribe({
-            next: (data) => {
-                this.cursos = (data as Curso[])
-            },
-            error: (error) => {
-                console.error(error);
-            }
-        });
-    }
+  constructor(private modalService: MdbModalService,private cursoService: CursoService) {
+    this.buscar();
+  }
+  openModal(option:Option) {
+    this.modalRef = this.modalService.open(ModalComponent, {
+      data: { action: 'Eliminar',name:"curso",option:option },
+    });
+    this.modalRef.onClose.subscribe((o: Option) => {
+      if (o!=null){
+        this.eliminarCurso(o.id)
+      }
+    });
+  }
   buscar(){
     this.cursoService.buscarAsignatura(this.searchTerm).subscribe({
       next: (data:any) => {
-        this.cursos = (data as Asignatura[])
+        this.cursos = (data as Option[])
       },
       error: (error) => {
         console.error(error);
@@ -53,7 +60,7 @@ export class CursosComponent {
         if (!this.existeCurso){
             this.cursoService.crearCurso(this.nombreCurso).subscribe({
                 next: (data) => {
-                    this.cursos.push(data as Curso)
+                    this.cursos.push(data as Option)
                 },
                 error: (error) => {
                     console.error(error);
@@ -66,7 +73,7 @@ export class CursosComponent {
             }, 1500);
         }
     }
-    borrar(curso:Curso){
+    borrar(curso:Option){
         this.cursoABorrar=curso;
     }
     eliminarCurso(id: number) {

@@ -2,8 +2,11 @@ import { Component } from '@angular/core';
 import {FormsModule} from "@angular/forms";
 import {NgForOf, NgIf} from "@angular/common";
 import {AsignaturaService} from "../../services/asignatura.service";
-import {Asignatura} from "../../interfaces/asignatura";
 import {RouterLink} from "@angular/router";
+import {Option} from "../../interfaces/option";
+import {MdbModalModule, MdbModalRef, MdbModalService} from "mdb-angular-ui-kit/modal";
+import {ModalComponent} from "../../util/modal/modal.component";
+import {MdbDropdownModule} from "mdb-angular-ui-kit/dropdown";
 
 @Component({
     selector: 'app-asignaturas',
@@ -12,35 +15,36 @@ import {RouterLink} from "@angular/router";
     FormsModule,
     NgForOf,
     NgIf,
-    RouterLink
+    RouterLink,
+    MdbModalModule,
+    MdbDropdownModule
   ],
     templateUrl: './asignaturas.component.html',
     styleUrl: './asignaturas.component.css'
 })
 export class AsignaturasComponent {
-    searchTerm:string="";
-    asignaturas: Asignatura[] = [];
-    nombreAsignatura:string="";
-    asignaturaABorrar:Asignatura={
-        id:0,
-        nombre:"",
-        clases:[]
-    }
-    existeAsignatura:boolean=false;
-    constructor(private asignaturaService: AsignaturaService) {
-        this.asignaturaService.getAsignaturas().subscribe({
-            next: (data) => {
-                this.asignaturas = (data as Asignatura[])
-            },
-            error: (error) => {
-                console.error(error);
-            }
-        });
-    }
+  modalRef: MdbModalRef<ModalComponent> | null = null;
+  searchTerm:string="";
+  asignaturas: Option[] = [];
+  nombreAsignatura:string="";
+  existeAsignatura:boolean=false;
+  constructor(private modalService: MdbModalService,private asignaturaService: AsignaturaService) {
+      this.buscar();
+  }
+  openModal(option:Option) {
+    this.modalRef = this.modalService.open(ModalComponent, {
+      data: { action: 'Eliminar',name:"asignatura",option:option },
+    });
+    this.modalRef.onClose.subscribe((o: Option) => {
+      if (o!=null){
+        this.eliminarAsignatura(o.id)
+      }
+    });
+  }
     buscar(){
       this.asignaturaService.buscarAsignatura(this.searchTerm).subscribe({
         next: (data:any) => {
-          this.asignaturas = (data as Asignatura[])
+          this.asignaturas = (data as Option[])
         },
         error: (error) => {
           console.error(error);
@@ -52,7 +56,7 @@ export class AsignaturasComponent {
         if (!this.existeAsignatura){
             this.asignaturaService.crearAsignatura(this.nombreAsignatura).subscribe({
                 next: (data) => {
-                    this.asignaturas.push(data as Asignatura)
+                    this.asignaturas.push(data as Option)
                 },
                 error: (error) => {
                     console.error(error);
@@ -64,9 +68,6 @@ export class AsignaturasComponent {
                 this.existeAsignatura = false;
             }, 1500);
         }
-    }
-    borrar(asignatura:Asignatura){
-        this.asignaturaABorrar=asignatura;
     }
     eliminarAsignatura(id: number) {
         this.asignaturaService.deleteAsignatura(id).subscribe({

@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Output} from '@angular/core';
 import {NgClass, NgForOf, NgIf} from "@angular/common";
-import {Estudiante} from "../../interfaces/estudiante";
+import {EstudianteRow} from "../../interfaces/estudiante";
 import {EstudianteService} from "../../services/estudiante.service";
 import {FormsModule} from "@angular/forms";
 import {NgbPagination} from "@ng-bootstrap/ng-bootstrap";
@@ -18,11 +18,11 @@ import {NgbPagination} from "@ng-bootstrap/ng-bootstrap";
   styleUrl: './estudiante.component.css'
 })
 export class EstudianteComponent {
-  estudiantes:Estudiante[]=[];
+  estudiantes:EstudianteRow[]=[];
   page= 1;
   pageSize:number=10;
   searchTerm:string="";
-  @Output() bloquearODesbloquear = new EventEmitter<Estudiante>();
+  @Output() bloquearODesbloquear = new EventEmitter<EstudianteRow>();
   collectionSize:number=0;
   estudianteABorrar:any={}
 
@@ -47,7 +47,7 @@ export class EstudianteComponent {
   pageChanged(){
     this.estudianteService.buscarEstudiante(this.searchTerm,this.page,this.pageSize,this.sortColumn,this.sortDirection).subscribe({
       next: (data:any) => {
-        this.estudiantes = (data.content as Estudiante[])
+        this.estudiantes = (data.content as EstudianteRow[])
         this.page=data.pageable.pageNumber+1
         this.collectionSize=data.totalElements
       },
@@ -56,10 +56,10 @@ export class EstudianteComponent {
       }
     })
   }
-  cambiarEstado(estudiante:Estudiante){
+  cambiarEstado(estudiante:EstudianteRow){
     this.bloquearODesbloquear.emit(estudiante);
   }
-  borrar(estudiante:Estudiante){
+  borrar(estudiante:EstudianteRow){
     this.estudianteABorrar=estudiante;
   }
   eliminarEstudiante(id: number) {

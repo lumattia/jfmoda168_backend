@@ -2,16 +2,16 @@ package org.iesvdm.proyecto.controller;
 
 import jakarta.validation.Valid;
 import org.iesvdm.proyecto.exeption.NotFoundException;
-import org.iesvdm.proyecto.model.Usuario;
-import org.iesvdm.proyecto.repository.UsuarioRepository;
+import org.iesvdm.proyecto.model.entity.Usuario;
 import org.iesvdm.proyecto.security.TokenUtils;
-import org.iesvdm.proyecto.model.UserDetailsImpl;
+import org.iesvdm.proyecto.model.entity.UserDetailsImpl;
 import org.iesvdm.proyecto.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -46,7 +46,7 @@ public class AuthController {
 
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
         List<String> roles = userDetails.getAuthorities().stream()
-                .map(item -> item.getAuthority())
+                .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList());
 
         Map<String, Object> response = new HashMap<>();

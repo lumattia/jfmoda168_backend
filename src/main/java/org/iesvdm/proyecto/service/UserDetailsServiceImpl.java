@@ -2,8 +2,8 @@ package org.iesvdm.proyecto.service;
 
 import jakarta.transaction.Transactional;
 
-import org.iesvdm.proyecto.model.UserDetailsImpl;
-import org.iesvdm.proyecto.model.Usuario;
+import org.iesvdm.proyecto.model.entity.UserDetailsImpl;
+import org.iesvdm.proyecto.model.entity.Usuario;
 import org.iesvdm.proyecto.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

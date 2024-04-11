@@ -1,6 +1,6 @@
 package org.iesvdm.proyecto.service;
 
-import org.iesvdm.proyecto.model.Usuario;
+import org.iesvdm.proyecto.model.entity.Usuario;
 import org.iesvdm.proyecto.exeption.NotFoundException;
 import org.iesvdm.proyecto.repository.UsuarioRepository;
 import org.springframework.data.domain.Page;

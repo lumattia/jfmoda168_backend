@@ -1,4 +1,7 @@
-import {Usuario} from "./usuario";
-export interface Profesor extends Usuario{
-  clases:String[];
+export interface ProfesorRow{
+  id:number;
+  nombre:string;
+  apellidos:string;
+  email:string;
+  blocked:boolean
 }

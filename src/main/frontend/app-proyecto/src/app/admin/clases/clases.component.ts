@@ -1,37 +1,41 @@
 import { Component } from '@angular/core';
-import {Clase} from "../../interfaces/clase";
 import {ClaseService} from "../../services/clase.service";
 import {NgForOf} from "@angular/common";
-import {Curso} from "../../interfaces/curso";
-import {Asignatura} from "../../interfaces/asignatura";
 import {CursoService} from "../../services/curso.service";
 import {AsignaturaService} from "../../services/asignatura.service";
 import {FormsModule} from "@angular/forms";
 import {ActivatedRoute} from "@angular/router";
+import {Option} from "../../interfaces/option";
+import {MdbDropdownModule} from "mdb-angular-ui-kit/dropdown";
+import {ModalComponent} from "../../util/modal/modal.component";
+import {MdbModalModule, MdbModalRef, MdbModalService} from "mdb-angular-ui-kit/modal";
 
 @Component({
   selector: 'app-clases',
   standalone: true,
   imports: [
     NgForOf,
-    FormsModule
+    FormsModule,
+    MdbModalModule,
+    MdbDropdownModule
   ],
   templateUrl: './clases.component.html',
   styleUrl: './clases.component.css'
 })
 export class ClasesComponent {
-  clases:Clase[]=[];
-  cursos:Curso[]=[];
-  asignaturas:Asignatura[]=[];
+  modalRef: MdbModalRef<ModalComponent> | null = null;
+  clases:Option[]=[];
+  cursos:Option[]=[];
+  asignaturas:Option[]=[];
   cursoSeleccionado:number=-1;
   asignaturaSeleccionado:number=-1;
 
-  claseAborrar:Clase={id:0,
-    nombre:"",
-    profesores:[]};
+  claseAborrar:Option={id:0,
+    nombre:""};
   constructor(private claseService: ClaseService,
               private cursoService:CursoService,
               private asignaturaService:AsignaturaService,
+              private modalService: MdbModalService,
               private route:ActivatedRoute) {
     this.route.queryParams.subscribe(params => {
       this.asignaturaSeleccionado = params['asignaturaId']|| -1;
@@ -39,20 +43,29 @@ export class ClasesComponent {
     });
     this.claseService.filterClase(this.cursoSeleccionado,this.asignaturaSeleccionado).subscribe({
       next: (data) => {
-        this.clases = (data as Clase[])
-        this.cursoService.getCursos().subscribe(cursos=>this.cursos = (cursos as Curso[]));
-        this.asignaturaService.getAsignaturas().subscribe(asignaturas=>this.asignaturas = (asignaturas as Asignatura[]));
+        this.clases = (data as Option[])
+        this.cursoService.getCursos().subscribe(cursos=>this.cursos = (cursos as Option[]));
+        this.asignaturaService.getAsignaturas().subscribe(asignaturas=>this.asignaturas = (asignaturas as Option[]));
       },
       error: (error) => {
         console.error(error);
       }
     });
   }
+  openModal(option:Option) {
+    this.modalRef = this.modalService.open(ModalComponent, {
+      data: { action: 'Eliminar',name:"asignatura",option:option },
+    });
+    this.modalRef.onClose.subscribe((o: Option) => {
+      if (o!=null){
+        this.eliminarClase(o.id)
+      }
+    });
+  }
   filtrarClases(){
-    console.log(this.cursoSeleccionado,this.asignaturaSeleccionado)
     this.claseService.filterClase(this.cursoSeleccionado,this.asignaturaSeleccionado).subscribe({
       next: (data) => {
-        this.clases = (data as Clase[])
+        this.clases = (data as Option[])
       },
       error: (error) => {
         console.error(error);
@@ -62,7 +75,7 @@ export class ClasesComponent {
   crearClase(){
     this.claseService.crearClase(this.cursoSeleccionado,this.asignaturaSeleccionado).subscribe({
       next: (data) => {
-        this.clases.push(data as Clase)
+        this.clases.push(data as Option)
       },
       error: (error) => {
         console.error(error);
@@ -79,7 +92,7 @@ export class ClasesComponent {
       }
     });
   }
-  borrar(clase:Clase){
+  borrar(clase:Option){
     this.claseAborrar=clase;
   }
 }

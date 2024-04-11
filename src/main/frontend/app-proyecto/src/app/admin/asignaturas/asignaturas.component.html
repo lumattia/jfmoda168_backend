@@ -1,54 +1,40 @@
 <div class="container ">
-    <div class="row">
-        <div class="col me-auto">
-            <h1>Asignaturas</h1>
+  <div class="row">
+    <div class="col me-auto">
+      <h1>Asignaturas</h1>
+    </div>
+    <div class="col">
+      <form class="d-flex" role="search">
+        <input class="form-control me-2" [(ngModel)]="searchTerm" name="searchTerm" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" (click)="buscar()" type="submit">Search</button>
+      </form>
+    </div>
+  </div>
+  <div class="row g-2 row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4" >
+    <div mdbDropdown class="btn-group" *ngFor="let asignatura of asignaturas">
+      <button type="button" class="w-100 text-start btn btn-primary" [routerLink]="['../clases']" [queryParams]="{ asignaturaId: asignatura.id }">{{asignatura.nombre}}</button>
+      <button
+        class="btn btn-primary"
+        type="button"
+        id="dropdownMenuButton"
+        aria-expanded="false"
+        mdbDropdownToggle
+      ><i class="fa-solid fa-ellipsis-vertical"></i></button>
+      <ul mdbDropdownMenu class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <li><a class="dropdown-item">Editar</a></li>
+        <li><a class="dropdown-item btn btn-primary" (click)="openModal(asignatura)">Eliminar</a></li>
+      </ul>
+    </div>
+    <div class="col">
+      <form action="" (ngSubmit)="crearAsignatura()">
+        <div class="input-group">
+          <input class="form-control" type="text" name="nombreAsignatura" [(ngModel)]="nombreAsignatura" placeholder="NombreAsignatura" aria-label="NombreAsignatura">
+          <button class="btn btn-outline-success" type="submit">Crear</button>
         </div>
-      <div class="col">
-        <form class="d-flex" role="search">
-          <input class="form-control me-2" [(ngModel)]="searchTerm" name="searchTerm" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success" (click)="buscar()" type="submit">Search</button>
-        </form>
+      </form>
+      <div *ngIf="existeAsignatura" class="alert alert-danger mt-2 position-absolute" role="alert">
+        ¡El asignatura ya existe!
       </div>
     </div>
-    <div class="row g-2 row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4" >
-        <div class="col position-relative" *ngFor="let asignatura of asignaturas" [routerLink]="['../clases']" [queryParams]="{ asignaturaId: asignatura.id }"><a class="w-100 btn btn-primary text-start">{{asignatura.nombre}}</a><a
-                class="position-absolute top-50 end-0 translate-middle bg-white rounded-circle px-2 py-0 btn btn-sm"
-                data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false"><i
-                class="fa-solid fa-ellipsis-vertical"></i></a>
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Editar</a></li>
-                <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#borrar" (click)="borrar(asignatura)" href="#">Eliminar</a></li>
-            </ul>
-        </div>
-        <div class="col">
-            <form action="" (ngSubmit)="crearAsignatura()">
-                <div class="input-group">
-                    <input class="form-control" type="text" name="nombreAsignatura" [(ngModel)]="nombreAsignatura" placeholder="nombreAsignatura" aria-label="NombreAsignatura">
-                    <button class="btn btn-outline-success" type="submit">Crear</button>
-                </div>
-            </form>
-            <div *ngIf="existeAsignatura" class="alert alert-danger mt-2 position-absolute" role="alert">
-                ¡La asignatura ya existe!
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal -->
-    <div class="modal fade" id="borrar" aria-labelledby="borrarLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="borrarLabel">Borrar Asignatura</h1>
-                    <button type="button" class="btn z-3-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    Seguro que quieres eliminar la clase: {{asignaturaABorrar.nombre}}?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn z-3 btn z-3-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="submit" data-bs-dismiss="modal" class="btn btn-primary" (click)="eliminarAsignatura(asignaturaABorrar.id)">Eliminar</button>
-                </div>
-            </div>
-        </div>
-    </div>
+  </div>
 </div>

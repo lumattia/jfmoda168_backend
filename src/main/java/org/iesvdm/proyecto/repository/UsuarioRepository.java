@@ -1,6 +1,6 @@
 package org.iesvdm.proyecto.repository;
 
-import org.iesvdm.proyecto.model.Usuario;
+import org.iesvdm.proyecto.model.entity.Usuario;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

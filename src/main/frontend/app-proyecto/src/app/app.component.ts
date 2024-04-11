@@ -1,14 +1,15 @@
-import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router, RouterOutlet} from '@angular/router';
 import {StorageService} from "./services/storage.service";
 import {CommonModule} from "@angular/common";
 import {LoginComponent} from "./login/login.component";
 import {Usuario} from "./interfaces/usuario";
+import {MdbDropdownModule} from "mdb-angular-ui-kit/dropdown";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, CommonModule, LoginComponent],
+  imports: [RouterOutlet, CommonModule, LoginComponent, MdbDropdownModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

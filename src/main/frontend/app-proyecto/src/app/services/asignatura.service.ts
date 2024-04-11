@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams} from "@angular/common/http";
 import {catchError, Observable, throwError} from "rxjs";
-import {Asignatura} from "../interfaces/asignatura";
-import {Curso} from "../interfaces/curso";
+import {Option} from "../interfaces/option";
 
 const ASIGNATURAURL="http://localhost:8080/v1/api/asignaturas"
 
@@ -24,26 +23,20 @@ export class AsignaturaService {
   getAsignaturas():Observable<Object>{
     return this.http.get(ASIGNATURAURL);
   }
-  getAsignatura(id:number):Observable<Object>{
-    const url = `${ASIGNATURAURL}/${id}`
-    return this.http.get<Asignatura>(url);
-  }
   buscarAsignatura(searchTerm:string){
     let options={
       params:new HttpParams().set("buscar",searchTerm)
     }
-    return this.http.get<Asignatura>(ASIGNATURAURL,options)
+    return this.http.get<Option>(ASIGNATURAURL,options)
   }
   crearAsignatura(nombre:any):Observable<Object>{
-    return this.http.post<Curso>(ASIGNATURAURL, {
+    return this.http.post<Option>(ASIGNATURAURL, {
       nombre
     },HTTPOPTIONS)  }
-
   actualizarAsignatura(a:any):Observable<Object>{
     const url = `${ASIGNATURAURL}/${a.id}`;
-    return this.http.put<Asignatura>(url, a, HTTPOPTIONS);
+    return this.http.put<Option>(url, a, HTTPOPTIONS);
   }
-
   deleteAsignatura(a:any):Observable<any>{
     const url = `${ASIGNATURAURL}/${a}`
     return this.http.delete(url, HTTPOPTIONS)

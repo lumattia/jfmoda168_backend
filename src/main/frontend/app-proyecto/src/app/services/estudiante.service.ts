@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams} from "@angular/common/http";
 import {catchError, Observable, throwError} from "rxjs";
-import {Estudiante} from "../interfaces/estudiante";
+import {EstudianteRow} from "../interfaces/estudiante";
 const ESTUDIANTEURL="http://localhost:8080/v1/api/estudiantes"
 
 const HTTPOPTIONS = {
@@ -24,7 +24,7 @@ export class EstudianteService {
   }
   getEstudiante(id:number):Observable<Object>{
     const url = `${ESTUDIANTEURL}/${id}`
-    return this.http.get<Estudiante>(url);
+    return this.http.get<EstudianteRow>(url);
   }
   buscarEstudiante(searchTerm:string,page:number,pageSize:number,sortColumn:string,sortDirection:string){
     let options={
@@ -33,17 +33,17 @@ export class EstudianteService {
         .set("size",pageSize)
         .set("sort",sortColumn+","+sortDirection)
     }
-    return this.http.get<Estudiante>(ESTUDIANTEURL,options)
+    return this.http.get<EstudianteRow>(ESTUDIANTEURL,options)
   }
   crearEstudiante(nombre:any):Observable<Object>{
-    return this.http.post<Estudiante>(ESTUDIANTEURL, {
+    return this.http.post<EstudianteRow>(ESTUDIANTEURL, {
       nombre
     },HTTPOPTIONS)
   }
 
   actualizarEstudiante(e:any):Observable<Object>{
     const url = `${ESTUDIANTEURL}/${e.id}`;
-    return this.http.put<Estudiante>(url, e, HTTPOPTIONS);
+    return this.http.put<EstudianteRow>(url, e, HTTPOPTIONS);
   }
 
   deleteEstudiante(e:any):Observable<any>{

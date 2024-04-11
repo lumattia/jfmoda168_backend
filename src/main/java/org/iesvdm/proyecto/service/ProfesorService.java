@@ -1,8 +1,9 @@
 package org.iesvdm.proyecto.service;
 
-import org.iesvdm.proyecto.model.Aula;
-import org.iesvdm.proyecto.model.Profesor;
+import org.iesvdm.proyecto.model.entity.Aula;
+import org.iesvdm.proyecto.model.entity.Profesor;
 import org.iesvdm.proyecto.exeption.NotFoundException;
+import org.iesvdm.proyecto.model.view.ProfesorRow;
 import org.iesvdm.proyecto.repository.ClaseRepository;
 import org.iesvdm.proyecto.repository.ProfesorRepository;
 import org.springframework.data.domain.Page;
@@ -20,12 +21,8 @@ public class ProfesorService {
         this.claseRepository = claseRepository;
     }
 
-    public Page<Profesor> all(Pageable pageable) {
-        return this.profesorRepository.findAll(pageable);
-    }
-    public Page<Profesor> allByFilter(String buscar, Pageable pageable) {
-        Page<Profesor> page=this.profesorRepository.findByNombreCompleto(buscar,pageable);
-        return page;
+    public Page<ProfesorRow> allByFilter(String buscar, Pageable pageable) {
+        return this.profesorRepository.findByNombreCompleto(buscar,pageable);
     }
     public Set<Aula> allAulas(Long id) {
         return this.profesorRepository.allAulas(id);

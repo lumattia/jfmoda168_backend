@@ -1,7 +1,10 @@
 package org.iesvdm.proyecto.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import org.iesvdm.proyecto.model.*;
+import org.iesvdm.proyecto.model.entity.Estudiante;
+import org.iesvdm.proyecto.model.entity.Fase;
+import org.iesvdm.proyecto.model.entity.Tarea;
+import org.iesvdm.proyecto.model.entity.TareaEstudiante;
 import org.iesvdm.proyecto.security.TokenUtils;
 import org.iesvdm.proyecto.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +26,7 @@ public class FaseController {
     @Autowired
     TokenUtils tokenUtils;
     @GetMapping("/{id}-{nivel}")
-    public Fase one(@PathVariable("id") long id,@PathVariable("nivel") byte nivel,@RequestHeader("Authorization") String authorizationHeader) {
+    public Fase one(@PathVariable("id") long id, @PathVariable("nivel") byte nivel, @RequestHeader("Authorization") String authorizationHeader) {
         Fase fase=this.faseService.one(id,nivel);
 
         //obtener el nivel mas dificil que el estudiante puede hacer

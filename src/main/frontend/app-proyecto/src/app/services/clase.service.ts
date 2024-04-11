@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, throwError } from 'rxjs';
-import {Clase} from "../interfaces/clase";
+import {Option} from "../interfaces/option";
 
 //ENDPOINTS
 const CLASEURL="http://localhost:8080/v1/api/clases"
@@ -26,14 +26,14 @@ export class ClaseService {
   }
   getClase(id:number):Observable<Object>{
     const url = `${CLASEURL}/${id}`
-    return this.http.get<Clase>(url);
+    return this.http.get<Option>(url);
   }
   filterClase(curso:number,asignatura:number):Observable<Object>{
     const url = `${CLASEURL}?curso=${curso}&asignatura=${asignatura}`
-    return this.http.get<Clase>(url);
+    return this.http.get<Option>(url);
   }
   crearClase(curso:number,asignatura:number):Observable<Object>{
-    return this.http.post<Clase>(CLASEURL,
+    return this.http.post<Option>(CLASEURL,
         {
           "curso":{"id":curso},
           "asignatura":{"id":asignatura},

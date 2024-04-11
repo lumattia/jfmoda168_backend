@@ -1,4 +1,4 @@
-package org.iesvdm.proyecto.model;
+package org.iesvdm.proyecto.model.entity;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
@@ -38,7 +38,10 @@ public class Usuario {
         DiscriminatorValue discriminatorValue = getClass().getAnnotation(DiscriminatorValue.class);
         return discriminatorValue.value();
     }
+    public String getApellidos() {
+        return this.getApellido1()+" "+this.getApellido2();
+    }
     public String getNombreCompleto() {
-        return this.getNombre()+" "+this.getApellido1()+" "+this.getApellido2();
+        return this.getNombre()+" "+getApellidos();
     }
 }

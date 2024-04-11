@@ -1,5 +1,6 @@
-package org.iesvdm.proyecto.model;
+package org.iesvdm.proyecto.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,6 +19,6 @@ public class Asignatura {
     @Column(unique = true)
     private String nombre;
     @OneToMany(mappedBy = "asignatura",cascade = CascadeType.ALL)
-    @ToString.Exclude
+    @JsonIgnore
     private Set<Clase> clases;
 }

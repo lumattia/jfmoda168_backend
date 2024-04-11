@@ -1,7 +1,7 @@
 package org.iesvdm.proyecto.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import org.iesvdm.proyecto.model.Usuario;
+import org.iesvdm.proyecto.model.entity.Usuario;
 import org.iesvdm.proyecto.service.UsuarioService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

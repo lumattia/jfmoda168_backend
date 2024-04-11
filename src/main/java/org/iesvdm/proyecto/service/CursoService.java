@@ -1,6 +1,6 @@
 package org.iesvdm.proyecto.service;
 
-import org.iesvdm.proyecto.model.Curso;
+import org.iesvdm.proyecto.model.entity.Curso;
 import org.iesvdm.proyecto.exeption.NotFoundException;
 import org.iesvdm.proyecto.repository.CursoRepository;
 import org.springframework.stereotype.Service;

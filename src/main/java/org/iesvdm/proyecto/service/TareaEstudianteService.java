@@ -1,6 +1,6 @@
 package org.iesvdm.proyecto.service;
 
-import org.iesvdm.proyecto.model.TareaEstudiante;
+import org.iesvdm.proyecto.model.entity.TareaEstudiante;
 import org.iesvdm.proyecto.repository.TareaEstudianteRepository;
 import org.springframework.stereotype.Service;
 

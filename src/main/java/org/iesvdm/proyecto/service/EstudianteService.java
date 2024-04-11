@@ -1,7 +1,8 @@
 package org.iesvdm.proyecto.service;
 
-import org.iesvdm.proyecto.model.Estudiante;
+import org.iesvdm.proyecto.model.entity.Estudiante;
 import org.iesvdm.proyecto.exeption.NotFoundException;
+import org.iesvdm.proyecto.model.view.EstudianteRow;
 import org.iesvdm.proyecto.repository.EstudianteRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,10 +14,7 @@ public class EstudianteService {
     public EstudianteService(EstudianteRepository estudianteRepository ) {
         this.estudianteRepository = estudianteRepository;
     }
-    public Page<Estudiante> all(Pageable pageable) {
-        return this.estudianteRepository.findAll(pageable);
-    }
-    public Page<Estudiante> allByFilter(String buscar, Pageable pageable) {
+    public Page<EstudianteRow> allByFilter(String buscar, Pageable pageable) {
         return this.estudianteRepository.findByNombreCompleto(buscar,pageable);
     }
     public Estudiante save(Estudiante estudiante) {

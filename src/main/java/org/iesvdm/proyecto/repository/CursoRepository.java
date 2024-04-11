@@ -1,6 +1,6 @@
 package org.iesvdm.proyecto.repository;
 
-import org.iesvdm.proyecto.model.Curso;
+import org.iesvdm.proyecto.model.entity.Curso;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

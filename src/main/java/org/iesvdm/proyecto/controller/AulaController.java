@@ -1,12 +1,11 @@
 package org.iesvdm.proyecto.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import org.iesvdm.proyecto.model.*;
+import org.iesvdm.proyecto.model.entity.Aula;
+import org.iesvdm.proyecto.model.entity.Tema;
 import org.iesvdm.proyecto.service.AulaService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Set;
 
 @Slf4j
 @CrossOrigin(origins = "http://localhost:4200")

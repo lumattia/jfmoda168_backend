@@ -1,8 +1,8 @@
 package org.iesvdm.proyecto.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import org.iesvdm.proyecto.model.Estudiante;
-import org.iesvdm.proyecto.model.Profesor;
+import org.iesvdm.proyecto.model.entity.Profesor;
+import org.iesvdm.proyecto.model.view.ProfesorRow;
 import org.iesvdm.proyecto.service.ProfesorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,14 +20,9 @@ public class ProfesorController {
     ProfesorService profesorService;
     @Autowired
     PasswordEncoder encoder;
-    @GetMapping(value = {"","/"},params = {"!buscar"})
-    public Page<Profesor> all(Pageable pageable) {
-        log.info("Accediendo a todos los profesores");
-        return this.profesorService.all(pageable);
-    }
     @GetMapping({"","/"})
-    public Page<Profesor> all(@RequestParam("buscar") String buscar,
-                                Pageable pageable) {
+    public Page<ProfesorRow> all(@RequestParam(value = "buscar",defaultValue = "") String buscar,
+                                 Pageable pageable) {
         log.info("Accediendo a todos los profesores");
         return this.profesorService.allByFilter(buscar,pageable);
     }

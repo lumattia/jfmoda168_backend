@@ -1,7 +1,7 @@
 package org.iesvdm.proyecto.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import org.iesvdm.proyecto.model.Tarea;
+import org.iesvdm.proyecto.model.entity.Tarea;
 import org.iesvdm.proyecto.service.TareaService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

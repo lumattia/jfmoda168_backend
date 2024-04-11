@@ -1,7 +1,7 @@
 package org.iesvdm.proyecto.service;
 
 import org.iesvdm.proyecto.exeption.NotFoundException;
-import org.iesvdm.proyecto.model.Tema;
+import org.iesvdm.proyecto.model.entity.Tema;
 import org.iesvdm.proyecto.repository.TemaRepository;
 import org.springframework.stereotype.Service;
 

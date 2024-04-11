@@ -1,4 +1,4 @@
-package org.iesvdm.proyecto.model;
+package org.iesvdm.proyecto.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -14,16 +14,26 @@ import java.util.Set;
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 @Entity
-public class Pregunta {
+@Table(uniqueConstraints={
+        @UniqueConstraint(columnNames = {"aula_id", "nombre"})
+})
+public class Tema {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     long id;
-    String nombreArchivo;
-    String enunciado;
+    String nombre;
+
     @ManyToOne
     @JsonIgnore
-    Fase fase;
-    @OneToMany(mappedBy = "pregunta", cascade = CascadeType.ALL,orphanRemoval = true)
-    Set<Respuesta> respuesta;
+    Aula aula;
+    @OneToMany(mappedBy = "tema")
+    Set<Tarea> tarea;
+
+    @JsonIgnore
+    long clase_id;
+
+    public String getRoute(){
+        return this.aula.getRoute()+" "+this.nombre;
+    }
 }

@@ -3,9 +3,9 @@ package org.iesvdm.proyecto.serializer;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
-import org.iesvdm.proyecto.model.Estudiante;
-import org.iesvdm.proyecto.model.Profesor;
-import org.iesvdm.proyecto.model.Usuario;
+import org.iesvdm.proyecto.model.entity.Estudiante;
+import org.iesvdm.proyecto.model.entity.Profesor;
+import org.iesvdm.proyecto.model.entity.Usuario;
 
 import java.io.IOException;
 

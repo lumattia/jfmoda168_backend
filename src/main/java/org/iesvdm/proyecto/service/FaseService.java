@@ -1,6 +1,6 @@
 package org.iesvdm.proyecto.service;
 
-import org.iesvdm.proyecto.model.Fase;
+import org.iesvdm.proyecto.model.entity.Fase;
 import org.iesvdm.proyecto.repository.FaseRepository;
 import org.springframework.stereotype.Service;
 

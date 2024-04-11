@@ -1,8 +1,9 @@
 package org.iesvdm.proyecto.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import org.iesvdm.proyecto.model.Clase;
-import org.iesvdm.proyecto.model.Profesor;
+import org.iesvdm.proyecto.model.entity.Clase;
+import org.iesvdm.proyecto.model.entity.Profesor;
+import org.iesvdm.proyecto.model.view.Option;
 import org.iesvdm.proyecto.service.ClaseService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -21,8 +22,8 @@ public class ClaseController {
     }
 
     @GetMapping({"","/"})
-    public Set<Clase> all(@RequestParam(required = false, defaultValue = "-1") long curso,
-                          @RequestParam(required = false, defaultValue = "-1") long asignatura) {
+    public Set<Option> all(@RequestParam(required = false, defaultValue = "-1") long curso,
+                           @RequestParam(required = false, defaultValue = "-1") long asignatura) {
         log.info("Accediendo a todas las clases");
         return this.claseService.all(curso,asignatura);
     }

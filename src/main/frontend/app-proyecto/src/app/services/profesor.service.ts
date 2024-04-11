@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams} from "@angular/common/http";
 import {catchError, Observable, throwError} from "rxjs";
-import {Profesor} from "../interfaces/profesor";
+import {ProfesorRow} from "../interfaces/profesor";
 const PROFESORURL="http://localhost:8080/v1/api/profesores"
 
 const HTTPOPTIONS = {
@@ -23,7 +23,7 @@ export class ProfesorService {
   }
   getProfesor(id:number):Observable<Object>{
     const url = `${PROFESORURL}/${id}`
-    return this.http.get<Profesor>(url);
+    return this.http.get<ProfesorRow>(url);
   }
   buscarProfesor(searchTerm:string,page:number,pageSize:number,sortColumn:string,sortDirection:string){
     let options={
@@ -32,17 +32,17 @@ export class ProfesorService {
       .set("size",pageSize)
       .set("sort",sortColumn+","+sortDirection)
     }
-    return this.http.get<Profesor>(PROFESORURL,options)
+    return this.http.get<ProfesorRow>(PROFESORURL,options)
   }
   crearProfesor(nombre:any):Observable<Object>{
-    return this.http.post<Profesor>(PROFESORURL, {
+    return this.http.post<ProfesorRow>(PROFESORURL, {
       nombre
     },HTTPOPTIONS)
   }
 
   actualizarProfesor(p:any):Observable<Object>{
     const url = `${PROFESORURL}/${p.id}`;
-    return this.http.put<Profesor>(url, p, HTTPOPTIONS);
+    return this.http.put<ProfesorRow>(url, p, HTTPOPTIONS);
   }
 
   deleteProfesor(p:any):Observable<any>{
