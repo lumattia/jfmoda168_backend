@@ -6,7 +6,6 @@ import {AsignaturaService} from "../../services/asignatura.service";
 import {FormsModule} from "@angular/forms";
 import {ActivatedRoute} from "@angular/router";
 import {Option} from "../../interfaces/option";
-import {MdbDropdownModule} from "mdb-angular-ui-kit/dropdown";
 import {ModalComponent} from "../../util/modal/modal.component";
 import {MdbModalModule, MdbModalRef, MdbModalService} from "mdb-angular-ui-kit/modal";
 
@@ -16,8 +15,7 @@ import {MdbModalModule, MdbModalRef, MdbModalService} from "mdb-angular-ui-kit/m
   imports: [
     NgForOf,
     FormsModule,
-    MdbModalModule,
-    MdbDropdownModule
+    MdbModalModule
   ],
   templateUrl: './clases.component.html',
   styleUrl: './clases.component.css'

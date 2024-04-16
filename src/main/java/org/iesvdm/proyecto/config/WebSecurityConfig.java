@@ -64,17 +64,23 @@ public class WebSecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .exceptionHandling(httpSecurityExceptionHandlingConfigurer -> httpSecurityExceptionHandlingConfigurer.authenticationEntryPoint(unauthorizedHandler) )
                 .sessionManagement(httpSecuritySessionManagementConfigurer -> httpSecuritySessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> {
-                    authorizationManagerRequestMatcherRegistry
-                            //PARA LAS PETICIONES preflight OPTIONS DEL NAVEGADOR :p
-                            //Ver https://stackoverflow.com/questions/76682586/allow-cors-with-spring-security-6-1-1-with-authenticated-requests
-                            .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                            .requestMatchers("/v1/api/asignaturas/**").hasAnyAuthority("ADMINISTRADOR")
-                            .requestMatchers("/v1/api/cursos/**").hasAnyAuthority("ADMINISTRADOR")
-                            .requestMatchers("/v1/api/clases/**").hasAnyAuthority("ADMINISTRADOR")
-                            .requestMatchers("/v1/api/**").permitAll()
-                            .anyRequest().authenticated();
-                } );
+                .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> authorizationManagerRequestMatcherRegistry
+                        //PARA LAS PETICIONES preflight OPTIONS DEL NAVEGADOR :p
+                        //Ver https://stackoverflow.com/questions/76682586/allow-cors-with-spring-security-6-1-1-with-authenticated-requests
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                        .requestMatchers("/v1/api/asignaturas/**").hasAnyAuthority("ADMINISTRADOR")
+                        .requestMatchers("/v1/api/cursos/**").hasAnyAuthority("ADMINISTRADOR")
+                        .requestMatchers("/v1/api/clases/**").hasAnyAuthority("ADMINISTRADOR")
+                        .requestMatchers("/v1/api/usuarios/**").hasAnyAuthority("ADMINISTRADOR")
+                        .requestMatchers("/v1/api/profesores").hasAnyAuthority("ADMINISTRADOR")
+                        .requestMatchers(HttpMethod.GET,"/v1/api/estudiantes").hasAnyAuthority("PROFESOR","ADMINISTRADOR")
+                        .requestMatchers("/v1/api/estudiantes").hasAnyAuthority("ADMINISTRADOR")
+                        .requestMatchers("/v1/api/profesores/**").hasAnyAuthority("PROFESOR")
+                        .requestMatchers(HttpMethod.GET,"/v1/api/aulas").hasAnyAuthority("PROFESOR","ESTUDIANTE")
+                        .requestMatchers("/v1/api/aulas/**").hasAnyAuthority("PROFESOR")
+                        .requestMatchers("/v1/api/estudiantes/**").hasAnyAuthority("ESTUDIANTE")
+                        .requestMatchers("/v1/api/**").permitAll()
+                        .anyRequest().authenticated());
         http.authenticationProvider(authenticationProvider());
         http.addFilterBefore(authenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 
@@ -86,5 +92,7 @@ public class WebSecurityConfig {
     }
 
 }
+
+
 
 

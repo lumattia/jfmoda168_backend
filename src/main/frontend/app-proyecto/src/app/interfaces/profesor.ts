@@ -5,3 +5,11 @@ export interface ProfesorRow{
   email:string;
   blocked:boolean
 }
+export interface ProfesorForm{
+  id:number;
+  nombre:string;
+  apellidos:string;
+  email:string;
+  password:string;
+}
+

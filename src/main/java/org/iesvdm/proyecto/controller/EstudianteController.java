@@ -3,6 +3,7 @@ package org.iesvdm.proyecto.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.iesvdm.proyecto.model.entity.Estudiante;
 import org.iesvdm.proyecto.model.view.EstudianteRow;
+import org.iesvdm.proyecto.model.view.Option;
 import org.iesvdm.proyecto.service.EstudianteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -10,6 +11,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Set;
 
 @Slf4j
 @CrossOrigin(origins = "http://localhost:4200")
@@ -36,6 +39,10 @@ public class EstudianteController {
     @GetMapping("/{id}")
     public Estudiante one(@PathVariable("id") long id) {
         return this.estudianteService.one(id);
+    }
+    @GetMapping("/getAulas/{id}")
+    public Set<Option> getAulas(@PathVariable("id") long id) {
+        return this.estudianteService.getAulas(id);
     }
     @PutMapping("/{id}")
     public Estudiante replace(@PathVariable("id") long id, @RequestBody Estudiante estudiante) {

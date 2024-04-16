@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams} from "@angular/common/http";
 import {catchError, Observable, throwError} from "rxjs";
-import {ProfesorRow} from "../interfaces/profesor";
+import {ProfesorForm, ProfesorRow} from "../interfaces/profesor";
+import {Option} from "../interfaces/option";
 const PROFESORURL="http://localhost:8080/v1/api/profesores"
 
 const HTTPOPTIONS = {
@@ -18,9 +19,6 @@ export class ProfesorService {
   }
 
   //Métodos (incluir tipos correctos en los argumentos)
-  getProfesores():Observable<Object>{
-    return this.http.get(PROFESORURL);
-  }
   getProfesor(id:number):Observable<Object>{
     const url = `${PROFESORURL}/${id}`
     return this.http.get<ProfesorRow>(url);
@@ -34,10 +32,16 @@ export class ProfesorService {
     }
     return this.http.get<ProfesorRow>(PROFESORURL,options)
   }
-  crearProfesor(nombre:any):Observable<Object>{
-    return this.http.post<ProfesorRow>(PROFESORURL, {
-      nombre
-    },HTTPOPTIONS)
+  getAulas(id:number):Observable<Object>{
+    const url = `${PROFESORURL}/getAulas/${id}`
+    return this.http.get<Array<Option>>(url)
+  }
+  getClases(id:number):Observable<Object>{
+    const url = `${PROFESORURL}/getClases/${id}`
+    return this.http.get<Array<Option>>(url)
+  }
+  crearProfesor(p:ProfesorForm):Observable<Object>{
+    return this.http.post<ProfesorRow>(PROFESORURL, p,HTTPOPTIONS)
   }
 
   actualizarProfesor(p:any):Observable<Object>{
@@ -45,8 +49,8 @@ export class ProfesorService {
     return this.http.put<ProfesorRow>(url, p, HTTPOPTIONS);
   }
 
-  deleteProfesor(p:any):Observable<any>{
-    const url = `${PROFESORURL}/${p}`
+  deleteProfesor(id:number):Observable<any>{
+    const url = `${PROFESORURL}/${id}`
     return this.http.delete(url, HTTPOPTIONS)
       .pipe(catchError(this.handleError));
   }

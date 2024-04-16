@@ -14,7 +14,9 @@
       </h2>
       <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
         <div class="accordion-body">
-          <app-profesores (bloquearODesbloquear)="bloquearODesbloquear($event)"></app-profesores>
+          <div class="table-responsive">
+            <app-profesores (bloquearODesbloquear)="bloquearODesbloquear($event)"></app-profesores>
+          </div>
         </div>
       </div>
     </div>
@@ -23,13 +25,14 @@
         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                 data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false"
                 aria-controls="panelsStayOpen-collapseTwo">
-          <h2>Alumnos</h2>
+          <h2>Estudiantes</h2>
         </button>
       </h2>
       <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse">
         <div class="accordion-body">
-          <app-estudiante></app-estudiante>
-
+          <div class="table-responsive">
+            <app-estudiante (bloquearODesbloquear)="bloquearODesbloquear($event)"></app-estudiante>
+          </div>
         </div>
       </div>
     </div>

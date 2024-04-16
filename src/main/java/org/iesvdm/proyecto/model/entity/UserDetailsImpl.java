@@ -21,8 +21,7 @@ public class UserDetailsImpl implements UserDetails {
     private Long id;
 
     private String nombre;
-    private String apellido1;
-    private String apellido2;
+    private String apellidos;
 
     private String email;
 
@@ -38,8 +37,7 @@ public class UserDetailsImpl implements UserDetails {
         return new UserDetailsImpl(
                 user.getId(),
                 user.getNombre(),
-                user.getApellido1(),
-                user.getApellido2(),
+                user.getApellidos(),
                 user.getEmail(),
                 user.getPassword(),
                 !user.isBlocked(),

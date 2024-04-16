@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.Optional;
 
 public interface UsuarioRepository extends JpaRepository<Usuario,Long> {
-    @Query("SELECT u FROM Usuario u WHERE CONCAT(u.nombre, ' ', u.apellido1, ' ', u.apellido2) LIKE %?1%")
+    @Query("SELECT u FROM Usuario u WHERE CONCAT(u.nombre, ' ', u.apellidos) LIKE %?1%")
     Page<Usuario> findByNombreCompleto(String nombreCompleto, Pageable pageable);
     Optional<Usuario> findByEmail(String email);
     Boolean existsByEmail(String email);

@@ -25,8 +25,7 @@ public class UsuarioSerializer extends StdSerializer<Usuario> {
         jgen.writeStringField("email", usuario.getEmail());
         jgen.writeStringField("nombre_completo", usuario.getNombreCompleto());
         jgen.writeStringField("nombre", usuario.getNombre());
-        jgen.writeStringField("apellido1", usuario.getApellido1());
-        jgen.writeStringField("apellido2", usuario.getApellido2());
+        jgen.writeStringField("apellidos", usuario.getApellidos());
         jgen.writeStringField("rol", usuario.getRol());
         jgen.writeBooleanField("blocked", usuario.isBlocked());
         if (usuario instanceof Profesor profesor) {

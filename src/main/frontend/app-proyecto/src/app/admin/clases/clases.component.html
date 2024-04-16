@@ -21,18 +21,15 @@
       </form>
     </div>
     <div class="row g-2 row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4" >
-      <div mdbDropdown class="btn-group" *ngFor="let clase of clases">
-        <button type="button" class="w-100 text-start btn btn-primary">{{clase.nombre}}</button>
-        <button
-          class="btn btn-primary"
-          type="button"
-          id="dropdownMenuButton"
-          aria-expanded="false"
-          mdbDropdownToggle
-        ><i class="fa-solid fa-ellipsis-vertical"></i></button>
-        <ul mdbDropdownMenu class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <li><a class="dropdown-item">Editar</a></li>
-          <li><a class="dropdown-item btn btn-primary" (click)="openModal(clase)">Eliminar</a></li>
+      <div class="btn-group" *ngFor="let clase of clases">
+        <button class="w-100 btn btn-primary text-start">
+          {{clase.nombre}}
+        </button>
+        <button class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+          <i class="fa-solid fa-ellipsis-vertical"></i>
+        </button>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item text-danger" (click)="openModal(clase)">Eliminar</a></li>
         </ul>
       </div>
     </div>

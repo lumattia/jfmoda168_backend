@@ -20,7 +20,7 @@ public class AsignaturaController {
     }
     @GetMapping({"","/"})
     public List<Asignatura> all(@RequestParam(value = "buscar",defaultValue = "") String buscar) {
-        log.info("Accediendo a todas los estudiantes");
+        log.info("Accediendo a todas las asignaturas");
         return this.asignaturaService.allByFilter(buscar);
     }
     @PostMapping({"","/"})

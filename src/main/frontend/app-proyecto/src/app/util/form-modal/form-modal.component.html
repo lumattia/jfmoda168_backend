@@ -1,0 +1,17 @@
+<div class="modal-header">
+  <h5 class="modal-title" id="exampleModalLabel">Editar {{name}}</h5>
+  <a
+    type="button"
+    class="btn-close"
+    (click)="modalRef.close()"
+  ></a>
+</div>
+<div class="modal-body">{{name}}:
+  <input class="form-control" type="text" [(ngModel)]="option.nombre" name="nombre" autofocus>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" (click)="modalRef.close()">
+    Cerrar
+  </button>
+  <button type="button" class="btn btn-primary" (click)="close()">Aceptar</button>
+</div>

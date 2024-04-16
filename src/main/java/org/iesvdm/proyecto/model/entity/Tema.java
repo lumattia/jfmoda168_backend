@@ -34,6 +34,6 @@ public class Tema {
     long clase_id;
 
     public String getRoute(){
-        return this.aula.getRoute()+" "+this.nombre;
+        return this.aula.getNombre()+" "+this.nombre;
     }
 }

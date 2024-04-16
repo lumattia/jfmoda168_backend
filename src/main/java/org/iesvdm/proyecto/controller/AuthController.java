@@ -69,8 +69,7 @@ public class AuthController {
             u.setId(1L);
             u.setEmail("admin@g.educaand.es");
             u.setNombre("admin");
-            u.setApellido1("admin");
-            u.setApellido2("admin");
+            u.setApellidos("admin");
             u.setPassword(encoder.encode("123456"));
             usuarioService.save(u);
             return ResponseEntity.ok("Usuario registrado correctamente!");

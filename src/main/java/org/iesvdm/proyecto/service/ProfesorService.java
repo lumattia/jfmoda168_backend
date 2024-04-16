@@ -1,8 +1,8 @@
 package org.iesvdm.proyecto.service;
 
-import org.iesvdm.proyecto.model.entity.Aula;
 import org.iesvdm.proyecto.model.entity.Profesor;
 import org.iesvdm.proyecto.exeption.NotFoundException;
+import org.iesvdm.proyecto.model.view.Option;
 import org.iesvdm.proyecto.model.view.ProfesorRow;
 import org.iesvdm.proyecto.repository.ClaseRepository;
 import org.iesvdm.proyecto.repository.ProfesorRepository;
@@ -24,10 +24,12 @@ public class ProfesorService {
     public Page<ProfesorRow> allByFilter(String buscar, Pageable pageable) {
         return this.profesorRepository.findByNombreCompleto(buscar,pageable);
     }
-    public Set<Aula> allAulas(Long id) {
-        return this.profesorRepository.allAulas(id);
+    public Set<Option> getAulas(Long id) {
+        return this.profesorRepository.getAulas(id);
     }
-
+    public Set<Option> getClases(Long id) {
+        return this.profesorRepository.getClases(id);
+    }
     public Profesor save(Profesor profesor) {
         return this.profesorRepository.save(profesor);
     }
@@ -38,11 +40,12 @@ public class ProfesorService {
     }
 
     public Profesor replace(Long id, Profesor profesor) {
-
-        return this.profesorRepository.findById(id).map( p -> (id.equals(profesor.getId())  ?
-                        this.profesorRepository.save(profesor) : null))
-                .orElseThrow(() -> new NotFoundException(id,"profesor"));
-
+        Profesor p=this.profesorRepository.findById(id).orElseThrow(() -> new NotFoundException(id,"profesor"));
+        p.setEmail(profesor.getEmail());
+        p.setNombre(profesor.getNombre());
+        p.setApellidos(profesor.getApellidos());
+        profesorRepository.save(p);
+        return p;
     }
 
     public void delete(Long id) {

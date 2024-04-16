@@ -1,30 +1,35 @@
 import {Component, EventEmitter, Output} from '@angular/core';
 import {NgClass, NgFor, NgIf} from "@angular/common";
-import {ProfesorService} from "../../services/profesor.service";
-import {ProfesorRow} from "../../interfaces/profesor";
+import {ProfesorService} from "../../../services/profesor.service";
+import {ProfesorRow} from "../../../interfaces/profesor";
 import {NgbPaginationModule} from "@ng-bootstrap/ng-bootstrap";
 import {FormsModule} from "@angular/forms";
+import {Option} from "../../../interfaces/option";
+import {ModalComponent} from "../../../util/modal/modal.component";
+import {MdbModalModule, MdbModalRef, MdbModalService} from "mdb-angular-ui-kit/modal";
+import {RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-profesores',
   standalone: true,
-  imports: [NgFor, NgIf, NgbPaginationModule, NgClass, FormsModule],
+  imports: [NgFor, NgIf, NgbPaginationModule, NgClass, FormsModule, MdbModalModule, RouterLink,
+  ],
   templateUrl: './profesor.component.html',
   styleUrl: './profesor.component.css'
 })
 export class ProfesorComponent {
+  modalRef: MdbModalRef<ModalComponent> | null = null;
   profesores:ProfesorRow[]=[];
-  page= 1;
+  page:number= 1;
   pageSize:number=10;
   searchTerm:string="";
   @Output() bloquearODesbloquear = new EventEmitter<ProfesorRow>();
   collectionSize:number=0;
-  profesorABorrar:any={}
 
   sortColumn= '';
   sortDirection= '';
 
-  constructor(private profesorService: ProfesorService) {
+  constructor(private modalService: MdbModalService,private profesorService: ProfesorService) {
     this.pageChanged()
   }
   onSort(column:string) {
@@ -54,16 +59,23 @@ export class ProfesorComponent {
   cambiarEstado(profesor:ProfesorRow){
     this.bloquearODesbloquear.emit(profesor);
   }
-  borrar(profesor:ProfesorRow){
-    this.profesorABorrar=profesor;
-  }
   eliminarProfesor(id: number) {
     this.profesorService.deleteProfesor(id).subscribe({
       next: () => {
-        this.profesores = this.profesores.filter(c => c.id != id)
+        this.pageChanged()
       },
       error: (error) => {
         console.error(error);
+      }
+    });
+  }
+  openModal(option:ProfesorRow) {
+    this.modalRef = this.modalService.open(ModalComponent, {
+      data: { name:"profesor",option: {id:option.id,nombre:option.nombre+" "+option.apellidos} },
+    });
+    this.modalRef.onClose.subscribe((o: Option) => {
+      if (o!=null){
+        this.eliminarProfesor(o.id)
       }
     });
   }

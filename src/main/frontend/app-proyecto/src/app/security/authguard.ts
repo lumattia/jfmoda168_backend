@@ -19,7 +19,7 @@ import {StorageService} from "../services/storage.service";
 //   }
 //
 // }
-export const canActivate: CanActivateFn = (
+export const canActivateAdmin: CanActivateFn = (
   route: ActivatedRouteSnapshot,
   state: RouterStateSnapshot
 ) => {
@@ -27,6 +27,47 @@ export const canActivate: CanActivateFn = (
   const router = inject(Router);
   if (!storageService.isLoggedIn()) {
     router.navigateByUrl('/login').then();
+    return false;
+  } else if (!storageService.isAdmin()) {
+    // Redirigir a una página de acceso denegado o mostrar un mensaje
+    // dependiendo de cómo quieras manejar este caso.
+    router.navigateByUrl('/access-denied').then();
+    return false;
+  } else {
+    return true;
+  }
+}
+export const canActivateProfesor: CanActivateFn = (
+  route: ActivatedRouteSnapshot,
+  state: RouterStateSnapshot
+) => {
+  const storageService = inject(StorageService);
+  const router = inject(Router);
+  if (!storageService.isLoggedIn()) {
+    router.navigateByUrl('/login').then();
+    return false;
+  } else if (!storageService.isProfesor()) {
+    // Redirigir a una página de acceso denegado o mostrar un mensaje
+    // dependiendo de cómo quieras manejar este caso.
+    router.navigateByUrl('/access-denied').then();
+    return false;
+  } else {
+    return true;
+  }
+}
+export const canActivateEstudiante: CanActivateFn = (
+  route: ActivatedRouteSnapshot,
+  state: RouterStateSnapshot
+) => {
+  const storageService = inject(StorageService);
+  const router = inject(Router);
+  if (!storageService.isLoggedIn()) {
+    router.navigateByUrl('/login').then();
+    return false;
+  } else if (!storageService.isEstudiante()) {
+    // Redirigir a una página de acceso denegado o mostrar un mensaje
+    // dependiendo de cómo quieras manejar este caso.
+    router.navigateByUrl('/access-denied').then();
     return false;
   } else {
     return true;

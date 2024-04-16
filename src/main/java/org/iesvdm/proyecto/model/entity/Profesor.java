@@ -15,6 +15,6 @@ import java.util.Set;
 public class Profesor extends Usuario{
     @ManyToMany(mappedBy = "profesores")
     Set<Clase> clases = new HashSet<>();
-    @ManyToMany
+    @ManyToMany(mappedBy = "profesores")
     Set<Aula> aulas;
 }

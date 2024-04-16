@@ -26,8 +26,7 @@ public class Usuario {
     @Column(nullable = false)
     String nombre;
     @Column(nullable = false)
-    String apellido1;
-    String apellido2="";
+    String apellidos;
     @Column(nullable = false,unique = true)
     @Email(regexp = "^[a-z0-9]+@g.educaand.es$")
     String email;
@@ -37,9 +36,6 @@ public class Usuario {
     public String getRol() {
         DiscriminatorValue discriminatorValue = getClass().getAnnotation(DiscriminatorValue.class);
         return discriminatorValue.value();
-    }
-    public String getApellidos() {
-        return this.getApellido1()+" "+this.getApellido2();
     }
     public String getNombreCompleto() {
         return this.getNombre()+" "+getApellidos();

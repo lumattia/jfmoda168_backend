@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams} from "@angular/common/http";
 import {catchError, Observable, throwError} from "rxjs";
 import {EstudianteRow} from "../interfaces/estudiante";
+import {Option} from "../interfaces/option";
 const ESTUDIANTEURL="http://localhost:8080/v1/api/estudiantes"
 
 const HTTPOPTIONS = {
@@ -35,10 +36,12 @@ export class EstudianteService {
     }
     return this.http.get<EstudianteRow>(ESTUDIANTEURL,options)
   }
-  crearEstudiante(nombre:any):Observable<Object>{
-    return this.http.post<EstudianteRow>(ESTUDIANTEURL, {
-      nombre
-    },HTTPOPTIONS)
+  getAulas(id:number):Observable<Object>{
+    const url = `${ESTUDIANTEURL}/getAulas/${id}`
+    return this.http.get<Array<Option>>(url)
+  }
+  crearEstudiante(e:any):Observable<Object>{
+    return this.http.post<EstudianteRow>(ESTUDIANTEURL, e,HTTPOPTIONS)
   }
 
   actualizarEstudiante(e:any):Observable<Object>{

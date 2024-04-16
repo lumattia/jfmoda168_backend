@@ -6,7 +6,7 @@ import {RouterLink} from "@angular/router";
 import {Option} from "../../interfaces/option";
 import {MdbModalModule, MdbModalRef, MdbModalService} from "mdb-angular-ui-kit/modal";
 import {ModalComponent} from "../../util/modal/modal.component";
-import {MdbDropdownModule} from "mdb-angular-ui-kit/dropdown";
+import {FormModalComponent} from "../../util/form-modal/form-modal.component";
 
 @Component({
     selector: 'app-asignaturas',
@@ -16,8 +16,7 @@ import {MdbDropdownModule} from "mdb-angular-ui-kit/dropdown";
     NgForOf,
     NgIf,
     RouterLink,
-    MdbModalModule,
-    MdbDropdownModule
+    MdbModalModule
   ],
     templateUrl: './asignaturas.component.html',
     styleUrl: './asignaturas.component.css'
@@ -27,17 +26,27 @@ export class AsignaturasComponent {
   searchTerm:string="";
   asignaturas: Option[] = [];
   nombreAsignatura:string="";
-  existeAsignatura:boolean=false;
   constructor(private modalService: MdbModalService,private asignaturaService: AsignaturaService) {
       this.buscar();
   }
-  openModal(option:Option) {
+  openEliminarModal(option:Option) {
     this.modalRef = this.modalService.open(ModalComponent, {
-      data: { action: 'Eliminar',name:"asignatura",option:option },
+      data: { name:"asignatura",option:option },
     });
     this.modalRef.onClose.subscribe((o: Option) => {
       if (o!=null){
         this.eliminarAsignatura(o.id)
+      }
+    });
+  }
+  openEditarModal(o:Option) {
+    this.modalRef = this.modalService.open(FormModalComponent, {
+      modalClass: 'modal-dialog-centered',
+      data: { name:"asignatura",option: {id:o.id,nombre:o.nombre} },
+    });
+    this.modalRef.onClose.subscribe((o: Option) => {
+      if (o!=null){
+        this.editarAsignatura(o)
       }
     });
   }
@@ -52,8 +61,7 @@ export class AsignaturasComponent {
       })
     }
     crearAsignatura() {
-        this.existeAsignatura=this.asignaturas.filter(a=>a.nombre==this.nombreAsignatura).length==1
-        if (!this.existeAsignatura){
+        if (this.existe(this.nombreAsignatura)){
             this.asignaturaService.crearAsignatura(this.nombreAsignatura).subscribe({
                 next: (data) => {
                     this.asignaturas.push(data as Option)
@@ -62,12 +70,23 @@ export class AsignaturasComponent {
                     console.error(error);
                 }
             });
-            // Establecer un temporizador para cambiar existeAsignatura a false después de 2 segundos
         }else{
-            setTimeout(() => {
-                this.existeAsignatura = false;
-            }, 1500);
+          alert("¡La asignatura ya existe!")
         }
+    }
+    editarAsignatura(o:Option){
+      if (this.existe(o.nombre)){
+          this.asignaturaService.actualizarAsignatura(o).subscribe({
+          next: (data) => {
+            this.asignaturas.splice(this.asignaturas.findIndex(a=>a.id==o.id), 1, o);
+          },
+          error: (error) => {
+            console.error(error);
+          }
+        })
+      }else{
+        alert("¡La asignatura ya existe!")
+      }
     }
     eliminarAsignatura(id: number) {
         this.asignaturaService.deleteAsignatura(id).subscribe({
@@ -75,8 +94,12 @@ export class AsignaturasComponent {
                 this.asignaturas = this.asignaturas.filter(a => a.id != id)
             },
             error: (error) => {
-                console.error(error);
+              alert("No se ha podido eliminar la asignatura")
+              console.error(error);
             }
         });
+    }
+    existe(nombre:string):boolean{
+      return this.asignaturas.filter(a=>a.nombre==nombre).length==0;
     }
 }

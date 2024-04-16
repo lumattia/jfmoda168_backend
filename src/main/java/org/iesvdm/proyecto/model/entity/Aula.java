@@ -3,6 +3,7 @@ package org.iesvdm.proyecto.model.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Data
@@ -19,7 +20,7 @@ public class Aula {
     @Column(nullable = false)
     private String año;
     @ManyToMany
-    private Set<Profesor> profesores;
+    private Set<Profesor> profesores=new HashSet<>();
     @ManyToOne(fetch = FetchType.EAGER,optional = false)
     private Profesor propietario;
     @ManyToMany
@@ -29,7 +30,7 @@ public class Aula {
     @OneToMany(mappedBy = "aula",cascade = CascadeType.ALL,orphanRemoval = true)
     private Set<Tema> temas;
     private boolean eliminado;
-    public String getRoute(){
+    public String getNombre(){
         return this.clase.getNombre()+" "+this.grupo+" "+this.año;
     }
 }

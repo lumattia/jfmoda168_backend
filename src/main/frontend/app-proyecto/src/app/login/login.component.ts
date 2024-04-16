@@ -34,7 +34,12 @@ export class LoginComponent implements OnInit {
     if (this.storageService.isLoggedIn()) {
       this.isLoggedIn = true;
       this.roles = this.storageService.getUser().roles;
-      this.router.navigateByUrl('admin').then(() => {console.log('Ya logueado, cargando index.')});
+      if (this.roles[0]=="ADMINISTRADOR")
+        this.router.navigateByUrl('admin').then(() => {console.log('Ya logueado, cargando index.')});
+      if(this.roles[0]=="PROFESOR")
+        this.router.navigateByUrl('profesor').then(() => {console.log('Ya logueado, cargando index.')});
+      if(this.roles[0]=="ESTUDIANTE")
+        this.router.navigateByUrl('estudiante').then(() => {console.log('Ya logueado, cargando index.')});
     }
   }
 
@@ -48,7 +53,6 @@ export class LoginComponent implements OnInit {
         this.isLoginFailed = false;
         this.isLoggedIn = true;
         console.log('isLoggedIn = '+ this.isLoggedIn);
-        this.roles = this.storageService.getUser().roles;
         this.reloadPage();
         // this.router.navigate(['index']).then(
         //   () => {console.log('Login OK, cargando index.')}

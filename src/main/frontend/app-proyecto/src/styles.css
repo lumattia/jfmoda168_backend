@@ -1,10 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
-@import '@fortawesome/fontawesome-free/css/all.css';
-@import 'mdb-angular-ui-kit/assets/scss/mdb.scss';
+.dropdown-item:hover{
+  background: lightblue;
+}
 a{
-    cursor: pointer;
-    color:var(--bs-primary);
+  cursor: pointer;
+  color:var(--bs-primary);
 }
 a i{
-    color:var(--bs-primary);
+  color:var(--bs-primary);
 }

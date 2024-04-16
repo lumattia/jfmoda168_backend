@@ -1,42 +1,42 @@
 -- Insertar datos en la tabla usuario para PROFESOR
-INSERT INTO usuario (rol, apellido1, apellido2, blocked, email, nombre, password, aula)
+INSERT INTO usuario (rol, apellidos, blocked, email, nombre, password, aula)
 VALUES
-    ('ADMINISTRADOR', 'admin2', 'admin2', FALSE, 'admin@g.educaand.es', 'admin2', '$2a$10$Ptp1ZRU7jLFs3uI8RQnYm.0sgVsSQ55EJiU48rrFQVPpdOtVroqvK', NULL),
-    ('PROFESOR', 'Pérez', 'García', FALSE, 'profesor1@g.educaand.es', 'Juan', '$2a$10$Ptp1ZRU7jLFs3uI8RQnYm.0sgVsSQ55EJiU48rrFQVPpdOtVroqvK', NULL),
-    ('PROFESOR', 'López', 'Fernández', FALSE, 'profesor2@g.educaand.es', 'Pedro', '$2a$10$Ptp1ZRU7jLFs3uI8RQnYm.0sgVsSQ55EJiU48rrFQVPpdOtVroqvK', NULL),
-    ('PROFESOR', 'Martínez', 'Sánchez', FALSE, 'profesor3@g.educaand.es', 'Ana', '$2a$10$Ptp1ZRU7jLFs3uI8RQnYm.0sgVsSQ55EJiU48rrFQVPpdOtVroqvK',NULL),
-    ('PROFESOR', 'Gómez', 'Rodríguez', FALSE, 'profesor4@g.educaand.es', 'María', '$2a$10$Ptp1ZRU7jLFs3uI8RQnYm.0sgVsSQ55EJiU48rrFQVPpdOtVroqvK', NULL),
-    ('PROFESOR', 'Sánchez', 'Martínez', FALSE, 'profesor5@g.educaand.es', 'David', '$2a$10$Ptp1ZRU7jLFs3uI8RQnYm.0sgVsSQ55EJiU48rrFQVPpdOtVroqvK', NULL),
-    ('PROFESOR', 'García', 'Hernández', FALSE, 'profesor6@g.educaand.es', 'Laura', '$2a$10$Ptp1ZRU7jLFs3uI8RQnYm.0sgVsSQ55EJiU48rrFQVPpdOtVroqvK', NULL),
-    ('PROFESOR', 'Hernández', 'López', FALSE, 'profesor7@g.educaand.es', 'José', '$2a$10$Ptp1ZRU7jLFs3uI8RQnYm.0sgVsSQ55EJiU48rrFQVPpdOtVroqvK', NULL),
-    ('PROFESOR', 'Díaz', 'Gómez', FALSE, 'profesor8@g.educaand.es', 'Marta', '$2a$10$Ptp1ZRU7jLFs3uI8RQnYm.0sgVsSQ55EJiU48rrFQVPpdOtVroqvK', NULL),
-    ('PROFESOR', 'Fernández', 'Martínez', FALSE, 'profesor9@g.educaand.es', 'Pablo', '$2a$10$Ptp1ZRU7jLFs3uI8RQnYm.0sgVsSQ55EJiU48rrFQVPpdOtVroqvK', NULL),
-    ('PROFESOR', 'López', 'Sánchez', FALSE, 'profesor10@g.educaand.es', 'Isabel', '$2a$10$Ptp1ZRU7jLFs3uI8RQnYm.0sgVsSQ55EJiU48rrFQVPpdOtVroqvK', NULL),
-    ('PROFESOR', 'Gómez', 'Pérez', FALSE, 'profesor11@g.educaand.es', 'Francisco', '$2a$10$Ptp1ZRU7jLFs3uI8RQnYm.0sgVsSQ55EJiU48rrFQVPpdOtVroqvK', NULL),
-    ('PROFESOR', 'Pérez', 'Martínez', FALSE, 'profesor12@g.educaand.es', 'Carmen', '$2a$10$Ptp1ZRU7jLFs3uI8RQnYm.0sgVsSQ55EJiU48rrFQVPpdOtVroqvK', NULL),
-    ('PROFESOR', 'Martínez', 'González', FALSE, 'profesor13@g.educaand.es', 'Javier', '$2a$10$Ptp1ZRU7jLFs3uI8RQnYm.0sgVsSQ55EJiU48rrFQVPpdOtVroqvK', NULL),
-    ('PROFESOR', 'González', 'Díaz', FALSE, 'profesor14@g.educaand.es', 'Sofía', '$2a$10$Ptp1ZRU7jLFs3uI8RQnYm.0sgVsSQ55EJiU48rrFQVPpdOtVroqvK', NULL),
-    ('PROFESOR', 'Sánchez', 'Fernández', FALSE, 'profesor15@g.educaand.es', 'Carlos', '$2a$10$Ptp1ZRU7jLFs3uI8RQnYm.0sgVsSQ55EJiU48rrFQVPpdOtVroqvK', NULL),
-    ('ESTUDIANTE', 'García', 'Pérez', FALSE, 'estudiante1@g.educaand.es', 'Laura', '$2a$10$Ptp1ZRU7jLFs3uI8RQnYm.0sgVsSQ55EJiU48rrFQVPpdOtVroqvK', 'Aula 101'),
-    ('ESTUDIANTE', 'Fernández', 'López', FALSE, 'estudiante2@g.educaand.es', 'Carlos', '$2a$10$Ptp1ZRU7jLFs3uI8RQnYm.0sgVsSQ55EJiU48rrFQVPpdOtVroqvK', 'Aula 101'),
-    ('ESTUDIANTE', 'Sánchez', 'Martínez', FALSE, 'estudiante3@g.educaand.es', 'Sofía', '$2a$10$Ptp1ZRU7jLFs3uI8RQnYm.0sgVsSQ55EJiU48rrFQVPpdOtVroqvK', 'Aula 101'),
-    ('ESTUDIANTE', 'Rodríguez', 'Gómez', FALSE, 'estudiante4@g.educaand.es', 'Pablo', '$2a$10$Ptp1ZRU7jLFs3uI8RQnYm.0sgVsSQ55EJiU48rrFQVPpdOtVroqvK', 'Aula 101'),
-    ('ESTUDIANTE', 'Martínez', 'Sánchez', FALSE, 'estudiante5@g.educaand.es', 'Lucía', '$2a$10$Ptp1ZRU7jLFs3uI8RQnYm.0sgVsSQ55EJiU48rrFQVPpdOtVroqvK', 'Aula 102'),
-    ('ESTUDIANTE', 'López', 'Fernández', FALSE, 'estudiante6@g.educaand.es', 'Elena', '$2a$10$Ptp1ZRU7jLFs3uI8RQnYm.0sgVsSQ55EJiU48rrFQVPpdOtVroqvK', 'Aula 102'),
-    ('ESTUDIANTE', 'García', 'Pérez', FALSE, 'estudiante7@g.educaand.es', 'Daniel', '$2a$10$Ptp1ZRU7jLFs3uI8RQnYm.0sgVsSQ55EJiU48rrFQVPpdOtVroqvK', 'Aula 102'),
-    ('ESTUDIANTE', 'Fernández', 'López', FALSE, 'estudiante8@g.educaand.es', 'Andrea', '$2a$10$Ptp1ZRU7jLFs3uI8RQnYm.0sgVsSQ55EJiU48rrFQVPpdOtVroqvK', 'Aula 102'),
-    ('ESTUDIANTE', 'Sánchez', 'Martínez', FALSE, 'estudiante9@g.educaand.es', 'Adrián', '$2a$10$Ptp1ZRU7jLFs3uI8RQnYm.0sgVsSQ55EJiU48rrFQVPpdOtVroqvK', 'Aula 102'),
-    ('ESTUDIANTE', 'Rodríguez', 'Gómez', FALSE, 'estudiante10@g.educaand.es', 'Julia', '$2a$10$Ptp1ZRU7jLFs3uI8RQnYm.0sgVsSQ55EJiU48rrFQVPpdOtVroqvK', 'Aula 102'),
-    ('ESTUDIANTE', 'Martínez', 'Sánchez', FALSE, 'estudiante11@g.educaand.es', 'Alejandro', '$2a$10$Ptp1ZRU7jLFs3uI8RQnYm.0sgVsSQ55EJiU48rrFQVPpdOtVroqvK', 'Aula 103'),
-    ('ESTUDIANTE', 'López', 'Fernández', FALSE, 'estudiante12@g.educaand.es', 'Paula', '$2a$10$Ptp1ZRU7jLFs3uI8RQnYm.0sgVsSQ55EJiU48rrFQVPpdOtVroqvK', 'Aula 103'),
-    ('ESTUDIANTE', 'García', 'Pérez', FALSE, 'estudiante13@g.educaand.es', 'Miguel', '$2a$10$Ptp1ZRU7jLFs3uI8RQnYm.0sgVsSQ55EJiU48rrFQVPpdOtVroqvK', 'Aula 103'),
-    ('ESTUDIANTE', 'Fernández', 'López', FALSE, 'estudiante14@g.educaand.es', 'Carmen', '$2a$10$Ptp1ZRU7jLFs3uI8RQnYm.0sgVsSQ55EJiU48rrFQVPpdOtVroqvK', 'Aula 103'),
-    ('ESTUDIANTE', 'Sánchez', 'Martínez', FALSE, 'estudiante15@g.educaand.es', 'Hugo', '$2a$10$Ptp1ZRU7jLFs3uI8RQnYm.0sgVsSQ55EJiU48rrFQVPpdOtVroqvK', 'Aula 103'),
-    ('ESTUDIANTE', 'Rodríguez', 'Gómez', FALSE, 'estudiante16@g.educaand.es', 'Natalia', '$2a$10$Ptp1ZRU7jLFs3uI8RQnYm.0sgVsSQ55EJiU48rrFQVPpdOtVroqvK', 'Aula 103'),
-    ('ESTUDIANTE', 'Martínez', 'Sánchez', FALSE, 'estudiante17@g.educaand.es', 'Diego', '$2a$10$Ptp1ZRU7jLFs3uI8RQnYm.0sgVsSQ55EJiU48rrFQVPpdOtVroqvK', 'Aula 104'),
-    ('ESTUDIANTE', 'López', 'Fernández', FALSE, 'estudiante18@g.educaand.es', 'Eva', '$2a$10$Ptp1ZRU7jLFs3uI8RQnYm.0sgVsSQ55EJiU48rrFQVPpdOtVroqvK', 'Aula 104'),
-    ('ESTUDIANTE', 'García', 'Pérez', FALSE, 'estudiante19@g.educaand.es', 'Javier', '$2a$10$Ptp1ZRU7jLFs3uI8RQnYm.0sgVsSQ55EJiU48rrFQVPpdOtVroqvK', 'Aula 104'),
-    ('ESTUDIANTE', 'Fernández', 'López', FALSE, 'estudiante20@g.educaand.es', 'Sara', '$2a$10$Ptp1ZRU7jLFs3uI8RQnYm.0sgVsSQ55EJiU48rrFQVPpdOtVroqvK', 'Aula 104');
+    ('ADMINISTRADOR', 'admin2', FALSE, 'admin@g.educaand.es', 'admin2', '$2a$10$Ptp1ZRU7jLFs3uI8RQnYm.0sgVsSQ55EJiU48rrFQVPpdOtVroqvK', NULL),
+    ('PROFESOR', 'Pérez García', FALSE, 'profesor1@g.educaand.es', 'Juan', '$2a$10$Ptp1ZRU7jLFs3uI8RQnYm.0sgVsSQ55EJiU48rrFQVPpdOtVroqvK', NULL),
+    ('PROFESOR', 'López Fernández', FALSE, 'profesor2@g.educaand.es', 'Pedro', '$2a$10$Ptp1ZRU7jLFs3uI8RQnYm.0sgVsSQ55EJiU48rrFQVPpdOtVroqvK', NULL),
+    ('PROFESOR', 'Martínez Sánchez', FALSE, 'profesor3@g.educaand.es', 'Ana', '$2a$10$Ptp1ZRU7jLFs3uI8RQnYm.0sgVsSQ55EJiU48rrFQVPpdOtVroqvK',NULL),
+    ('PROFESOR', 'Gómez Rodríguez', FALSE, 'profesor4@g.educaand.es', 'María', '$2a$10$Ptp1ZRU7jLFs3uI8RQnYm.0sgVsSQ55EJiU48rrFQVPpdOtVroqvK', NULL),
+    ('PROFESOR', 'Sánchez Martínez', FALSE, 'profesor5@g.educaand.es', 'David', '$2a$10$Ptp1ZRU7jLFs3uI8RQnYm.0sgVsSQ55EJiU48rrFQVPpdOtVroqvK', NULL),
+    ('PROFESOR', 'García Hernández', FALSE, 'profesor6@g.educaand.es', 'Laura', '$2a$10$Ptp1ZRU7jLFs3uI8RQnYm.0sgVsSQ55EJiU48rrFQVPpdOtVroqvK', NULL),
+    ('PROFESOR', 'Hernández López', FALSE, 'profesor7@g.educaand.es', 'José', '$2a$10$Ptp1ZRU7jLFs3uI8RQnYm.0sgVsSQ55EJiU48rrFQVPpdOtVroqvK', NULL),
+    ('PROFESOR', 'Díaz Gómez', FALSE, 'profesor8@g.educaand.es', 'Marta', '$2a$10$Ptp1ZRU7jLFs3uI8RQnYm.0sgVsSQ55EJiU48rrFQVPpdOtVroqvK', NULL),
+    ('PROFESOR', 'Fernández Martínez', FALSE, 'profesor9@g.educaand.es', 'Pablo', '$2a$10$Ptp1ZRU7jLFs3uI8RQnYm.0sgVsSQ55EJiU48rrFQVPpdOtVroqvK', NULL),
+    ('PROFESOR', 'López Sánchez', FALSE, 'profesor10@g.educaand.es', 'Isabel', '$2a$10$Ptp1ZRU7jLFs3uI8RQnYm.0sgVsSQ55EJiU48rrFQVPpdOtVroqvK', NULL),
+    ('PROFESOR', 'Gómez Pérez', FALSE, 'profesor11@g.educaand.es', 'Francisco', '$2a$10$Ptp1ZRU7jLFs3uI8RQnYm.0sgVsSQ55EJiU48rrFQVPpdOtVroqvK', NULL),
+    ('PROFESOR', 'Pérez Martínez', FALSE, 'profesor12@g.educaand.es', 'Carmen', '$2a$10$Ptp1ZRU7jLFs3uI8RQnYm.0sgVsSQ55EJiU48rrFQVPpdOtVroqvK', NULL),
+    ('PROFESOR', 'Martínez González', FALSE, 'profesor13@g.educaand.es', 'Javier', '$2a$10$Ptp1ZRU7jLFs3uI8RQnYm.0sgVsSQ55EJiU48rrFQVPpdOtVroqvK', NULL),
+    ('PROFESOR', 'González Díaz', FALSE, 'profesor14@g.educaand.es', 'Sofía', '$2a$10$Ptp1ZRU7jLFs3uI8RQnYm.0sgVsSQ55EJiU48rrFQVPpdOtVroqvK', NULL),
+    ('PROFESOR', 'Sánchez Fernández', FALSE, 'profesor15@g.educaand.es', 'Carlos', '$2a$10$Ptp1ZRU7jLFs3uI8RQnYm.0sgVsSQ55EJiU48rrFQVPpdOtVroqvK', NULL),
+    ('ESTUDIANTE', 'García Pérez', FALSE, 'estudiante1@g.educaand.es', 'Laura', '$2a$10$Ptp1ZRU7jLFs3uI8RQnYm.0sgVsSQ55EJiU48rrFQVPpdOtVroqvK', 'Aula 101'),
+    ('ESTUDIANTE', 'Fernández López', FALSE, 'estudiante2@g.educaand.es', 'Carlos', '$2a$10$Ptp1ZRU7jLFs3uI8RQnYm.0sgVsSQ55EJiU48rrFQVPpdOtVroqvK', 'Aula 101'),
+    ('ESTUDIANTE', 'Sánchez Martínez', FALSE, 'estudiante3@g.educaand.es', 'Sofía', '$2a$10$Ptp1ZRU7jLFs3uI8RQnYm.0sgVsSQ55EJiU48rrFQVPpdOtVroqvK', 'Aula 101'),
+    ('ESTUDIANTE', 'Rodríguez Gómez', FALSE, 'estudiante4@g.educaand.es', 'Pablo', '$2a$10$Ptp1ZRU7jLFs3uI8RQnYm.0sgVsSQ55EJiU48rrFQVPpdOtVroqvK', 'Aula 101'),
+    ('ESTUDIANTE', 'Martínez Sánchez', FALSE, 'estudiante5@g.educaand.es', 'Lucía', '$2a$10$Ptp1ZRU7jLFs3uI8RQnYm.0sgVsSQ55EJiU48rrFQVPpdOtVroqvK', 'Aula 102'),
+    ('ESTUDIANTE', 'López Fernández', FALSE, 'estudiante6@g.educaand.es', 'Elena', '$2a$10$Ptp1ZRU7jLFs3uI8RQnYm.0sgVsSQ55EJiU48rrFQVPpdOtVroqvK', 'Aula 102'),
+    ('ESTUDIANTE', 'García Pérez', FALSE, 'estudiante7@g.educaand.es', 'Daniel', '$2a$10$Ptp1ZRU7jLFs3uI8RQnYm.0sgVsSQ55EJiU48rrFQVPpdOtVroqvK', 'Aula 102'),
+    ('ESTUDIANTE', 'Fernández López', FALSE, 'estudiante8@g.educaand.es', 'Andrea', '$2a$10$Ptp1ZRU7jLFs3uI8RQnYm.0sgVsSQ55EJiU48rrFQVPpdOtVroqvK', 'Aula 102'),
+    ('ESTUDIANTE', 'Sánchez Martínez', FALSE, 'estudiante9@g.educaand.es', 'Adrián', '$2a$10$Ptp1ZRU7jLFs3uI8RQnYm.0sgVsSQ55EJiU48rrFQVPpdOtVroqvK', 'Aula 102'),
+    ('ESTUDIANTE', 'Rodríguez Gómez', FALSE, 'estudiante10@g.educaand.es', 'Julia', '$2a$10$Ptp1ZRU7jLFs3uI8RQnYm.0sgVsSQ55EJiU48rrFQVPpdOtVroqvK', 'Aula 102'),
+    ('ESTUDIANTE', 'Martínez Sánchez', FALSE, 'estudiante11@g.educaand.es', 'Alejandro', '$2a$10$Ptp1ZRU7jLFs3uI8RQnYm.0sgVsSQ55EJiU48rrFQVPpdOtVroqvK', 'Aula 103'),
+    ('ESTUDIANTE', 'López Fernández', FALSE, 'estudiante12@g.educaand.es', 'Paula', '$2a$10$Ptp1ZRU7jLFs3uI8RQnYm.0sgVsSQ55EJiU48rrFQVPpdOtVroqvK', 'Aula 103'),
+    ('ESTUDIANTE', 'García Pérez', FALSE, 'estudiante13@g.educaand.es', 'Miguel', '$2a$10$Ptp1ZRU7jLFs3uI8RQnYm.0sgVsSQ55EJiU48rrFQVPpdOtVroqvK', 'Aula 103'),
+    ('ESTUDIANTE', 'Fernández López', FALSE, 'estudiante14@g.educaand.es', 'Carmen', '$2a$10$Ptp1ZRU7jLFs3uI8RQnYm.0sgVsSQ55EJiU48rrFQVPpdOtVroqvK', 'Aula 103'),
+    ('ESTUDIANTE', 'Sánchez Martínez', FALSE, 'estudiante15@g.educaand.es', 'Hugo', '$2a$10$Ptp1ZRU7jLFs3uI8RQnYm.0sgVsSQ55EJiU48rrFQVPpdOtVroqvK', 'Aula 103'),
+    ('ESTUDIANTE', 'Rodríguez Gómez', FALSE, 'estudiante16@g.educaand.es', 'Natalia', '$2a$10$Ptp1ZRU7jLFs3uI8RQnYm.0sgVsSQ55EJiU48rrFQVPpdOtVroqvK', 'Aula 103'),
+    ('ESTUDIANTE', 'Martínez Sánchez', FALSE, 'estudiante17@g.educaand.es', 'Diego', '$2a$10$Ptp1ZRU7jLFs3uI8RQnYm.0sgVsSQ55EJiU48rrFQVPpdOtVroqvK', 'Aula 104'),
+    ('ESTUDIANTE', 'López Fernández', FALSE, 'estudiante18@g.educaand.es', 'Eva', '$2a$10$Ptp1ZRU7jLFs3uI8RQnYm.0sgVsSQ55EJiU48rrFQVPpdOtVroqvK', 'Aula 104'),
+    ('ESTUDIANTE', 'García Pérez', FALSE, 'estudiante19@g.educaand.es', 'Javier', '$2a$10$Ptp1ZRU7jLFs3uI8RQnYm.0sgVsSQ55EJiU48rrFQVPpdOtVroqvK', 'Aula 104'),
+    ('ESTUDIANTE', 'Fernández López', FALSE, 'estudiante20@g.educaand.es', 'Sara', '$2a$10$Ptp1ZRU7jLFs3uI8RQnYm.0sgVsSQ55EJiU48rrFQVPpdOtVroqvK', 'Aula 104');
 
 INSERT INTO asignatura (nombre) VALUES ('Matemáticas');
 INSERT INTO asignatura (nombre) VALUES ('Lengua y Literatura');
@@ -69,16 +69,16 @@ INSERT INTO aula (año, eliminado, grupo, clase_id, propietario_id) VALUES ('23/
 INSERT INTO aula (año, eliminado, grupo, clase_id, propietario_id) VALUES ('23/24', 0, 'D', 4, 4);
 INSERT INTO aula (año, eliminado, grupo, clase_id, propietario_id) VALUES ('23/24', 0, 'E', 5, 5);
 
-INSERT INTO aula_profesores (aula_id, profesores_id) VALUES (1, 2);
-INSERT INTO aula_profesores (aula_id, profesores_id) VALUES (1, 3);
-INSERT INTO aula_profesores (aula_id, profesores_id) VALUES (2, 4);
-INSERT INTO aula_profesores (aula_id, profesores_id) VALUES (2, 5);
-INSERT INTO aula_profesores (aula_id, profesores_id) VALUES (3, 6);
-INSERT INTO aula_profesores (aula_id, profesores_id) VALUES (1, 1);
-INSERT INTO aula_profesores (aula_id, profesores_id) VALUES (2, 2);
-INSERT INTO aula_profesores (aula_id, profesores_id) VALUES (3, 3);
-INSERT INTO aula_profesores (aula_id, profesores_id) VALUES (4, 4);
-INSERT INTO aula_profesores (aula_id, profesores_id) VALUES (5, 5);
+INSERT INTO aula_profesores (aulas_id, profesores_id) VALUES (1, 2);
+INSERT INTO aula_profesores (aulas_id, profesores_id) VALUES (1, 3);
+INSERT INTO aula_profesores (aulas_id, profesores_id) VALUES (2, 4);
+INSERT INTO aula_profesores (aulas_id, profesores_id) VALUES (2, 5);
+INSERT INTO aula_profesores (aulas_id, profesores_id) VALUES (3, 6);
+INSERT INTO aula_profesores (aulas_id, profesores_id) VALUES (1, 1);
+INSERT INTO aula_profesores (aulas_id, profesores_id) VALUES (2, 2);
+INSERT INTO aula_profesores (aulas_id, profesores_id) VALUES (3, 3);
+INSERT INTO aula_profesores (aulas_id, profesores_id) VALUES (4, 4);
+INSERT INTO aula_profesores (aulas_id, profesores_id) VALUES (5, 5);
 
 INSERT INTO aula_estudiantes (aula_id, estudiantes_id) VALUES (1, 6);
 INSERT INTO aula_estudiantes (aula_id, estudiantes_id) VALUES (1, 7);

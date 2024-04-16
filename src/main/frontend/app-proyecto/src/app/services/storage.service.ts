@@ -28,10 +28,22 @@ export class StorageService {
 
   public isLoggedIn(): boolean {
     const user = window.sessionStorage.getItem(USER_KEY);
-    if (user) {
-      return true;
-    }
+    return !!user;
 
-    return false;
+  }
+  public isAdmin(): boolean {
+    let user=this.getUser();
+    return user.roles == "ADMINISTRADOR";
+
+  }
+  public isProfesor(): boolean {
+    let user=this.getUser();
+    return user.roles == "PROFESOR";
+
+  }
+  public isEstudiante(): boolean {
+    let user=this.getUser();
+    return user.roles == "ESTUDIANTE";
+
   }
 }
