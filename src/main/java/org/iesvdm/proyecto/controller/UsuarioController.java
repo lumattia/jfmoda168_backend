@@ -3,10 +3,16 @@ package org.iesvdm.proyecto.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.iesvdm.proyecto.model.entity.Usuario;
 import org.iesvdm.proyecto.service.UsuarioService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @Slf4j
 @CrossOrigin(origins = "http://localhost:4200")
@@ -14,6 +20,9 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/v1/api/usuarios")
 public class UsuarioController {
     private final UsuarioService usuarioService;
+
+    @Autowired
+    PasswordEncoder encoder;
     public UsuarioController(UsuarioService usuarioService) {
         this.usuarioService = usuarioService;
     }
@@ -41,9 +50,21 @@ public class UsuarioController {
     public Usuario replace(@PathVariable("id") long id, @RequestBody Usuario usuario) {
         return this.usuarioService.replace(id, usuario);
     }
-    @PostMapping("/cambiarEstado/{id}")
+    @PutMapping("/cambiarEstado/{id}")
     public boolean cambiarEstado(@PathVariable("id") long id) {
         return this.usuarioService.cambiarEstado(id);
+    }
+    @ResponseBody
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PutMapping("/cambiarContrasena/")
+    public void cambiarContrasena(@RequestBody Map<String, String> request) {
+        String oldPassword = request.get("oldPassword");
+        String newPassword = request.get("newPassword");
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (encoder.matches(oldPassword,usuarioService.one(auth.getName()).getPassword()))
+            usuarioService.cambiarContraseña(auth.getName(),encoder.encode(newPassword));
+        else
+            throw new RuntimeException("Contraseña incorrecta");
     }
     @ResponseBody
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -51,4 +72,5 @@ public class UsuarioController {
     public void delete(@PathVariable("id") long id){
         this.usuarioService.delete(id);
     }
+
 }

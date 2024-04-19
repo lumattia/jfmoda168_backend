@@ -1,13 +1,13 @@
 package org.iesvdm.proyecto.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import org.iesvdm.proyecto.model.entity.Estudiante;
-import org.iesvdm.proyecto.model.entity.Fase;
-import org.iesvdm.proyecto.model.entity.Tarea;
-import org.iesvdm.proyecto.model.entity.TareaEstudiante;
+import org.iesvdm.proyecto.model.entity.*;
 import org.iesvdm.proyecto.security.TokenUtils;
 import org.iesvdm.proyecto.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
@@ -26,22 +26,22 @@ public class FaseController {
     @Autowired
     TokenUtils tokenUtils;
     @GetMapping("/{id}-{nivel}")
-    public Fase one(@PathVariable("id") long id, @PathVariable("nivel") byte nivel, @RequestHeader("Authorization") String authorizationHeader) {
-        Fase fase=this.faseService.one(id,nivel);
-
-        //obtener el nivel mas dificil que el estudiante puede hacer
-        String token = null;
-        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
-            token = authorizationHeader.substring(7); // Ignorar "Bearer "
+    public Fase one(@PathVariable("id") long TareaId, @PathVariable("nivel") byte nivel) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String rol=auth.getAuthorities().stream().findAny().map(GrantedAuthority::getAuthority).orElse("");
+        if (rol.equals("ESTUDIANTE")){
+            Estudiante e=estudianteService.one(auth.getName());
+            Tarea tarea=tareaService.one(TareaId);
+            byte nivelMax=tareaEstudianteService.one(new TareaEstudiante.TareaEstudianteId(tarea,e)).getFase();
+            if (nivel>nivelMax){
+                throw new RuntimeException("Demasiado difícil para tí");
+            }else{
+                return faseService.one(TareaId,nivel);
+            }
+        }else{
+            throw new RuntimeException("No autorizado");
         }
-        Estudiante estudiante = estudianteService.one(tokenUtils.getTimeCreationUsername(token)[1].toString());
-        Tarea tarea=tareaService.one(id);
-        byte nivelMax=tareaEstudianteService.one(new TareaEstudiante.TareaEstudianteId(tarea,estudiante)).getFase();
 
-        if (nivel>nivelMax){
-            throw new RuntimeException("Demasiado difícil para tí");
-        }
-        return fase;
     }
     @PostMapping("/{id}-{nivel}")
     public Fase done(@PathVariable("id") long id,@PathVariable("id") byte nivel,@RequestBody Fase fase) {

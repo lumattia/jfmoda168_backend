@@ -22,6 +22,10 @@ export class UsuarioService {
   }
   cambiarEstado(id:number):Observable<boolean>{
     const url = `${USUARIOURL}/cambiarEstado/${id}`;
-    return this.http.post<boolean>(url, HTTPOPTIONS);
+    return this.http.put<boolean>(url, HTTPOPTIONS);
+  }
+  cambiarContraseña(oldPassword:string,newPassword:string):Observable<void>{
+    const url = `${USUARIOURL}/cambiarContrasena/`;
+    return this.http.put<void>(url,{oldPassword,newPassword},HTTPOPTIONS);
   }
 }

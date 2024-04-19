@@ -33,21 +33,26 @@ public class UsuarioService {
         return this.usuarioRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(id,"usuario"));
     }
-
+    public Usuario one(String email) {
+        return this.usuarioRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Usuario with Email: "+email+" not found"));
+    }
     public Usuario replace(Long id, Usuario usuario) {
-
         return this.usuarioRepository.findById(id).map(
                 p -> (id.equals(usuario.getId()) && p.getRol().equals("ADMINISTRADOR") ?
                         this.usuarioRepository.save(usuario) : null))
                 .orElseThrow(() -> new NotFoundException(id,"usuario"));
-
     }
     public boolean cambiarEstado(Long id) {
         Usuario usuario=one(id);
         usuario.setBlocked(!usuario.isBlocked());
         this.usuarioRepository.save(usuario);
         return usuario.isBlocked();
-
+    }
+    public void cambiarContraseña(String email,String codedNewPassword) {
+        Usuario usuario=one(email);
+        usuario.setPassword(codedNewPassword);
+        this.usuarioRepository.save(usuario);
     }
     public void delete(Long id) {
         this.usuarioRepository.findById(id).map(e -> {
