@@ -38,7 +38,10 @@ public class ProfesorService {
         return this.profesorRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(id,"profesor"));
     }
-
+    public Profesor one(String email) {
+        return this.profesorRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Profesor with Email: "+email+" not found"));
+    }
     public Profesor replace(Long id, Profesor profesor) {
         Profesor p=this.profesorRepository.findById(id).orElseThrow(() -> new NotFoundException(id,"profesor"));
         p.setEmail(profesor.getEmail());

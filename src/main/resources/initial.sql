@@ -105,11 +105,11 @@ INSERT INTO tarea (nombre, avanzado_id, basico_id, intermedio_id, propietario_id
 VALUES ('Tarea 3', 3, 1, 2, 3, 3);
 -- Insertar datos en la tabla tarea_estudiante
 INSERT INTO tarea_estudiante (fase, estudiante_id, tarea_id)
-VALUES (1, 1, 2);
+VALUES (1, 20, 2);
 INSERT INTO tarea_estudiante (fase, puntuacion_basica, puntuacion_intermedia, estudiante_id, tarea_id)
-VALUES (2, 85, 80, 3, 1);
+VALUES (2, 85, 80, 21, 1);
 INSERT INTO tarea_estudiante (fase, puntuacion_basica, puntuacion_intermedia, puntuacion_avanzada, estudiante_id, tarea_id)
-VALUES (3, 90, 85, 80, 4, 3);
+VALUES (3, 90, 85, 80, 22, 3);
 INSERT INTO pregunta (enunciado, nombre_archivo, fase_id) VALUES ('Enunciado pregunta 1', 'archivo1.jpg', 1);
 INSERT INTO pregunta (enunciado, nombre_archivo, fase_id) VALUES ('Enunciado pregunta 2', 'archivo2.mp3', 2);
 INSERT INTO pregunta (enunciado, nombre_archivo, fase_id) VALUES ('Enunciado pregunta 3', 'archivo3.mp4', 3);

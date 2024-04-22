@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Data
@@ -29,7 +30,8 @@ public class Tarea {
     @JsonIgnore
     Tema tema;
     @OneToMany(mappedBy = "id.tarea")
-    private Set<TareaEstudiante> tareaEstudiantes;
+
+    Set<TareaEstudiante> tareaEstudiantes=new HashSet<>();
     @OneToOne(cascade = CascadeType.ALL,orphanRemoval = true)
     Fase basico=new Fase((short)1);
     @OneToOne(cascade = CascadeType.ALL,orphanRemoval = true)

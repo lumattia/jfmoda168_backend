@@ -10,6 +10,8 @@ import {ProfesorFormComponent} from "./admin/usuarios/profesor/form/form.compone
 import {EstudianteFormComponent} from "./admin/usuarios/estudiante/form/form.component";
 import {ProfesorComponent} from "./profesor/profesor.component";
 import {EstudianteComponent} from "./estudiante/estudiante.component";
+import {ListAulasComponent} from "./profesor/list-aulas/list-aulas.component";
+import {AulaComponent} from "./profesor/aula/aula.component";
 
 export const routes: Routes = [
   {path:'login',component:LoginComponent},
@@ -28,7 +30,8 @@ export const routes: Routes = [
       ]
   },
   {path:'profesor',component:ProfesorComponent, canActivate: [canActivateProfesor],children:[
-
+      {path:'',component:ListAulasComponent},
+      {path:':id',component:AulaComponent}
     ]
   },
   {path:'estudiante',component:EstudianteComponent, canActivate: [canActivateEstudiante],children:[

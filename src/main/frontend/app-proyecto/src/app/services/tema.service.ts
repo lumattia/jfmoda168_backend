@@ -2,10 +2,8 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpHeaders} from "@angular/common/http";
 import {catchError, Observable, throwError} from "rxjs";
 import {Option} from "../interfaces/option";
-import {Aula, AulaForm} from "../interfaces/aula";
 
-const AULAURL="http://localhost:8080/v1/api/aulas"
-
+const TEMAURL="http://localhost:8080/v1/api/temas"
 const HTTPOPTIONS = {
   headers: new HttpHeaders({
     'Content-Type':  'application/json'
@@ -15,29 +13,20 @@ const HTTPOPTIONS = {
 @Injectable({
   providedIn: 'root'
 })
-export class AulaService {
+export class TemaService {
 
   constructor(private http:HttpClient) {
   }
-
-  //Métodos (incluir tipos correctos en los argumentos)
-  getAulas():Observable<Object>{
-    return this.http.get(AULAURL);
-  }
-  getAula(id:number):Observable<Aula>{
-    const url = `${AULAURL}/${id}`
-    return this.http.get<Aula>(url);
-  }
-  crearAula(aula:AulaForm):Observable<Object>{
-    return this.http.post<Option>(AULAURL,
-      aula
-    ,HTTPOPTIONS)  }
-  actualizarAula(a:any):Observable<Object>{
-    const url = `${AULAURL}/${a.id}`;
+  crearTema(nombre:any):Observable<Object>{
+    return this.http.post<Option>(TEMAURL, {
+      nombre
+    },HTTPOPTIONS)  }
+  actualizarTema(a:any):Observable<Object>{
+    const url = `${TEMAURL}/${a.id}`;
     return this.http.put<Option>(url, a, HTTPOPTIONS);
   }
-  deleteAula(a:any):Observable<any>{
-    const url = `${AULAURL}/${a}`
+  deleteTema(a:any):Observable<any>{
+    const url = `${TEMAURL}/${a}`
     return this.http.delete(url, HTTPOPTIONS)
       .pipe(catchError(this.handleError));
   }

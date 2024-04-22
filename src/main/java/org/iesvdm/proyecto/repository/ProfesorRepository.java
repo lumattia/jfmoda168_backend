@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.Optional;
 import java.util.Set;
 
 public interface ProfesorRepository extends JpaRepository<Profesor,Long> {
@@ -17,4 +18,5 @@ public interface ProfesorRepository extends JpaRepository<Profesor,Long> {
     Set<Option> getAulas(Long profesorId);
     @Query("SELECT c FROM Clase c JOIN FETCH c.profesores p WHERE p.id = ?1")
     Set<Option> getClases(Long profesorId);
+    Optional<Profesor> findByEmail(String email);
 }
