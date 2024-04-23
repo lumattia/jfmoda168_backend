@@ -20,11 +20,12 @@ public class TemaService {
     }
 
     public Tema replace(long id, Tema tema) {
-
-        return this.temaRepository.findById(id).map( c -> (id==tema.getId()  ?
-                        this.temaRepository.save(tema) : null))
-                .orElseThrow(() -> new NotFoundException(id,"tema"));
-
+        Tema t=one(id);
+        if (id==tema.getId()){
+            t.setNombre(tema.getNombre());
+            return this.temaRepository.save(t);
+        }
+        return null;
     }
 
     public void delete(long id) {

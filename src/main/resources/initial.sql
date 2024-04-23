@@ -63,7 +63,7 @@ INSERT INTO clase_profesores (clases_id, profesores_id) VALUES (3, 4);
 INSERT INTO clase_profesores (clases_id, profesores_id) VALUES (4, 5);
 INSERT INTO clase_profesores (clases_id, profesores_id) VALUES (5, 6);
 
-INSERT INTO aula (año, eliminado, grupo, clase_id, propietario_id) VALUES ('23/24', 0, 'A', 1, 1);
+INSERT INTO aula (año, eliminado, grupo, clase_id, propietario_id) VALUES ('23/24', 0, 'A', 1, 2);
 INSERT INTO aula (año, eliminado, grupo, clase_id, propietario_id) VALUES ('23/24', 0, 'B', 2, 2);
 INSERT INTO aula (año, eliminado, grupo, clase_id, propietario_id) VALUES ('23/24', 0, 'C', 3, 3);
 INSERT INTO aula (año, eliminado, grupo, clase_id, propietario_id) VALUES ('23/24', 0, 'D', 4, 4);
@@ -74,23 +74,23 @@ INSERT INTO aula_profesores (aulas_id, profesores_id) VALUES (1, 3);
 INSERT INTO aula_profesores (aulas_id, profesores_id) VALUES (2, 4);
 INSERT INTO aula_profesores (aulas_id, profesores_id) VALUES (2, 5);
 INSERT INTO aula_profesores (aulas_id, profesores_id) VALUES (3, 6);
-INSERT INTO aula_profesores (aulas_id, profesores_id) VALUES (1, 1);
+INSERT INTO aula_profesores (aulas_id, profesores_id) VALUES (1, 4);
 INSERT INTO aula_profesores (aulas_id, profesores_id) VALUES (2, 2);
 INSERT INTO aula_profesores (aulas_id, profesores_id) VALUES (3, 3);
 INSERT INTO aula_profesores (aulas_id, profesores_id) VALUES (4, 4);
 INSERT INTO aula_profesores (aulas_id, profesores_id) VALUES (5, 5);
 
-INSERT INTO aula_estudiantes (aula_id, estudiantes_id) VALUES (1, 6);
-INSERT INTO aula_estudiantes (aula_id, estudiantes_id) VALUES (1, 7);
-INSERT INTO aula_estudiantes (aula_id, estudiantes_id) VALUES (1, 8);
-INSERT INTO aula_estudiantes (aula_id, estudiantes_id) VALUES (1, 9);
-INSERT INTO aula_estudiantes (aula_id, estudiantes_id) VALUES (1, 10);
+INSERT INTO aula_estudiantes (aula_id, estudiantes_id) VALUES (1, 20);
+INSERT INTO aula_estudiantes (aula_id, estudiantes_id) VALUES (1, 21);
+INSERT INTO aula_estudiantes (aula_id, estudiantes_id) VALUES (1, 22);
+INSERT INTO aula_estudiantes (aula_id, estudiantes_id) VALUES (1, 23);
+INSERT INTO aula_estudiantes (aula_id, estudiantes_id) VALUES (1, 24);
 
-INSERT INTO tema (clase_id, nombre, aula_id) VALUES (1, 'Tema 1', 1);
-INSERT INTO tema (clase_id, nombre, aula_id) VALUES (2, 'Tema 2', 2);
-INSERT INTO tema (clase_id, nombre, aula_id) VALUES (3, 'Tema 3', 3);
-INSERT INTO tema (clase_id, nombre, aula_id) VALUES (4, 'Tema 4', 4);
-INSERT INTO tema (clase_id, nombre, aula_id) VALUES (5, 'Tema 5', 5);
+INSERT INTO tema (nombre, aula_id) VALUES ('Tema 1', 1);
+INSERT INTO tema (nombre, aula_id) VALUES ('Tema 2', 2);
+INSERT INTO tema (nombre, aula_id) VALUES ('Tema 3', 3);
+INSERT INTO tema (nombre, aula_id) VALUES ('Tema 4', 4);
+INSERT INTO tema (nombre, aula_id) VALUES ('Tema 5', 5);
 -- Insertar datos en la tabla fase
 INSERT INTO fase (nombre_archivo,nivel) VALUES ('video',1);
 INSERT INTO fase (nombre_archivo,nivel) VALUES ('foto',2);

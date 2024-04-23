@@ -6,14 +6,14 @@
   </div>
   <div class="row g-2 row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4" >
     <div class="btn-group col" *ngFor="let aula of aulas">
-      <button class="w-100 btn btn-primary text-start" [routerLink]="['.',aula.id]">
+      <button class="w-100 btn btn-primary text-start" [routerLink]="['./aula',aula.id]">
         {{aula.nombre}}
       </button>
       <button class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
         <i class="fa-solid fa-ellipsis-vertical"></i>
       </button>
       <ul class="dropdown-menu">
-        <li><a class="dropdown-item" (click)="openEditarModal(aula)">Editar</a></li>
+        <li><a class="dropdown-item" (click)="openEditarModal(aula.id)">Editar</a></li>
         <li><a class="dropdown-item text-danger" (click)="openEliminarModal(aula)">Eliminar</a></li>
       </ul>
     </div>

@@ -31,7 +31,7 @@ export const routes: Routes = [
   },
   {path:'profesor',component:ProfesorComponent, canActivate: [canActivateProfesor],children:[
       {path:'',component:ListAulasComponent},
-      {path:':id',component:AulaComponent}
+      {path:'aula/:id',component:AulaComponent}
     ]
   },
   {path:'estudiante',component:EstudianteComponent, canActivate: [canActivateEstudiante],children:[

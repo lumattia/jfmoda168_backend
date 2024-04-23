@@ -3,7 +3,6 @@ package org.iesvdm.proyecto.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.iesvdm.proyecto.model.entity.Aula;
 import org.iesvdm.proyecto.model.entity.Profesor;
-import org.iesvdm.proyecto.model.entity.Tema;
 import org.iesvdm.proyecto.service.AulaService;
 import org.iesvdm.proyecto.service.ProfesorService;
 import org.springframework.http.HttpStatus;
@@ -48,10 +47,6 @@ public class AulaController {
     @PutMapping("/{id}")
     public Aula replace(@PathVariable("id") long id, @RequestBody Aula aula) {
         return this.aulaService.replace(id, aula);
-    }
-    @PostMapping("/{id}")
-    public Aula createTarea(@PathVariable("id") long id, @RequestBody Tema tema) {
-        return this.aulaService.createTema(id, tema);
     }
     @ResponseBody
     @ResponseStatus(HttpStatus.NO_CONTENT)

@@ -68,18 +68,17 @@ public class WebSecurityConfig {
                         //PARA LAS PETICIONES preflight OPTIONS DEL NAVEGADOR :p
                         //Ver https://stackoverflow.com/questions/76682586/allow-cors-with-spring-security-6-1-1-with-authenticated-requests
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                        .requestMatchers("/v1/api/usuarios/cambiarContrasena").authenticated()
                         .requestMatchers("/v1/api/asignaturas/**").hasAnyAuthority("ADMINISTRADOR")
                         .requestMatchers("/v1/api/cursos/**").hasAnyAuthority("ADMINISTRADOR")
                         .requestMatchers("/v1/api/clases/**").hasAnyAuthority("ADMINISTRADOR")
-                        .requestMatchers("/v1/api/usuarios/cambiarContrasena").authenticated()
                         .requestMatchers("/v1/api/usuarios/**").hasAnyAuthority("ADMINISTRADOR")
-                        .requestMatchers("/v1/api/profesores").hasAnyAuthority("ADMINISTRADOR")
-                        .requestMatchers(HttpMethod.GET,"/v1/api/estudiantes").hasAnyAuthority("PROFESOR","ADMINISTRADOR")
-                        .requestMatchers("/v1/api/estudiantes").hasAnyAuthority("ADMINISTRADOR")
-                        .requestMatchers("/v1/api/profesores/**").hasAnyAuthority("PROFESOR")
-                        .requestMatchers(HttpMethod.GET,"/v1/api/aulas").hasAnyAuthority("PROFESOR","ESTUDIANTE")
+                        .requestMatchers(HttpMethod.GET,"/v1/api/profesores/**").hasAnyAuthority("PROFESOR","ADMINISTRADOR")
+                        .requestMatchers("/v1/api/profesores/**").hasAnyAuthority("ADMINISTRADOR")
+                        .requestMatchers("/v1/api/estudiantes/**").hasAnyAuthority("ADMINISTRADOR")
                         .requestMatchers("/v1/api/aulas/**").hasAnyAuthority("PROFESOR")
-                        .requestMatchers("/v1/api/estudiantes/**").hasAnyAuthority("ESTUDIANTE")
+                        .requestMatchers("/v1/api/temas/**").hasAnyAuthority("PROFESOR")
+                        .requestMatchers("/v1/api/tareas/**").hasAnyAuthority("PROFESOR")
                         .requestMatchers("/v1/api/**").permitAll()
                         .anyRequest().authenticated());
         http.authenticationProvider(authenticationProvider());

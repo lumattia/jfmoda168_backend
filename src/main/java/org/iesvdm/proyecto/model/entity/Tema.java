@@ -8,6 +8,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.iesvdm.proyecto.serializer.TemaSerializer;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Data
@@ -29,9 +30,7 @@ public class Tema {
     @ManyToOne
     Aula aula;
     @OneToMany(mappedBy = "tema")
-    Set<Tarea> tareas;
-
-    long clase_id;
+    Set<Tarea> tareas=new HashSet<>();
 
     public String getRoute(){
         return this.aula.getNombre()+" "+this.nombre;

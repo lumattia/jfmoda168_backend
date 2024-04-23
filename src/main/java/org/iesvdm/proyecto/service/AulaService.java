@@ -4,7 +4,6 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.iesvdm.proyecto.exeption.NotFoundException;
 import org.iesvdm.proyecto.model.entity.Aula;
-import org.iesvdm.proyecto.model.entity.Tema;
 import org.iesvdm.proyecto.repository.AulaRepository;
 import org.springframework.stereotype.Service;
 
@@ -15,12 +14,6 @@ public class AulaService {
     private final AulaRepository aulaRepository;
     public AulaService(AulaRepository aulaRepository) {
         this.aulaRepository = aulaRepository;
-    }
-    public Aula createTema(long id, Tema tema) {
-        Aula a=one(id);
-        a.getTemas().add(tema);
-        tema.setClase_id(a.getClase().getId());
-        return this.aulaRepository.save(a);
     }
     public Aula save(Aula aula) {
         aula.getProfesores().add(aula.getPropietario());
@@ -39,7 +32,12 @@ public class AulaService {
 
     public Aula replace(long id, Aula aula) {
         Aula a= one(id);
-        return id==a.getId()?this.aulaRepository.save(aula) : null;
+        if (id==a.getId()){
+            a.setGrupo(aula.getGrupo());
+            a.setAño(aula.getAño());
+            return this.aulaRepository.save(a);
+        }
+        return null;
     }
 
     public void delete(long id) {
