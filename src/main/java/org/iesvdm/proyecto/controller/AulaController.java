@@ -3,6 +3,7 @@ package org.iesvdm.proyecto.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.iesvdm.proyecto.model.entity.Aula;
 import org.iesvdm.proyecto.model.entity.Profesor;
+import org.iesvdm.proyecto.model.entity.Tema;
 import org.iesvdm.proyecto.service.AulaService;
 import org.iesvdm.proyecto.service.ProfesorService;
 import org.springframework.http.HttpStatus;
@@ -22,6 +23,15 @@ public class AulaController {
         this.profesorService = profesorService;
         this.aulaService = aulaService;
     }
+    private Profesor comprobarAccesoAula(long idAula) {
+        // Realizar la comprobación de acceso al aula
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Profesor p = profesorService.one(auth.getName());
+        if (p.getAulas().stream().noneMatch(aula -> aula.getId() == idAula)) {
+            throw new RuntimeException("No eres profesor de ese aula.");
+        }
+        return p;
+    }
     @PostMapping({"","/"})
     public Aula save(@RequestBody Aula aula) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -36,22 +46,25 @@ public class AulaController {
     }
     @GetMapping("/{id}")
     public Aula one(@PathVariable("id") long id) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        Profesor p=profesorService.one(auth.getName());
-        if (p.getAulas().stream().anyMatch(aula -> aula.getId()==id)){
-            return this.aulaService.one(id);
-        }else{
-            throw new RuntimeException("No eres profesor de ese aula.");
-        }
+        comprobarAccesoAula(id);
+        return this.aulaService.one(id);
     }
     @PutMapping("/{id}")
     public Aula replace(@PathVariable("id") long id, @RequestBody Aula aula) {
+        comprobarAccesoAula(id);
         return this.aulaService.replace(id, aula);
+    }
+    @PostMapping("/{id}")
+    public Tema createTema(@PathVariable("id") long id, @RequestBody Tema tema) {
+        comprobarAccesoAula(id);
+        return this.aulaService.createTema(id, tema);
     }
     @ResponseBody
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
     public void delete(@PathVariable("id") long id){
-        this.aulaService.delete(id);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Profesor p = profesorService.one(auth.getName());
+        this.aulaService.delete(id,p.getId());
     }
 }

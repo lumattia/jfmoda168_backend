@@ -5,7 +5,6 @@ import org.iesvdm.proyecto.model.entity.Tarea;
 import org.iesvdm.proyecto.repository.TareaRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
 
 @Service
 public class TareaService {
@@ -17,16 +16,17 @@ public class TareaService {
         return this.tareaRepository.save(tarea);
     }
     public Tarea one(long id) {
-        Optional<Tarea> t=this.tareaRepository.findById(id);
         return this.tareaRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(id,"tarea"));
     }
 
     public Tarea replace(long id, Tarea tarea) {
-
-        return this.tareaRepository.findById(id).map( c -> (id==tarea.getId()  ?
-                        this.tareaRepository.save(tarea) : null))
-                .orElseThrow(() -> new NotFoundException(id,"tarea"));
+        Tarea t=one(id);
+        if (id==tarea.getId()){
+            t.setNombre(tarea.getNombre());
+            return this.tareaRepository.save(t);
+        }
+        return null;
     }
     public void delete(long id) {
         this.tareaRepository.findById(id).map(c -> {

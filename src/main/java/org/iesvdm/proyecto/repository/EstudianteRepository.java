@@ -16,7 +16,7 @@ public interface EstudianteRepository extends JpaRepository<Estudiante,Long> {
             " FROM Estudiante e WHERE CONCAT(e.nombre, ' ', e.apellidos) LIKE %?1%" +
             "or e.aula LIKE %?1%")
     Page<EstudianteRow> findByNombreCompleto(String nombreCompleto, Pageable pageable);
-    @Query("SELECT a FROM Aula a JOIN FETCH a.estudiantes e WHERE e.id = ?1 and not a.eliminado")
+    @Query("SELECT a FROM Aula a JOIN FETCH a.estudiantes e WHERE e.id = ?1")
     Set<Option> getAulas(Long estudianteId);
     Optional<Estudiante> findByEmail(String email);
 }

@@ -1,5 +1,6 @@
 package org.iesvdm.proyecto.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -28,8 +29,9 @@ public class Tema {
     String nombre;
 
     @ManyToOne
+    @JsonIgnore
     Aula aula;
-    @OneToMany(mappedBy = "tema")
+    @OneToMany(mappedBy = "tema",cascade = CascadeType.ALL,orphanRemoval = true)
     Set<Tarea> tareas=new HashSet<>();
 
     public String getRoute(){

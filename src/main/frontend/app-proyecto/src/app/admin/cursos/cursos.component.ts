@@ -1,12 +1,12 @@
-import { Component } from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {FormsModule} from "@angular/forms";
 import {NgForOf, NgIf} from "@angular/common";
 import {CursoService} from "../../services/curso.service";
 import {RouterLink} from "@angular/router";
 import {Option} from "../../interfaces/option";
 import {ModalComponent} from "../../util/modal/modal.component";
-import {MdbModalModule, MdbModalRef, MdbModalService} from "mdb-angular-ui-kit/modal";
 import {FormModalComponent} from "../../util/form-modal/form-modal.component";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-cursos',
@@ -15,39 +15,33 @@ import {FormModalComponent} from "../../util/form-modal/form-modal.component";
     FormsModule,
     NgForOf,
     NgIf,
-    RouterLink,
-    MdbModalModule
+    RouterLink
   ],
   templateUrl: './cursos.component.html',
   styleUrl: './cursos.component.css'
 })
 export class CursosComponent {
-  modalRef: MdbModalRef<ModalComponent> | null = null;
+  private modalService = inject(NgbModal);
   searchTerm:string="";
   cursos: Option[] = [];
   nombreCurso:string="";
-  constructor(private modalService: MdbModalService,private cursoService: CursoService) {
+  constructor(private cursoService: CursoService) {
     this.buscar();
   }
   openEliminarModal(option:Option) {
-    this.modalRef = this.modalService.open(ModalComponent, {
-      data: { name:"curso",option:option },
-    });
-    this.modalRef.onClose.subscribe((o: Option) => {
-      if (o!=null){
+    const modalRef = this.modalService.open(ModalComponent);
+    modalRef.componentInstance.name = 'curso';
+    modalRef.componentInstance.option = option;
+    modalRef.closed.subscribe((o: Option) => {
         this.eliminarCurso(o.id)
-      }
     });
   }
   openEditarModal(o:Option) {
-    this.modalRef = this.modalService.open(FormModalComponent, {
-      modalClass: 'modal-dialog-centered',
-      data: { name:"asignatura",option: {id:o.id,nombre:o.nombre} },
-    });
-    this.modalRef.onClose.subscribe((o: Option) => {
-      if (o!=null){
-        this.editarCurso(o)
-      }
+    const modalRef = this.modalService.open(FormModalComponent,{centered:true});
+    modalRef.componentInstance.name = 'curso';
+    modalRef.componentInstance.option = {id:o.id,nombre:o.nombre};
+    modalRef.closed.subscribe((o: Option) => {
+      this.editarCurso(o)
     });
   }
   buscar(){

@@ -1,10 +1,9 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import {Component, EventEmitter, inject, Output} from '@angular/core';
 import {NgClass, NgForOf, NgIf} from "@angular/common";
 import {EstudianteRow} from "../../../interfaces/estudiante";
 import {EstudianteService} from "../../../services/estudiante.service";
 import {FormsModule} from "@angular/forms";
-import {NgbPagination} from "@ng-bootstrap/ng-bootstrap";
-import {MdbModalModule, MdbModalRef, MdbModalService} from "mdb-angular-ui-kit/modal";
+import {NgbModal, NgbPagination} from "@ng-bootstrap/ng-bootstrap";
 import {ModalComponent} from "../../../util/modal/modal.component";
 import {Option} from "../../../interfaces/option";
 import {RouterLink} from "@angular/router";
@@ -17,14 +16,13 @@ import {RouterLink} from "@angular/router";
     NgIf,
     NgbPagination,
     NgClass,
-    MdbModalModule,
     RouterLink
   ],
   templateUrl: './estudiante.component.html',
   styleUrl: './estudiante.component.css'
 })
 export class EstudianteComponent {
-  modalRef: MdbModalRef<ModalComponent> | null = null;
+  private modalService = inject(NgbModal);
   estudiantes:EstudianteRow[]=[];
   page= 1;
   pageSize:number=10;
@@ -35,7 +33,7 @@ export class EstudianteComponent {
   sortColumn= '';
   sortDirection= '';
 
-  constructor(private modalService: MdbModalService, private estudianteService: EstudianteService) {
+  constructor(private estudianteService: EstudianteService) {
     this.pageChanged()
   }
   onSort(column:string) {
@@ -76,13 +74,11 @@ export class EstudianteComponent {
     });
   }
   openModal(option:EstudianteRow) {
-    this.modalRef = this.modalService.open(ModalComponent, {
-      data: { name:"profesor",option: {id:option.id,nombre:option.nombre+" "+option.apellidos} },
-    });
-    this.modalRef.onClose.subscribe((o: Option) => {
-      if (o!=null){
-        this.eliminarEstudiante(o.id)
-      }
+    const modalRef = this.modalService.open(ModalComponent);
+    modalRef.componentInstance.name = 'estudiante';
+    modalRef.componentInstance.option = {id:option.id,nombre:option.nombre+" "+option.apellidos};
+    modalRef.closed.subscribe((o: Option) => {
+      this.eliminarEstudiante(o.id)
     });
   }
 }

@@ -1,8 +1,7 @@
-import { Component } from '@angular/core';
-import {MdbModalRef} from "mdb-angular-ui-kit/modal";
+import {Component, inject, Input} from '@angular/core';
 import {Option} from "../../interfaces/option";
-import {ModalComponent} from "../modal/modal.component";
 import {FormsModule} from "@angular/forms";
+import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-modal',
@@ -14,13 +13,10 @@ import {FormsModule} from "@angular/forms";
   styleUrl: './form-modal.component.html'
 })
 export class FormModalComponent {
-  name: string | null = null;
-  option:Option= {
+  activeModal = inject(NgbActiveModal);
+  @Input() name: string="";
+  @Input() option:Option= {
     id:0,
     nombre:""
   };
-  constructor(public modalRef: MdbModalRef<ModalComponent>) {}
-  close(): void {
-      this.modalRef.close(this.option);
-  }
 }

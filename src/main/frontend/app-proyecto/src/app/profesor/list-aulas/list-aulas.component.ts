@@ -1,5 +1,4 @@
-import { Component } from '@angular/core';
-import {MdbModalModule, MdbModalRef, MdbModalService} from "mdb-angular-ui-kit/modal";
+import {Component, inject} from '@angular/core';
 import {Aula, AulaForm} from "../../interfaces/aula";
 import {Option} from "../../interfaces/option";
 import {ProfesorService} from "../../services/profesor.service";
@@ -9,6 +8,8 @@ import {FormsModule} from "@angular/forms";
 import {NgForOf} from "@angular/common";
 import {RouterLink} from "@angular/router";
 import {AulaEditModalComponent} from "../aula-edit-modal/aula-edit-modal.component";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {ModalComponent} from "../../util/modal/modal.component";
 
 @Component({
   selector: 'app-list-aulas',
@@ -16,14 +17,13 @@ import {AulaEditModalComponent} from "../aula-edit-modal/aula-edit-modal.compone
   imports: [
     FormsModule,
     NgForOf,
-    RouterLink,
-    MdbModalModule
+    RouterLink
   ],
   templateUrl: './list-aulas.component.html',
   styleUrl: './list-aulas.component.css'
 })
 export class ListAulasComponent {
-  modalRef: MdbModalRef<AulaEditModalComponent>|null= null;
+  private modalService = inject(NgbModal);
   aula:AulaForm={
     id:0,
     clase:{id:-1,nombre:""},
@@ -32,8 +32,8 @@ export class ListAulasComponent {
   }
   aulas:Option[]=[];
   clases:Option[]=[];
-  constructor(private profesorService:ProfesorService,private aulaService:AulaService,
-              private modalService: MdbModalService,private storageService: StorageService) {
+  constructor(profesorService:ProfesorService,private aulaService:AulaService,
+              storageService: StorageService) {
     let id=storageService.getUser().content.id;
     profesorService.getAulas(id).subscribe({
       next: (a) => {
@@ -52,41 +52,33 @@ export class ListAulasComponent {
       }
     })
   }
+  openEliminarModal(option:Option) {
+    const modalRef = this.modalService.open(ModalComponent);
+    modalRef.componentInstance.name = 'aula';
+    modalRef.componentInstance.option = option;
+    modalRef.closed.subscribe((o: Option) => {
+      this.eliminarAula(o.id)
+    });
+  }
   openEditarModal(id:number) {
     this.aulaService.getAula(id).subscribe({
       next: (a) => {
-        this.modalRef = this.modalService.open(AulaEditModalComponent, {
-          modalClass: 'modal-dialog-centered',
-          data: { aula:{
+        const modalRef = this.modalService.open(AulaEditModalComponent,{centered:true});
+        modalRef.componentInstance.aula = {
             id:a.id,
-              grupo:a.grupo,
-              año:a.año,
-              clase:{nombre:a.clase.nombre},
-              tema:[]
-            }},
-        });
-        this.modalRef.onClose.subscribe((a: Aula) => {
-          if (a!=null){
-            this.editarAula(a)
-          }
+            grupo:a.grupo,
+            año:a.año,
+            clase:{nombre:a.clase.nombre},
+            tema:[]
+          };
+        modalRef.closed.subscribe((a: Aula) => {
+          this.editarAula(a)
         });
       },
       error: (error) => {
         console.error(error);
       }
     })
-
-
-  }
-  openEliminarModal(option:Option) {
-    this.modalRef = this.modalService.open(AulaEditModalComponent, {
-      data: { name:"Aula",option:option },
-    });
-    this.modalRef.onClose.subscribe((o: Option) => {
-      if (o!=null){
-        this.eliminarAula(o.id)
-      }
-    });
   }
   ngOnInit(){
     const anioActual = new Date().getFullYear()-2000;

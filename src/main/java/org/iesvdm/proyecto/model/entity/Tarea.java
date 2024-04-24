@@ -30,7 +30,7 @@ public class Tarea {
     @JsonIgnore
     Tema tema;
     @OneToMany(mappedBy = "id.tarea")
-
+    @JsonIgnore
     Set<TareaEstudiante> tareaEstudiantes=new HashSet<>();
     @OneToOne(cascade = CascadeType.ALL,orphanRemoval = true)
     Fase basico=new Fase((short)1);

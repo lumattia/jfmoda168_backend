@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
-import {MdbModalRef} from "mdb-angular-ui-kit/modal";
+import {Component, inject, Input} from '@angular/core';
 import {Option} from "../../interfaces/option";
+import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-modal',
@@ -10,10 +10,8 @@ import {Option} from "../../interfaces/option";
   styleUrl: './modal.component.css'
 })
 export class ModalComponent {
-  name: string | null = null;
-  option:Option|null=null;
-  constructor(public modalRef: MdbModalRef<ModalComponent>) {}
-  close(): void {
-    this.modalRef.close(this.option);
-  }
+  activeModal = inject(NgbActiveModal);
+
+  @Input() name: string="";
+  @Input() option:Option|null=null;
 }

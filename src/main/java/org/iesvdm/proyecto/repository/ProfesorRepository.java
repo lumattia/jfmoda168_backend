@@ -14,7 +14,7 @@ import java.util.Set;
 public interface ProfesorRepository extends JpaRepository<Profesor,Long> {
     @Query("SELECT p FROM Profesor p WHERE CONCAT(p.nombre, ' ', p.apellidos) LIKE %?1%")
     Page<ProfesorRow> findByNombreCompleto(String nombreCompleto, Pageable pageable);
-    @Query("SELECT a FROM Aula a JOIN FETCH a.profesores p WHERE p.id = ?1 and not a.eliminado")
+    @Query("SELECT a FROM Aula a JOIN FETCH a.profesores p WHERE p.id = ?1")
     Set<Option> getAulas(Long profesorId);
     @Query("SELECT c FROM Clase c JOIN FETCH c.profesores p WHERE p.id = ?1")
     Set<Option> getClases(Long profesorId);

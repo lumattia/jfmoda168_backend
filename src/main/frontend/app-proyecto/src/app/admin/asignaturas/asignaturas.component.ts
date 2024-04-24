@@ -1,12 +1,12 @@
-import { Component } from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {FormsModule} from "@angular/forms";
 import {NgForOf, NgIf} from "@angular/common";
 import {AsignaturaService} from "../../services/asignatura.service";
 import {RouterLink} from "@angular/router";
 import {Option} from "../../interfaces/option";
-import {MdbModalModule, MdbModalRef, MdbModalService} from "mdb-angular-ui-kit/modal";
 import {ModalComponent} from "../../util/modal/modal.component";
 import {FormModalComponent} from "../../util/form-modal/form-modal.component";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
     selector: 'app-asignaturas',
@@ -15,39 +15,33 @@ import {FormModalComponent} from "../../util/form-modal/form-modal.component";
     FormsModule,
     NgForOf,
     NgIf,
-    RouterLink,
-    MdbModalModule
+    RouterLink
   ],
     templateUrl: './asignaturas.component.html',
     styleUrl: './asignaturas.component.css'
 })
 export class AsignaturasComponent {
-  modalRef: MdbModalRef<ModalComponent> | null = null;
+  private modalService = inject(NgbModal);
   searchTerm:string="";
   asignaturas: Option[] = [];
   nombreAsignatura:string="";
-  constructor(private modalService: MdbModalService,private asignaturaService: AsignaturaService) {
+  constructor(private asignaturaService: AsignaturaService) {
       this.buscar();
   }
   openEliminarModal(option:Option) {
-    this.modalRef = this.modalService.open(ModalComponent, {
-      data: { name:"asignatura",option:option },
-    });
-    this.modalRef.onClose.subscribe((o: Option) => {
-      if (o!=null){
+    const modalRef = this.modalService.open(ModalComponent);
+    modalRef.componentInstance.name = 'asignatura';
+    modalRef.componentInstance.option = option;
+    modalRef.closed.subscribe((o: Option) => {
         this.eliminarAsignatura(o.id)
-      }
     });
   }
   openEditarModal(o:Option) {
-    this.modalRef = this.modalService.open(FormModalComponent, {
-      modalClass: 'modal-dialog-centered',
-      data: { name:"asignatura",option: {id:o.id,nombre:o.nombre} },
-    });
-    this.modalRef.onClose.subscribe((o: Option) => {
-      if (o!=null){
+    const modalRef = this.modalService.open(FormModalComponent,{centered:true});
+    modalRef.componentInstance.name = 'asignatura';
+    modalRef.componentInstance.option = {id:o.id,nombre:o.nombre};
+    modalRef.closed.subscribe((o: Option) => {
         this.editarAsignatura(o)
-      }
     });
   }
     buscar(){

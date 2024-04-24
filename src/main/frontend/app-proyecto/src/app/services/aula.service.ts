@@ -32,6 +32,11 @@ export class AulaService {
     return this.http.post<Option>(AULAURL,
       aula
     ,HTTPOPTIONS)  }
+  crearTema(id:number,nombre:string):Observable<Object>{
+    const url = `${AULAURL}/${id}`
+    return this.http.post<Option>(url,
+      {nombre}
+      ,HTTPOPTIONS)  }
   actualizarAula(a:any):Observable<Object>{
     const url = `${AULAURL}/${a.id}`;
     return this.http.put<Option>(url, a, HTTPOPTIONS);

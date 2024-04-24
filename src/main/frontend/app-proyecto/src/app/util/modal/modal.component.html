@@ -1,16 +1,11 @@
 <div class="modal-header">
-  <h5 class="modal-title" id="exampleModalLabel">Eliminar {{name}}</h5>
-  <a
-    type="button"
-    class="btn-close"
-    aria-label="Close"
-    (click)="modalRef.close()"
-  ></a>
+  <h4 class="modal-title">Eliminar {{name}}</h4>
+  <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss()"></button>
 </div>
 <div class="modal-body">Seguro que quieres eliminar: {{option?.nombre}}?</div>
 <div class="modal-footer">
-  <button type="button" class="btn btn-secondary" (click)="modalRef.close()">
+  <button type="button" class="btn btn-secondary" (click)="activeModal.dismiss()">
     Cerrar
   </button>
-  <button type="button" class="btn btn-primary" (click)="close()">Aceptar</button>
+  <button type="button" class="btn btn-danger" (click)="activeModal.close(this.option)">Eliminar</button>
 </div>

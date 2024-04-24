@@ -1,6 +1,7 @@
 package org.iesvdm.proyecto.service;
 
 import org.iesvdm.proyecto.exeption.NotFoundException;
+import org.iesvdm.proyecto.model.entity.Tarea;
 import org.iesvdm.proyecto.model.entity.Tema;
 import org.iesvdm.proyecto.repository.TemaRepository;
 import org.springframework.stereotype.Service;
@@ -11,8 +12,12 @@ public class TemaService {
     public TemaService(TemaRepository temaRepository) {
         this.temaRepository = temaRepository;
     }
-    public Tema save(Tema tema) {
-        return this.temaRepository.save(tema);
+    public Tarea createTarea(long id, Tarea tarea) {
+        Tema t=one(id);
+        tarea.setTema(t);
+        t.getTareas().add(tarea);
+        this.temaRepository.save(t);
+        return t.getTareas().stream().sorted((o1, o2) -> Math.toIntExact(o2.getId() - o1.getId())).toList().get(0);
     }
     public Tema one(long id) {
         return this.temaRepository.findById(id)

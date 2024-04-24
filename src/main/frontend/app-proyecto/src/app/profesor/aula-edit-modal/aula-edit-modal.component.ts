@@ -1,8 +1,7 @@
-import { Component } from '@angular/core';
-import {MdbModalRef} from "mdb-angular-ui-kit/modal";
-import {ModalComponent} from "../../util/modal/modal.component";
-import {Aula} from "../../interfaces/aula";
+import {Component, inject, Input} from '@angular/core';
+import {AulaForm} from "../../interfaces/aula";
 import {FormsModule} from "@angular/forms";
+import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-aula-edit-modal',
@@ -14,16 +13,15 @@ import {FormsModule} from "@angular/forms";
   styleUrl: './aula-edit-modal.component.css'
 })
 export class AulaEditModalComponent {
-  aula: Aula=<Aula>{};
+  @Input() aula: AulaForm=<AulaForm>{};
   ano:string="";
-  constructor(public modalRef: MdbModalRef<ModalComponent>) {
+  activeModal = inject(NgbActiveModal);
 
-  }
   ngOnInit(){
     this.ano=this.aula.año;
   }
-  close(): void {
+  close(){
     this.aula.año=this.ano
-    this.modalRef.close(this.aula);
+    this.activeModal.close(this.aula)
   }
 }

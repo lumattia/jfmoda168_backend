@@ -17,11 +17,10 @@ export class TemaService {
 
   constructor(private http:HttpClient) {
   }
-  crearTema(tema:any):Observable<Object>{
-    console.log(tema)
-
-    return this.http.post<Option>(TEMAURL,
-      tema
+  crearTarea(id:number,nombre:any):Observable<Object>{
+    const url = `${TEMAURL}/${id}`;
+    return this.http.post<Option>(url,
+        {nombre}
     ,HTTPOPTIONS)  }
   actualizarTema(a:any):Observable<Object>{
     const url = `${TEMAURL}/${a.id}`;

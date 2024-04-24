@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {ClaseService} from "../../services/clase.service";
 import {NgForOf} from "@angular/common";
 import {CursoService} from "../../services/curso.service";
@@ -7,21 +7,20 @@ import {FormsModule} from "@angular/forms";
 import {ActivatedRoute} from "@angular/router";
 import {Option} from "../../interfaces/option";
 import {ModalComponent} from "../../util/modal/modal.component";
-import {MdbModalModule, MdbModalRef, MdbModalService} from "mdb-angular-ui-kit/modal";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-clases',
   standalone: true,
   imports: [
     NgForOf,
-    FormsModule,
-    MdbModalModule
+    FormsModule
   ],
   templateUrl: './clases.component.html',
   styleUrl: './clases.component.css'
 })
 export class ClasesComponent {
-  modalRef: MdbModalRef<ModalComponent> | null = null;
+  private modalService = inject(NgbModal);
   clases:Option[]=[];
   cursos:Option[]=[];
   asignaturas:Option[]=[];
@@ -33,7 +32,6 @@ export class ClasesComponent {
   constructor(private claseService: ClaseService,
               private cursoService:CursoService,
               private asignaturaService:AsignaturaService,
-              private modalService: MdbModalService,
               private route:ActivatedRoute) {
     this.route.queryParams.subscribe(params => {
       this.asignaturaSeleccionado = params['asignaturaId']|| -1;
@@ -51,13 +49,11 @@ export class ClasesComponent {
     });
   }
   openModal(option:Option) {
-    this.modalRef = this.modalService.open(ModalComponent, {
-      data: { action: 'Eliminar',name:"asignatura",option:option },
-    });
-    this.modalRef.onClose.subscribe((o: Option) => {
-      if (o!=null){
-        this.eliminarClase(o.id)
-      }
+    const modalRef = this.modalService.open(ModalComponent);
+    modalRef.componentInstance.name = 'clase';
+    modalRef.componentInstance.option = option;
+    modalRef.closed.subscribe((o: Option) => {
+      this.eliminarClase(o.id)
     });
   }
   filtrarClases(){
@@ -89,9 +85,6 @@ export class ClasesComponent {
         console.error(error);
       }
     });
-  }
-  borrar(clase:Option){
-    this.claseAborrar=clase;
   }
 }
 

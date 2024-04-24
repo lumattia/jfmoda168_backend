@@ -2,8 +2,10 @@ package org.iesvdm.proyecto.service;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.transaction.Transactional;
 import org.iesvdm.proyecto.exeption.NotFoundException;
 import org.iesvdm.proyecto.model.entity.Aula;
+import org.iesvdm.proyecto.model.entity.Tema;
 import org.iesvdm.proyecto.repository.AulaRepository;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,15 @@ public class AulaService {
     public AulaService(AulaRepository aulaRepository) {
         this.aulaRepository = aulaRepository;
     }
+
+    public Tema createTema(long id, Tema tema) {
+        Aula a=one(id);
+        tema.setAula(a);
+        a.getTemas().add(tema);
+        this.aulaRepository.save(a);
+        return a.getTemas().stream().sorted((o1, o2) -> Math.toIntExact(o2.getId() - o1.getId())).toList().get(0);
+    }
+    @Transactional
     public Aula save(Aula aula) {
         aula.getProfesores().add(aula.getPropietario());
         this.aulaRepository.save(aula);
@@ -40,10 +51,15 @@ public class AulaService {
         return null;
     }
 
-    public void delete(long id) {
-        this.aulaRepository.findById(id).map(c -> {c.setEliminado(true);
-                    this.aulaRepository.save(c);
-                    return c;})
-                .orElseThrow(() -> new NotFoundException(id,"aula"));
+    public void delete(long id,long usuarioId) {
+        Aula a=this.aulaRepository.findById(id).orElseThrow(() -> new NotFoundException(id,"aula"));
+        if (a.getPropietario().getId()==usuarioId){
+            a.setEliminado(true);
+            a.setProfesores(null);
+            a.setEstudiantes(null);
+            this.aulaRepository.save(a);
+        }else{
+            throw new RuntimeException("No tienes permiso para eliminar esa clase.");
+        }
     }
 }
