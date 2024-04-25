@@ -40,7 +40,7 @@ public class ProfesorService {
     }
     public Profesor one(String email) {
         return this.profesorRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("Profesor with Email: "+email+" not found"));
+                .orElseThrow(() -> new NotFoundException("Profesor with Email: "+email+" not found"));
     }
     public Profesor replace(Long id, Profesor profesor) {
         Profesor p=this.profesorRepository.findById(id).orElseThrow(() -> new NotFoundException(id,"profesor"));

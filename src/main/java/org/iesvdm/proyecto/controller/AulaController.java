@@ -11,6 +11,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import org.springframework.security.access.AccessDeniedException;
 @Slf4j
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -28,7 +29,7 @@ public class AulaController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Profesor p = profesorService.one(auth.getName());
         if (p.getAulas().stream().noneMatch(aula -> aula.getId() == idAula)) {
-            throw new RuntimeException("No eres profesor de ese aula.");
+            throw new AccessDeniedException("No eres profesor de ese aula.");
         }
         return p;
     }
@@ -41,11 +42,11 @@ public class AulaController {
             log.info("Guardando una aula");
             return this.aulaService.save(aula);
         }else{
-            throw new RuntimeException("Solo los profesores pueden crear un aula.");
+            throw new AccessDeniedException("Solo los profesores pueden crear un aula.");
         }
     }
     @GetMapping("/{id}")
-    public Aula one(@PathVariable("id") long id) {
+    public Aula one(@PathVariable("id") long id) throws AccessDeniedException {
         comprobarAccesoAula(id);
         return this.aulaService.one(id);
     }

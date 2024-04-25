@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import {StorageService} from "../services/storage.service";
-
+import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HTTP_INTERCEPTORS, HttpErrorResponse } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { StorageService } from "../services/storage.service";
 
 @Injectable()
 export class HttpRequestInterceptor implements HttpInterceptor {
@@ -10,20 +10,25 @@ export class HttpRequestInterceptor implements HttpInterceptor {
   constructor(private storageService: StorageService) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    /* Para jwt por cookie con withCredentials inserta las cookies en las peticiones automáticamente
-    req = req.clone({
-      withCredentials: true,
-    });
-    */
-
-    /*jwt por Authorization Bearer token en header*/
     const user = this.storageService.getUser();
     if (user && Object.keys(user).length) {
       req = req.clone({
         setHeaders: { Authorization: `Bearer ${user.token}` }
       });
     }
-    return next.handle(req);
+    return next.handle(req).pipe(
+      catchError((error: HttpErrorResponse) => {
+        let errorMessage = 'Ha ocurrido un error en la aplicación';
+        if (error.error instanceof ErrorEvent) {
+          // Error del lado del cliente
+          errorMessage = `Error: ${error.error.message}`;
+        } else {
+          // Error del lado del servidor
+          errorMessage = `Código de error: ${error.status}, mensaje: ${error.error}`;
+        }
+        return throwError(()=>new Error(errorMessage));
+      })
+    );
   }
 }
 

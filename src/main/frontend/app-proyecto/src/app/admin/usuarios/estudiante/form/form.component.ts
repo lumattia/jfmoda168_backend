@@ -40,23 +40,20 @@ export class EstudianteFormComponent {
             this.estudiante.email=estudiante.email;
           },
           error:(error)=>{
-            alert("Estudiante not found")
-            console.log(error)
+            alert(error.error)
           }
         })
       }
     });
   }
   guardar() {
-    console.log(this.estudiante)
     if (this.estudiante.id==0)
       this.estudianteService.crearEstudiante(this.estudiante).subscribe({
         next:(data)=>{
           this.volver()
         },
         error:(error)=>{
-          alert("Error a crear el estudiante.")
-          console.log(error)
+          alert(error.error)
         }
       })
     else{
@@ -65,8 +62,7 @@ export class EstudianteFormComponent {
           this.volver()
         },
         error:(error)=>{
-          alert("Error a editar el estudiante.")
-          console.log(error)
+          alert(error.error)
         }
       })
     }

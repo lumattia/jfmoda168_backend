@@ -7,6 +7,7 @@ import org.iesvdm.proyecto.model.entity.Tema;
 import org.iesvdm.proyecto.service.ProfesorService;
 import org.iesvdm.proyecto.service.TemaService;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +28,7 @@ public class TemaController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Profesor p = profesorService.one(auth.getName());
         if (p.getAulas().stream().noneMatch(aula -> aula.getId() == idAula)) {
-            throw new RuntimeException("No eres profesor de ese aula.");
+            throw new AccessDeniedException("No eres profesor de ese aula.");
         }
         return p;
     }

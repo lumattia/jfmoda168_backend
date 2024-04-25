@@ -10,6 +10,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import org.springframework.security.access.AccessDeniedException;
 @Slf4j
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -34,15 +35,15 @@ public class FaseController {
             Tarea tarea=tareaService.one(TareaId);
             byte nivelMax=tareaEstudianteService.one(new TareaEstudiante.TareaEstudianteId(tarea,e)).getFase();
             if (nivel>nivelMax){
-                throw new RuntimeException("Demasiado difícil para tí");
+                throw new AccessDeniedException("Demasiado difícil para tí");
             }else{
                 return faseService.one(TareaId,nivel);
             }
         }else{
-            throw new RuntimeException("No autorizado");
+            throw new AccessDeniedException("No autorizado");
         }
-
     }
+
     @PostMapping("/{id}-{nivel}")
     public Fase done(@PathVariable("id") long id,@PathVariable("id") byte nivel,@RequestBody Fase fase) {
         Tarea tarea=tareaService.one(id);

@@ -40,7 +40,7 @@ export class TareaComponent {
         this.tarea=data as Option;
       },
       error: (error) => {
-        console.error(error);
+        alert(error.error);
       }
     })
   }

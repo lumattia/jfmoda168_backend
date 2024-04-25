@@ -45,11 +45,10 @@ export class AulaComponent {
     if (this.existe(this.temaACrear)){
       this.aulaService.crearTema(this.aula.id,this.temaACrear).subscribe({
         next: (data) => {
-          console.log(data)
           this.aula.temas.push(data as Tema)
         },
         error: (error) => {
-          console.error(error);
+          alert(error.error);
         }
       });
     }else{

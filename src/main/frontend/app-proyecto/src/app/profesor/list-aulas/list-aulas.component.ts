@@ -85,11 +85,9 @@ export class ListAulasComponent {
     this.aula.año = `${anioActual}/${anioActual + 1}`;
   }
   crearAula(){
-    console.log(this.aula)
     if (this.aula.clase.id>0){
       this.aulaService.crearAula(this.aula).subscribe({
         next: (data) => {
-          console.log(data)
           this.aulas.push(data as Option)
         },
         error: (error) => {

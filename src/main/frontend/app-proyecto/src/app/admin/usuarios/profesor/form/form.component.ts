@@ -39,8 +39,7 @@ export class ProfesorFormComponent {
             this.profesor.email=profesor.email;
           },
           error:(error)=>{
-            alert("ProfesorForm not found")
-            console.log(error)
+            alert(error.error)
           }
         })
       }
@@ -53,8 +52,7 @@ export class ProfesorFormComponent {
           this.volver()
         },
         error:(error)=>{
-          alert("Error a crear el profesor.")
-          console.log(error)
+          alert(error.error)
         }
       })
     else{
@@ -63,8 +61,7 @@ export class ProfesorFormComponent {
           this.volver()
         },
         error:(error)=>{
-          alert("Error a editar el profesor.")
-          console.log(error)
+          alert(error.error)
         }
       })
     }

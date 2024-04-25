@@ -30,7 +30,7 @@ public class EstudianteService {
     }
     public Estudiante one(String email) {
         return this.estudianteRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("Estudiante with Email: "+email+" not found"));
+                .orElseThrow(() -> new NotFoundException("Estudiante with Email: "+email+" not found"));
     }
     public Set<Option> getAulas(Long id) {
         return this.estudianteRepository.getAulas(id);

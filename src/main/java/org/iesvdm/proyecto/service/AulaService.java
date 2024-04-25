@@ -7,6 +7,7 @@ import org.iesvdm.proyecto.exeption.NotFoundException;
 import org.iesvdm.proyecto.model.entity.Aula;
 import org.iesvdm.proyecto.model.entity.Tema;
 import org.iesvdm.proyecto.repository.AulaRepository;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -36,7 +37,7 @@ public class AulaService {
         Aula a=this.aulaRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(id,"aula"));
         if (a.isEliminado()){
-            throw new RuntimeException("Aula eliminada");
+            throw new NotFoundException("Aula eliminada");
         }
         return a;
     }
@@ -59,7 +60,7 @@ public class AulaService {
             a.setEstudiantes(null);
             this.aulaRepository.save(a);
         }else{
-            throw new RuntimeException("No tienes permiso para eliminar esa clase.");
+            throw new AccessDeniedException("No tienes permiso para eliminar esa clase.");
         }
     }
 }

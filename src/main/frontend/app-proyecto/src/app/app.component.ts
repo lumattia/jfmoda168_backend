@@ -4,14 +4,13 @@ import {StorageService} from "./services/storage.service";
 import {CommonModule} from "@angular/common";
 import {LoginComponent} from "./login/login.component";
 import {Usuario} from "./interfaces/usuario";
-import {MdbDropdownModule} from "mdb-angular-ui-kit/dropdown";
 import {UsuarioService} from "./services/usuario.service";
 import {FormsModule} from "@angular/forms";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, CommonModule, LoginComponent, MdbDropdownModule, FormsModule],
+  imports: [RouterOutlet, CommonModule, LoginComponent, FormsModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
@@ -46,8 +45,9 @@ export class AppComponent implements OnInit {
     this.usuarioService.cambiarContraseña(this.contrasenaAntigua,this.nuevaContrasena).subscribe({
       next(){
         alert("Contraseña cambiada correctamente")
-      },error(){
-        alert("No se ha posido cambiar la contreseña")
+      },error(error){
+        console.log(error)
+        alert(error)
       }
     })
   }

@@ -11,8 +11,8 @@
       Nombre <i *ngIf="sortColumn === 'nombre';else sort" class="fas" [ngClass]="sortDirection=='asc'?'fa-sort-up':'fa-sort-down'"></i>
     </th>
 
-    <th class="text-nowrap" (click)="onSort('apellido1')">
-      Apellidos <i *ngIf="sortColumn === 'apellido1';else sort" class="fas" [ngClass]="sortDirection=='asc'?'fa-sort-up':'fa-sort-down'"></i>
+    <th class="text-nowrap" (click)="onSort('apellidos')">
+      Apellidos <i *ngIf="sortColumn === 'apellidos';else sort" class="fas" [ngClass]="sortDirection=='asc'?'fa-sort-up':'fa-sort-down'"></i>
     </th>
     <th class="text-nowrap" (click)="onSort('email')">
       Correo <i *ngIf="sortColumn === 'email';else sort" class="fas" [ngClass]="sortDirection=='asc'?'fa-sort-up':'fa-sort-down'" ></i>

@@ -52,17 +52,12 @@ export class LoginComponent implements OnInit {
 
         this.isLoginFailed = false;
         this.isLoggedIn = true;
-        console.log('isLoggedIn = '+ this.isLoggedIn);
         this.reloadPage();
-        // this.router.navigate(['index']).then(
-        //   () => {console.log('Login OK, cargando index.')}
-        // )
-        console.log(data)
       },
       error: err => {
         this.errorMessage = "usuario o contraseña incorrecta";
         this.isLoginFailed = true;
-        console.log(err)
+        console.log(err.error)
       }
     });
   }
