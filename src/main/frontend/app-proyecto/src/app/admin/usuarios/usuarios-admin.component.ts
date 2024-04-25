@@ -1,21 +1,21 @@
 import {Component} from '@angular/core';
-import {ProfesorComponent} from "./profesor/profesor.component";
-import {EstudianteComponent} from "./estudiante/estudiante.component";
+import {ProfesorAdminComponent} from "./profesor/profesor-admin.component";
+import {EstudianteAdminComponent} from "./estudiante/estudiante-admin.component";
 import {FormsModule} from "@angular/forms";
 import {UsuarioService} from "../../services/usuario.service";
 
 @Component({
-  selector: 'app-usuarios',
+  selector: 'app-admin-usuarios',
   standalone: true,
   imports: [
-    ProfesorComponent,
-    EstudianteComponent,
+    ProfesorAdminComponent,
+    EstudianteAdminComponent,
     FormsModule
   ],
-  templateUrl: './usuarios.component.html',
-  styleUrl: './usuarios.component.css'
+  templateUrl: './usuarios-admin.component.html',
+  styleUrl: './usuarios-admin.component.css'
 })
-export class UsuariosComponent {
+export class UsuariosAdminComponent {
   constructor(private usuarioService:UsuarioService) {
   }
   bloquearODesbloquear(u:any){
@@ -24,7 +24,7 @@ export class UsuariosComponent {
         u.blocked = b
       },
         error: (error) => {
-        console.error(error);
+        alert(error);
       }
     })
   }

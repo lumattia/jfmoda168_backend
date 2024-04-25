@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpErrorResponse, HttpHeaders} from "@angular/common/http";
-import {catchError, Observable, throwError} from "rxjs";
+import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
+import {Observable} from "rxjs";
 import {Option} from "../interfaces/option";
 import {Aula, AulaForm} from "../interfaces/aula";
+import {ProfesorRow} from "../interfaces/profesor";
+import {EstudianteRow} from "../interfaces/estudiante";
 
 const AULAURL="http://localhost:8080/v1/api/aulas"
 
@@ -28,6 +30,20 @@ export class AulaService {
     const url = `${AULAURL}/${id}`
     return this.http.get<Aula>(url);
   }
+  getProfesores(id:number,searchTerm:string):Observable<Array<ProfesorRow>>{
+    const url = `${AULAURL}/${id}/profesores`
+    let options={
+      params:new HttpParams().set("buscar",searchTerm)
+    }
+    return this.http.get<Array<ProfesorRow>>(url,options);
+  }
+  getEstudiantes(id:number,searchTerm:string):Observable<Array<EstudianteRow>>{
+    const url = `${AULAURL}/${id}/estudiantes`
+    let options={
+      params:new HttpParams().set("buscar",searchTerm)
+    }
+    return this.http.get<Array<EstudianteRow>>(url,options);
+  }
   crearAula(aula:AulaForm):Observable<Object>{
     return this.http.post<Option>(AULAURL,
       aula
@@ -43,6 +59,14 @@ export class AulaService {
   }
   deleteAula(a:any):Observable<any>{
     const url = `${AULAURL}/${a}`
+    return this.http.delete(url, HTTPOPTIONS)
+  }
+  removeProfesor(idAula:number,idProfesor:number):Observable<any>{
+    const url = `${AULAURL}/${idAula}/profesores/${idProfesor}`
+    return this.http.delete(url, HTTPOPTIONS)
+  }
+  removeEstudiante(idAula:number,idEstudiante:number):Observable<any>{
+    const url = `${AULAURL}/${idAula}/profesores/${idEstudiante}`
     return this.http.delete(url, HTTPOPTIONS)
   }
 }

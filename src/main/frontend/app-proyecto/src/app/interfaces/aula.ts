@@ -1,5 +1,7 @@
 import {Option} from "./option";
 import {Tema} from "./tema";
+import {ProfesorRow} from "./profesor";
+import {EstudianteRow} from "./estudiante";
 
 export interface AulaForm {
   id:number,
@@ -12,5 +14,8 @@ export interface Aula {
   clase:Option,
   grupo:string,
   año:string,
-  temas:Tema[]
+  temas:Tema[],
+  propietario:number,
+  profesores:ProfesorRow[],
+  estudiantes:EstudianteRow[],
 }

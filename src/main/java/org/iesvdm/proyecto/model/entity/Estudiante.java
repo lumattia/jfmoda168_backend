@@ -16,7 +16,7 @@ import java.util.Set;
 @DiscriminatorValue("ESTUDIANTE")
 public class Estudiante extends Usuario{
     String aula;
-    @ManyToMany
+    @ManyToMany(mappedBy = "estudiantes")
     Set<Aula> aulas;
     @OneToMany(mappedBy = "id.estudiante")
     private Set<TareaEstudiante> tareaEstudiantes;

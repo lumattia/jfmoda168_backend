@@ -39,7 +39,7 @@ export class ProfesorFormComponent {
             this.profesor.email=profesor.email;
           },
           error:(error)=>{
-            alert(error.error)
+            alert(error)
           }
         })
       }
@@ -52,7 +52,7 @@ export class ProfesorFormComponent {
           this.volver()
         },
         error:(error)=>{
-          alert(error.error)
+          alert(error)
         }
       })
     else{
@@ -61,7 +61,7 @@ export class ProfesorFormComponent {
           this.volver()
         },
         error:(error)=>{
-          alert(error.error)
+          alert(error)
         }
       })
     }

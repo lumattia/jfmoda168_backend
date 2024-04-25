@@ -40,7 +40,7 @@ export class EstudianteFormComponent {
             this.estudiante.email=estudiante.email;
           },
           error:(error)=>{
-            alert(error.error)
+            alert(error)
           }
         })
       }
@@ -53,7 +53,7 @@ export class EstudianteFormComponent {
           this.volver()
         },
         error:(error)=>{
-          alert(error.error)
+          alert(error)
         }
       })
     else{
@@ -62,7 +62,7 @@ export class EstudianteFormComponent {
           this.volver()
         },
         error:(error)=>{
-          alert(error.error)
+          alert(error)
         }
       })
     }

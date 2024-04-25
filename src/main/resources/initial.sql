@@ -80,11 +80,11 @@ INSERT INTO aula_profesores (aulas_id, profesores_id) VALUES (3, 3);
 INSERT INTO aula_profesores (aulas_id, profesores_id) VALUES (4, 4);
 INSERT INTO aula_profesores (aulas_id, profesores_id) VALUES (5, 5);
 
-INSERT INTO aula_estudiantes (aula_id, estudiantes_id) VALUES (1, 20);
-INSERT INTO aula_estudiantes (aula_id, estudiantes_id) VALUES (1, 21);
-INSERT INTO aula_estudiantes (aula_id, estudiantes_id) VALUES (1, 22);
-INSERT INTO aula_estudiantes (aula_id, estudiantes_id) VALUES (1, 23);
-INSERT INTO aula_estudiantes (aula_id, estudiantes_id) VALUES (1, 24);
+INSERT INTO aula_estudiantes (aulas_id, estudiantes_id) VALUES (1, 20);
+INSERT INTO aula_estudiantes (aulas_id, estudiantes_id) VALUES (1, 21);
+INSERT INTO aula_estudiantes (aulas_id, estudiantes_id) VALUES (1, 22);
+INSERT INTO aula_estudiantes (aulas_id, estudiantes_id) VALUES (1, 23);
+INSERT INTO aula_estudiantes (aulas_id, estudiantes_id) VALUES (1, 24);
 
 INSERT INTO tema (nombre, aula_id) VALUES ('Tema 1', 1);
 INSERT INTO tema (nombre, aula_id) VALUES ('Tema 2', 2);

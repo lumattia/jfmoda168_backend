@@ -40,7 +40,7 @@ export class ListAulasComponent {
         this.aulas = a as Option[]
       },
       error: (error) => {
-        console.error(error);
+        alert(error);
       }
     })
     profesorService.getClases(id).subscribe({
@@ -48,7 +48,7 @@ export class ListAulasComponent {
         this.clases = c as Option[]
       },
       error: (error) => {
-        console.error(error);
+        alert(error);
       }
     })
   }
@@ -76,7 +76,7 @@ export class ListAulasComponent {
         });
       },
       error: (error) => {
-        console.error(error);
+        alert(error);
       }
     })
   }
@@ -91,7 +91,7 @@ export class ListAulasComponent {
           this.aulas.push(data as Option)
         },
         error: (error) => {
-          console.error(error);
+          alert(error);
         }
       })
     }
@@ -102,7 +102,7 @@ export class ListAulasComponent {
         this.aulas.splice(this.aulas.findIndex(a=>a.id==o.id), 1, data as Option);
       },
       error: (error) => {
-        console.error(error);
+        alert(error);
       }
     })
   }
@@ -113,7 +113,7 @@ export class ListAulasComponent {
       },
       error: (error) => {
         alert("No se ha podido eliminar el aula")
-        console.error(error);
+        alert(error);
       }
     });
   }

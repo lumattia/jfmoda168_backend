@@ -46,7 +46,6 @@ export class AppComponent implements OnInit {
       next(){
         alert("Contraseña cambiada correctamente")
       },error(error){
-        console.log(error)
         alert(error)
       }
     })

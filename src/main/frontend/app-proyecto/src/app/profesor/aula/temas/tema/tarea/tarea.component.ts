@@ -1,8 +1,8 @@
 import {Component, EventEmitter, inject, Input, Output} from '@angular/core';
-import {Option} from "../../../../interfaces/option";
-import {ModalComponent} from "../../../../util/modal/modal.component";
-import {FormModalComponent} from "../../../../util/form-modal/form-modal.component";
-import {TareaService} from "../../../../services/tarea.service";
+import {Option} from "../../../../../interfaces/option";
+import {ModalComponent} from "../../../../../util/modal/modal.component";
+import {FormModalComponent} from "../../../../../util/form-modal/form-modal.component";
+import {TareaService} from "../../../../../services/tarea.service";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
@@ -40,7 +40,7 @@ export class TareaComponent {
         this.tarea=data as Option;
       },
       error: (error) => {
-        alert(error.error);
+        alert(error);
       }
     })
   }
@@ -51,7 +51,7 @@ export class TareaComponent {
       },
       error: (error) => {
         alert("No se ha podido eliminar el tema")
-        console.error(error);
+        alert(error);
       }
     });
   }

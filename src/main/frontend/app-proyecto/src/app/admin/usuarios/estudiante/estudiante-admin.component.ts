@@ -8,7 +8,7 @@ import {ModalComponent} from "../../../util/modal/modal.component";
 import {Option} from "../../../interfaces/option";
 import {RouterLink} from "@angular/router";
 @Component({
-  selector: 'app-estudiante',
+  selector: 'app-estudiante-admin',
   standalone: true,
   imports: [
     NgForOf,
@@ -18,10 +18,10 @@ import {RouterLink} from "@angular/router";
     NgClass,
     RouterLink
   ],
-  templateUrl: './estudiante.component.html',
-  styleUrl: './estudiante.component.css'
+  templateUrl: './estudiante-admin.component.html',
+  styleUrl: './estudiante-admin.component.css'
 })
-export class EstudianteComponent {
+export class EstudianteAdminComponent {
   private modalService = inject(NgbModal);
   estudiantes:EstudianteRow[]=[];
   page= 1;
@@ -56,7 +56,7 @@ export class EstudianteComponent {
         this.collectionSize=data.totalElements
       },
       error: (error) => {
-        console.error(error);
+        alert(error);
       }
     })
   }
@@ -69,7 +69,7 @@ export class EstudianteComponent {
         this.pageChanged()
       },
       error: (error) => {
-        console.error(error);
+        alert(error);
       }
     });
   }

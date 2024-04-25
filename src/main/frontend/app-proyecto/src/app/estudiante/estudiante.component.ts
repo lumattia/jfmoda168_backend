@@ -26,7 +26,7 @@ export class EstudianteComponent {
         this.aulas = a as Option[]
       },
       error: (error) => {
-        console.error(error);
+        alert(error);
       }
     })
   }

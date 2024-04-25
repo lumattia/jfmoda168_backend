@@ -9,14 +9,14 @@ import {ModalComponent} from "../../../util/modal/modal.component";
 import {RouterLink} from "@angular/router";
 
 @Component({
-  selector: 'app-profesores',
+  selector: 'app-profesor-admin',
   standalone: true,
   imports: [NgFor, NgIf, NgbPaginationModule, NgClass, FormsModule, RouterLink,
   ],
-  templateUrl: './profesor.component.html',
-  styleUrl: './profesor.component.css'
+  templateUrl: './profesor-admin.component.html',
+  styleUrl: './profesor-admin.component.css'
 })
-export class ProfesorComponent {
+export class ProfesorAdminComponent {
   private modalService = inject(NgbModal);
   profesores:ProfesorRow[]=[];
   page:number= 1;
@@ -51,7 +51,7 @@ export class ProfesorComponent {
         this.collectionSize=data.totalElements
       },
       error: (error) => {
-        console.error(error);
+        alert(error);
       }
     })
   }
@@ -64,7 +64,7 @@ export class ProfesorComponent {
         this.pageChanged()
       },
       error: (error) => {
-        console.error(error);
+        alert(error);
       }
     });
   }

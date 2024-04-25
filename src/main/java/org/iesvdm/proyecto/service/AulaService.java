@@ -6,9 +6,13 @@ import jakarta.transaction.Transactional;
 import org.iesvdm.proyecto.exeption.NotFoundException;
 import org.iesvdm.proyecto.model.entity.Aula;
 import org.iesvdm.proyecto.model.entity.Tema;
+import org.iesvdm.proyecto.model.view.EstudianteRow;
+import org.iesvdm.proyecto.model.view.ProfesorRow;
 import org.iesvdm.proyecto.repository.AulaRepository;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
+
+import java.util.Set;
 
 @Service
 public class AulaService {
@@ -41,7 +45,12 @@ public class AulaService {
         }
         return a;
     }
-
+    public Set<ProfesorRow> getProfesores(long id,String buscar) {
+        return this.aulaRepository.getProfesores(id,buscar);
+    }
+    public Set<EstudianteRow> getEstudiantes(long id,String buscar) {
+        return this.aulaRepository.getEstudiantes(id,buscar);
+    }
     public Aula replace(long id, Aula aula) {
         Aula a= one(id);
         if (id==a.getId()){

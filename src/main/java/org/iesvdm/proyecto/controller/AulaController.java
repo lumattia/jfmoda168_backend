@@ -4,6 +4,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.iesvdm.proyecto.model.entity.Aula;
 import org.iesvdm.proyecto.model.entity.Profesor;
 import org.iesvdm.proyecto.model.entity.Tema;
+import org.iesvdm.proyecto.model.view.EstudianteRow;
+import org.iesvdm.proyecto.model.view.ProfesorRow;
 import org.iesvdm.proyecto.service.AulaService;
 import org.iesvdm.proyecto.service.ProfesorService;
 import org.springframework.http.HttpStatus;
@@ -12,6 +14,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.security.access.AccessDeniedException;
+
+import java.util.Set;
+
 @Slf4j
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -29,7 +34,7 @@ public class AulaController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Profesor p = profesorService.one(auth.getName());
         if (p.getAulas().stream().noneMatch(aula -> aula.getId() == idAula)) {
-            throw new AccessDeniedException("No eres profesor de ese aula.");
+            throw new AccessDeniedException("No eres profesor de esa aula.");
         }
         return p;
     }
@@ -46,9 +51,21 @@ public class AulaController {
         }
     }
     @GetMapping("/{id}")
-    public Aula one(@PathVariable("id") long id) throws AccessDeniedException {
+    public Aula one(@PathVariable("id") long id) {
         comprobarAccesoAula(id);
         return this.aulaService.one(id);
+    }
+    @GetMapping("/{id}/profesores")
+    public Set<ProfesorRow> getProfesores(@PathVariable("id") long id,
+                                          @RequestParam(value = "buscar",defaultValue = "") String buscar){
+        comprobarAccesoAula(id);
+        return this.aulaService.getProfesores(id,buscar);
+    }
+    @GetMapping("/{id}/estudiantes")
+    public Set<EstudianteRow> getEstudiantes(@PathVariable("id") long id,
+                                             @RequestParam(value = "buscar",defaultValue = "") String buscar){
+        comprobarAccesoAula(id);
+        return this.aulaService.getEstudiantes(id,buscar);
     }
     @PutMapping("/{id}")
     public Aula replace(@PathVariable("id") long id, @RequestBody Aula aula) {

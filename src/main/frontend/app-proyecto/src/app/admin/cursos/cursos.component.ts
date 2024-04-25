@@ -50,7 +50,7 @@ export class CursosComponent {
         this.cursos = (data as Option[])
       },
       error: (error) => {
-        console.error(error);
+        alert(error);
       }
     })
   }
@@ -61,7 +61,7 @@ export class CursosComponent {
                   this.cursos.push(data as Option)
               },
               error: (error) => {
-                  console.error(error);
+                  alert(error);
               }
           });
       }else{
@@ -75,7 +75,7 @@ export class CursosComponent {
           this.cursos.splice(this.cursos.findIndex(a=>a.id==o.id), 1, o);
         },
         error: (error) => {
-          console.error(error);
+          alert(error);
         }
       })
     }else{
@@ -89,7 +89,7 @@ export class CursosComponent {
             },
             error: (error) => {
               alert("No se ha podido eliminar el curso")
-              console.error(error);
+              alert(error);
             }
         });
     }

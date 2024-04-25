@@ -50,7 +50,7 @@ export class AsignaturasComponent {
           this.asignaturas = (data as Option[])
         },
         error: (error) => {
-          console.error(error);
+          alert(error);
         }
       })
     }
@@ -61,7 +61,7 @@ export class AsignaturasComponent {
                     this.asignaturas.push(data as Option)
                 },
                 error: (error) => {
-                    console.error(error);
+                  alert(error);
                 }
             });
         }else{
@@ -75,7 +75,7 @@ export class AsignaturasComponent {
             this.asignaturas.splice(this.asignaturas.findIndex(a=>a.id==o.id), 1, o);
           },
           error: (error) => {
-            console.error(error);
+            alert(error);
           }
         })
       }else{
@@ -89,7 +89,7 @@ export class AsignaturasComponent {
             },
             error: (error) => {
               alert("No se ha podido eliminar la asignatura")
-              console.error(error);
+              alert(error);
             }
         });
     }

@@ -1,4 +1,5 @@
 export interface ProfesorRow{
+  [key: string]: any
   id:number;
   nombre:string;
   apellidos:string;

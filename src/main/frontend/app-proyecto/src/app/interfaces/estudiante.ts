@@ -1,4 +1,5 @@
 export interface EstudianteRow{
+  [key: string]: any;
   id:number;
   nombre:string;
   apellidos:string;

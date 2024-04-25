@@ -21,7 +21,7 @@ public class Aula {
     private String año;
     @ManyToMany
     private Set<Profesor> profesores=new HashSet<>();
-    @ManyToOne(fetch = FetchType.EAGER,optional = false)
+    @ManyToOne(optional = false)
     private Profesor propietario;
     @ManyToMany
     private Set<Estudiante> estudiantes;

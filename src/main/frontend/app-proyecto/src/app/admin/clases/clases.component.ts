@@ -44,7 +44,7 @@ export class ClasesComponent {
         this.asignaturaService.getAsignaturas().subscribe(asignaturas=>this.asignaturas = (asignaturas as Option[]));
       },
       error: (error) => {
-        console.error(error);
+        alert(error);
       }
     });
   }
@@ -62,7 +62,7 @@ export class ClasesComponent {
         this.clases = (data as Option[])
       },
       error: (error) => {
-        console.error(error);
+        alert(error);
       }
     });
   }
@@ -72,7 +72,7 @@ export class ClasesComponent {
         this.clases.push(data as Option)
       },
       error: (error) => {
-        console.error(error);
+        alert(error);
       }
     });
   }
@@ -82,7 +82,7 @@ export class ClasesComponent {
         this.clases=this.clases.filter(c=>c.id!=id)
       },
       error: (error) => {
-        console.error(error);
+        alert(error);
       }
     });
   }
