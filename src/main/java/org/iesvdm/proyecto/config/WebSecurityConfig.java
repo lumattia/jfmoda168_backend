@@ -1,7 +1,5 @@
 package org.iesvdm.proyecto.config;
 
-
-
 import org.iesvdm.proyecto.security.AuthEntryPointToken;
 import org.iesvdm.proyecto.security.AuthTokenFilter;
 import org.iesvdm.proyecto.service.UserDetailsServiceImpl;
@@ -74,6 +72,7 @@ public class WebSecurityConfig {
                         .requestMatchers("/v1/api/clases/**").hasAnyAuthority("ADMINISTRADOR")
                         .requestMatchers("/v1/api/usuarios/**").hasAnyAuthority("ADMINISTRADOR")
                         .requestMatchers(HttpMethod.GET,"/v1/api/profesores/**").hasAnyAuthority("PROFESOR","ADMINISTRADOR")
+                        .requestMatchers(HttpMethod.GET,"/v1/api/estudiantes/**").hasAnyAuthority("PROFESOR","ADMINISTRADOR")
                         .requestMatchers("/v1/api/profesores/**").hasAnyAuthority("ADMINISTRADOR")
                         .requestMatchers("/v1/api/estudiantes/**").hasAnyAuthority("ADMINISTRADOR")
                         .requestMatchers("/v1/api/aulas/**").hasAnyAuthority("PROFESOR")
@@ -83,16 +82,8 @@ public class WebSecurityConfig {
                         .anyRequest().authenticated());
         http.authenticationProvider(authenticationProvider());
         http.addFilterBefore(authenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class);
-
         //https://stackoverflow.com/questions/59302026/spring-security-why-adding-the-jwt-filter-before-usernamepasswordauthenticatio
         //http.addFilterAfter(authenticationJwtTokenFilter(), ExceptionTranslationFilter.class);
-
         return http.build();
-
     }
-
 }
-
-
-
-

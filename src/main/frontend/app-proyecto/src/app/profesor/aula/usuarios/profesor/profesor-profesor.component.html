@@ -1,6 +1,3 @@
-<ng-template #sort>
-  <i class="fas fa-sort"></i>
-</ng-template>
 <div class="col">
   <form class="d-flex" role="search">
     <input class="form-control me-2" [(ngModel)]="searchTerm" name="searchTerm" type="search" placeholder="Search" aria-label="Search">
@@ -19,7 +16,10 @@
     <th class="text-nowrap" (click)="onSort('email')">
       Correo <i *ngIf="sortColumn === 'email';else sort" class="fas" [ngClass]="sortDirection=='asc'?'fa-sort-up':'fa-sort-down'" ></i>
     </th>
-    <th class="text-end"><a (click)="anadirProfesor()"><i class="fa-solid fa-plus"></i></a></th>
+    <th class="text-end"><a (click)="abrirModalAnadir()"><i class="fa-solid fa-plus"></i></a></th>
+    <ng-template #sort>
+      <i class="fas fa-sort"></i>
+    </ng-template>
   </tr>
   </thead>
   <tbody>

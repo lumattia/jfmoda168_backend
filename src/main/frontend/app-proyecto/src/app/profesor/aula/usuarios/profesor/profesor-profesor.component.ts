@@ -7,6 +7,7 @@ import {Option} from "../../../../interfaces/option";
 import {ModalComponent} from "../../../../util/modal/modal.component";
 import {ActivatedRoute, RouterLink} from "@angular/router";
 import {AulaService} from "../../../../services/aula.service";
+import {AddProfsModalComponent} from "./add-profs-modal/add-profs-modal.component";
 
 @Component({
   selector: 'app-profesor-profesor',
@@ -17,7 +18,6 @@ import {AulaService} from "../../../../services/aula.service";
   styleUrl: './profesor-profesor.component.css'
 })
 export class ProfesorProfesorComponent {
-
   private modalService = inject(NgbModal);
   profesores:ProfesorRow[]=[];
   searchTerm:string="";
@@ -64,13 +64,28 @@ export class ProfesorProfesorComponent {
       }
     })
   }
-  anadirProfesor(){
-
+  abrirModalAnadir(){
+    const modalRef = this.modalService.open(AddProfsModalComponent,{size: 'lg',centered: true, scrollable: true});
+    modalRef.componentInstance.added=this.profesores;
+    modalRef.closed.subscribe((ids: number[]) => {
+      this.aniadirProfesor(ids)
+    });
   }
+  aniadirProfesor(ids:number[]){
+    this.aulaService.addProf(this.id,ids).subscribe({
+      next: (data:any) => {
+        this.profesores.push(...(data as ProfesorRow[]))
+      },
+      error: (error) => {
+        alert(error);
+      }
+    })
+  }
+
   eliminarProfesor(id: number) {
     this.aulaService.removeProfesor(this.id,id).subscribe({
       next: () => {
-        this.getProfesores()
+        this.profesores = this.profesores.filter(p => p.id != id)
       },
       error: (error) => {
         alert(error);

@@ -20,7 +20,9 @@ public class ProfesorService {
         this.profesorRepository = profesorRepository;
         this.claseRepository = claseRepository;
     }
-
+    public Page<ProfesorRow> allByFilterNotBlocked(String buscar, Pageable pageable) {
+        return this.profesorRepository.findSearchNotBlocked(buscar,pageable);
+    }
     public Page<ProfesorRow> allByFilter(String buscar, Pageable pageable) {
         return this.profesorRepository.findByNombreCompleto(buscar,pageable);
     }

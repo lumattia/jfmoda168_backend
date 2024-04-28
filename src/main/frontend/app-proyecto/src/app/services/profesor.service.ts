@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams} from "@angular/common/http";
-import {catchError, Observable, throwError} from "rxjs";
+import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
+import {Observable} from "rxjs";
 import {ProfesorForm, ProfesorRow} from "../interfaces/profesor";
 import {Option} from "../interfaces/option";
 const PROFESORURL="http://localhost:8080/v1/api/profesores"
@@ -17,11 +17,20 @@ const HTTPOPTIONS = {
 export class ProfesorService {
   constructor(private http:HttpClient) {
   }
-
-  //Métodos (incluir tipos correctos en los argumentos)
   getProfesor(id:number):Observable<Object>{
     const url = `${PROFESORURL}/${id}`
     return this.http.get<ProfesorRow>(url);
+  }
+  buscarNotBlocked(searchTerm:string,page:number,pageSize:number,sortColumn:string,sortDirection:string)
+  {
+    const url = `${PROFESORURL}/notBlocked`
+    let options={
+      params:new HttpParams().set("buscar",searchTerm)
+        .set("page",page-1)
+        .set("size",pageSize)
+        .set("sort",sortColumn+","+sortDirection)
+    }
+    return this.http.get<ProfesorRow>(url,options)
   }
   buscarProfesor(searchTerm:string,page:number,pageSize:number,sortColumn:string,sortDirection:string){
     let options={

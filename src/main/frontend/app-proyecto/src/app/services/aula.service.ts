@@ -53,6 +53,16 @@ export class AulaService {
     return this.http.post<Option>(url,
       {nombre}
       ,HTTPOPTIONS)  }
+  addProf(id:number,ids:number[]):Observable<Object>{
+    const url = `${AULAURL}/${id}/addProf`
+    return this.http.post<Option>(url,
+      ids
+      ,HTTPOPTIONS)  }
+  addEst(id:number,ids:number[]):Observable<Object>{
+    const url = `${AULAURL}/${id}/addEst`
+    return this.http.post<Option>(url,
+      ids
+      ,HTTPOPTIONS)  }
   actualizarAula(a:any):Observable<Object>{
     const url = `${AULAURL}/${a.id}`;
     return this.http.put<Option>(url, a, HTTPOPTIONS);
@@ -62,11 +72,11 @@ export class AulaService {
     return this.http.delete(url, HTTPOPTIONS)
   }
   removeProfesor(idAula:number,idProfesor:number):Observable<any>{
-    const url = `${AULAURL}/${idAula}/profesores/${idProfesor}`
+    const url = `${AULAURL}/${idAula}/profesor/${idProfesor}`
     return this.http.delete(url, HTTPOPTIONS)
   }
   removeEstudiante(idAula:number,idEstudiante:number):Observable<any>{
-    const url = `${AULAURL}/${idAula}/profesores/${idEstudiante}`
+    const url = `${AULAURL}/${idAula}/estudiante/${idEstudiante}`
     return this.http.delete(url, HTTPOPTIONS)
   }
 }

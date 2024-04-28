@@ -12,6 +12,8 @@ import java.util.Optional;
 import java.util.Set;
 
 public interface EstudianteRepository extends JpaRepository<Estudiante,Long> {
+    @Query("SELECT e FROM Estudiante e WHERE CONCAT(e.nombre, ' ', e.apellidos) LIKE %?1% and e.blocked = false")
+    Page<EstudianteRow> findSearchNotBlocked(String nombreCompleto, Pageable pageable);
     @Query("SELECT e" +
             " FROM Estudiante e WHERE CONCAT(e.nombre, ' ', e.apellidos) LIKE %?1%" +
             "or e.aula LIKE %?1%")

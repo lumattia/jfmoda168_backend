@@ -18,6 +18,9 @@ export class HttpRequestInterceptor implements HttpInterceptor {
     }
     return next.handle(req).pipe(
       catchError((error: HttpErrorResponse) => {
+        if (error.status === 0 && error.error instanceof ProgressEvent) {
+          return throwError(()=>"Something has gone wrong");
+        }
         let errorMessage = 'Ha ocurrido un error en la aplicación';
         if (error.error instanceof ErrorEvent) {
           // Error del lado del cliente
@@ -26,7 +29,7 @@ export class HttpRequestInterceptor implements HttpInterceptor {
           // Error del lado del servidor
           errorMessage = `Código de error: ${error.status}, mensaje: ${error.error}`;
         }
-        return throwError(()=>new Error(errorMessage));
+        return throwError(()=>errorMessage);
       })
     );
   }

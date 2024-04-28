@@ -23,8 +23,14 @@ public class ProfesorController {
     ProfesorService profesorService;
     @Autowired
     PasswordEncoder encoder;
+    @GetMapping({"notBlocked"})
+    public Page<ProfesorRow> allNotBlocked(@RequestParam(value = "buscar",defaultValue = "") String buscar,
+                                      Pageable pageable) {
+        log.info("Accediendo a todos los profesores");
+        return this.profesorService.allByFilterNotBlocked(buscar,pageable);
+    }
     @GetMapping({"","/"})
-    public Page<ProfesorRow> all(@RequestParam(value = "buscar",defaultValue = "") String buscar,
+    public Page<ProfesorRow> allPaged(@RequestParam(value = "buscar",defaultValue = "") String buscar,
                                  Pageable pageable) {
         log.info("Accediendo a todos los profesores");
         return this.profesorService.allByFilter(buscar,pageable);

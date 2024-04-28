@@ -24,6 +24,12 @@ public class EstudianteController {
 
     @Autowired
     private PasswordEncoder encoder;
+    @GetMapping({"notBlocked"})
+    public Page<EstudianteRow> allNotBlocked(@RequestParam(value = "buscar",defaultValue = "") String buscar,
+                                           Pageable pageable) {
+        log.info("Accediendo a todos los profesores");
+        return this.estudianteService.allByFilterNotBlocked(buscar,pageable);
+    }
     @GetMapping({"","/"})
     public Page<EstudianteRow> all(@RequestParam(value = "buscar",defaultValue = "") String buscar,
                                    Pageable pageable) {

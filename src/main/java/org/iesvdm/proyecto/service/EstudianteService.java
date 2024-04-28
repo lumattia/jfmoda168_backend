@@ -17,6 +17,9 @@ public class EstudianteService {
     public EstudianteService(EstudianteRepository estudianteRepository ) {
         this.estudianteRepository = estudianteRepository;
     }
+    public Page<EstudianteRow> allByFilterNotBlocked(String buscar, Pageable pageable) {
+        return this.estudianteRepository.findSearchNotBlocked(buscar,pageable);
+    }
     public Page<EstudianteRow> allByFilter(String buscar, Pageable pageable) {
         return this.estudianteRepository.findByNombreCompleto(buscar,pageable);
     }

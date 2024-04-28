@@ -1,12 +1,13 @@
 import {Component, inject} from '@angular/core';
 import {NgClass, NgFor, NgIf} from "@angular/common";
-import {EstudianteRow} from "../../../../interfaces/estudiante";
 import {NgbModal, NgbPaginationModule} from "@ng-bootstrap/ng-bootstrap";
 import {FormsModule} from "@angular/forms";
 import {Option} from "../../../../interfaces/option";
 import {ModalComponent} from "../../../../util/modal/modal.component";
 import {ActivatedRoute, RouterLink} from "@angular/router";
 import {AulaService} from "../../../../services/aula.service";
+import {EstudianteRow} from "../../../../interfaces/estudiante";
+import {AddEstudiantesModalComponent} from "./add-estudiantes-modal/add-estudiantes-modal.component";
 
 @Component({
   selector: 'app-estudiante-profesor',
@@ -17,7 +18,6 @@ import {AulaService} from "../../../../services/aula.service";
   styleUrl: './estudiante-profesor.component.css'
 })
 export class EstudianteProfesorComponent {
-
   private modalService = inject(NgbModal);
   estudiantes:EstudianteRow[]=[];
   searchTerm:string="";
@@ -42,7 +42,7 @@ export class EstudianteProfesorComponent {
     }
     this.sort()
   }
-  sort() {
+  sort(){
     if (!(this.sortDirection === '' || this.sortColumn === '')) {
       const compare = (a: EstudianteRow, b: EstudianteRow) => {
         const v1 = a[this.sortColumn];
@@ -64,13 +64,28 @@ export class EstudianteProfesorComponent {
       }
     })
   }
-  anadirEstudiante(){
-
+  abrirModalAnadir(){
+    const modalRef = this.modalService.open(AddEstudiantesModalComponent,{size: 'xl',centered: true, scrollable: true});
+    modalRef.componentInstance.added=this.estudiantes;
+    modalRef.closed.subscribe((ids: number[]) => {
+      this.aniadirEstudiante(ids)
+    });
   }
+  aniadirEstudiante(ids:number[]){
+    this.aulaService.addEst(this.id,ids).subscribe({
+      next: (data:any) => {
+        this.estudiantes.push(...(data as EstudianteRow[]))
+      },
+      error: (error) => {
+        alert(error);
+      }
+    })
+  }
+
   eliminarEstudiante(id: number) {
     this.aulaService.removeEstudiante(this.id,id).subscribe({
       next: () => {
-        this.getEstudiantes()
+        this.estudiantes = this.estudiantes.filter(p => p.id != id)
       },
       error: (error) => {
         alert(error);

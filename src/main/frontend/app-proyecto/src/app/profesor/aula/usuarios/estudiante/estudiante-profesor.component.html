@@ -20,10 +20,10 @@
     <th class="text-nowrap" (click)="onSort('aula')">
       Aula <i *ngIf="sortColumn === 'aula';else sort" class="fas" [ngClass]="sortDirection=='asc'?'fa-sort-up':'fa-sort-down'" ></i>
     </th>
+    <th class="text-end"><a (click)="abrirModalAnadir()"><i class="fa-solid fa-plus"></i></a></th>
     <ng-template #sort>
       <i class="fas fa-sort"></i>
     </ng-template>
-    <th class="text-end"><a [routerLink]="['../estudiante/create']"><i class="fa-solid fa-plus"></i></a></th>
   </tr>
   </thead>
   <tbody>
@@ -35,7 +35,7 @@
     <td class="text-nowrap">
       <div class="text-end">
         <a class="p-1" (click)="openModal(estudiante)">
-          <i class="text-danger fa-solid fa-x" ></i>
+          <i class="text-danger fa-solid fa-minus"></i>
         </a>
       </div>
     </td>

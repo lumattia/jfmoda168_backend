@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams} from "@angular/common/http";
-import {catchError, Observable, throwError} from "rxjs";
+import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
+import {Observable} from "rxjs";
 import {EstudianteRow} from "../interfaces/estudiante";
 import {Option} from "../interfaces/option";
+import {ProfesorRow} from "../interfaces/profesor";
 const ESTUDIANTEURL="http://localhost:8080/v1/api/estudiantes"
 
 const HTTPOPTIONS = {
@@ -26,6 +27,17 @@ export class EstudianteService {
   getEstudiante(id:number):Observable<Object>{
     const url = `${ESTUDIANTEURL}/${id}`
     return this.http.get<EstudianteRow>(url);
+  }
+  buscarNotBlocked(searchTerm:string,page:number,pageSize:number,sortColumn:string,sortDirection:string)
+  {
+    const url = `${ESTUDIANTEURL}/notBlocked`
+    let options={
+      params:new HttpParams().set("buscar",searchTerm)
+        .set("page",page-1)
+        .set("size",pageSize)
+        .set("sort",sortColumn+","+sortDirection)
+    }
+    return this.http.get<ProfesorRow>(url,options)
   }
   buscarEstudiante(searchTerm:string,page:number,pageSize:number,sortColumn:string,sortDirection:string){
     let options={

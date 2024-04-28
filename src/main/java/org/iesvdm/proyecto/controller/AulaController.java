@@ -2,11 +2,13 @@ package org.iesvdm.proyecto.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.iesvdm.proyecto.model.entity.Aula;
+import org.iesvdm.proyecto.model.entity.Estudiante;
 import org.iesvdm.proyecto.model.entity.Profesor;
 import org.iesvdm.proyecto.model.entity.Tema;
 import org.iesvdm.proyecto.model.view.EstudianteRow;
 import org.iesvdm.proyecto.model.view.ProfesorRow;
 import org.iesvdm.proyecto.service.AulaService;
+import org.iesvdm.proyecto.service.EstudianteService;
 import org.iesvdm.proyecto.service.ProfesorService;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.security.access.AccessDeniedException;
 
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Slf4j
 @CrossOrigin(origins = "http://localhost:4200")
@@ -23,10 +26,12 @@ import java.util.Set;
 @RequestMapping("/v1/api/aulas")
 public class AulaController {
     private final ProfesorService profesorService;
+    private final EstudianteService estudianteService;
     private final AulaService aulaService;
 
-    public AulaController(ProfesorService profesorService, AulaService aulaService) {
+    public AulaController(ProfesorService profesorService, EstudianteService estudianteService, AulaService aulaService) {
         this.profesorService = profesorService;
+        this.estudianteService = estudianteService;
         this.aulaService = aulaService;
     }
     private Profesor comprobarAccesoAula(long idAula) {
@@ -77,12 +82,39 @@ public class AulaController {
         comprobarAccesoAula(id);
         return this.aulaService.createTema(id, tema);
     }
+    @PostMapping("/{id}/addProf")
+    public Set<ProfesorRow> addProf(@PathVariable("id") long id, @RequestBody Set<Long> ids) {
+        comprobarAccesoAula(id);
+        Set<Profesor> p=ids.stream().map(profesorService::one).collect(Collectors.toSet());
+        return this.aulaService.addProf(id, p);
+    }
+    @PostMapping("/{id}/addEst")
+    public Set<EstudianteRow> addEst(@PathVariable("id") long id, @RequestBody Set<Long> ids) {
+        comprobarAccesoAula(id);
+        Set<Estudiante> p=ids.stream().map(estudianteService::one).collect(Collectors.toSet());
+        return this.aulaService.addEst(id, p);
+    }
     @ResponseBody
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
     public void delete(@PathVariable("id") long id){
+        comprobarAccesoAula(id);
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Profesor p = profesorService.one(auth.getName());
-        this.aulaService.delete(id,p.getId());
+        this.aulaService.delete(id,p);
+    }
+    @ResponseBody
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping("/{id}/profesor/{idProfesor}")
+    public void removeProf(@PathVariable("id") long id,@PathVariable("idProfesor") long idProfesor){
+        comprobarAccesoAula(id);
+        this.aulaService.removeProf(id,idProfesor);
+    }
+    @ResponseBody
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping("/{id}/estudiante/{idEstudiante}")
+    public void removeEst(@PathVariable("id") long id,@PathVariable("idEstudiante") long idEstudiante){
+        comprobarAccesoAula(id);
+        this.aulaService.removeEst(id,idEstudiante);
     }
 }
