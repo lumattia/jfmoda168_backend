@@ -66,7 +66,14 @@ export class EstudianteProfesorComponent {
   }
   abrirModalAnadir(){
     const modalRef = this.modalService.open(AddEstudiantesModalComponent,{size: 'xl',centered: true, scrollable: true});
-    modalRef.componentInstance.added=this.estudiantes;
+    this.aulaService.getEstudiantes(this.id,"").subscribe({
+      next: (data:any) => {
+        modalRef.componentInstance.added=data as EstudianteRow[];
+      },
+      error: (error) => {
+        alert(error);
+      }
+    })
     modalRef.closed.subscribe((ids: number[]) => {
       this.aniadirEstudiante(ids)
     });
