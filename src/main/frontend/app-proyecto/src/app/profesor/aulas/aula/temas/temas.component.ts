@@ -3,10 +3,10 @@ import {ActivatedRoute, RouterLink} from "@angular/router";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NgForOf, NgIf} from "@angular/common";
 import {NgbPagination} from "@ng-bootstrap/ng-bootstrap";
-import {Aula} from "../../../interfaces/aula";
-import {AulaService} from "../../../services/aula.service";
+import {Aula} from "../../../../interfaces/aula";
+import {AulaService} from "../../../../services/aula.service";
 import {TemaComponent} from "./tema/tema.component";
-import {Tema} from "../../../interfaces/tema";
+import {Tema} from "../../../../interfaces/tema";
 
 @Component({
   selector: 'app-aula',

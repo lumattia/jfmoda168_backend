@@ -2,8 +2,8 @@ import {Component, inject, Input} from '@angular/core';
 import {FormsModule} from "@angular/forms";
 import {NgClass, NgForOf, NgIf} from "@angular/common";
 import {NgbActiveModal, NgbPagination} from "@ng-bootstrap/ng-bootstrap";
-import {ProfesorRow} from "../../../../../interfaces/profesor";
-import {ProfesorService} from "../../../../../services/profesor.service";
+import {ProfesorRow} from "../../interfaces/profesor";
+import {ProfesorService} from "../../services/profesor.service";
 
 @Component({
   selector: 'app-add-profs-modal',

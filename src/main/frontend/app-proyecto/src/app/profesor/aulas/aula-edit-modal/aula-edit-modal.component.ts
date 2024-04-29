@@ -1,5 +1,5 @@
 import {Component, inject, Input} from '@angular/core';
-import {AulaForm} from "../../interfaces/aula";
+import {AulaForm} from "../../../interfaces/aula";
 import {FormsModule} from "@angular/forms";
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 

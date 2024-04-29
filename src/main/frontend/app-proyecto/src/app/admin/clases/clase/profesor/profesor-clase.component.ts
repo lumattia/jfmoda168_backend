@@ -6,27 +6,28 @@ import {FormsModule} from "@angular/forms";
 import {Option} from "../../../../interfaces/option";
 import {ModalComponent} from "../../../../util/modal/modal.component";
 import {ActivatedRoute, RouterLink} from "@angular/router";
-import {AulaService} from "../../../../services/aula.service";
-import {AddProfsModalComponent} from "./add-profs-modal/add-profs-modal.component";
+import {ClaseService} from "../../../../services/clase.service";
+import {AddProfsModalComponent} from "../../../../util/add-profs-modal/add-profs-modal.component";
 
 @Component({
   selector: 'app-profesor-profesor',
   standalone: true,
   imports: [NgFor, NgIf, NgbPaginationModule, NgClass, FormsModule, RouterLink,
   ],
-  templateUrl: './profesor-profesor.component.html',
-  styleUrl: './profesor-profesor.component.css'
+  templateUrl: './profesor-clase.component.html',
+  styleUrl: './profesor-clase.component.css'
 })
-export class ProfesorProfesorComponent {
+export class ProfesorClaseComponent {
   private modalService = inject(NgbModal);
   profesores:ProfesorRow[]=[];
   searchTerm:string="";
   sortColumn= '';
   sortDirection= '';
   id:number=0
-  constructor(private aulaService:AulaService,private route:ActivatedRoute) {
+  constructor(private claseService:ClaseService,private route:ActivatedRoute) {
     this.route.parent?.params.subscribe(p => {
       this.id = Number(p['id'])||0;
+      console.log(p['id'])
       this.getProfesores();
     })
   }
@@ -54,7 +55,7 @@ export class ProfesorProfesorComponent {
     }
   }
   getProfesores(){
-    this.aulaService.getProfesores(this.id,this.searchTerm).subscribe({
+    this.claseService.getProfesores(this.id,this.searchTerm).subscribe({
       next: (data:any) => {
         this.profesores = (data as ProfesorRow[])
         this.sort()
@@ -66,7 +67,7 @@ export class ProfesorProfesorComponent {
   }
   abrirModalAnadir(){
     const modalRef = this.modalService.open(AddProfsModalComponent,{size: 'lg',centered: true, scrollable: true});
-    this.aulaService.getProfesores(this.id,"").subscribe({
+    this.claseService.getProfesores(this.id,"").subscribe({
       next: (data:any) => {
         modalRef.componentInstance.added=data as ProfesorRow[];
       },
@@ -79,7 +80,7 @@ export class ProfesorProfesorComponent {
     });
   }
   aniadirProfesor(ids:number[]){
-    this.aulaService.addProf(this.id,ids).subscribe({
+    this.claseService.addProf(this.id,ids).subscribe({
       next: (data:any) => {
         this.profesores.push(...(data as ProfesorRow[]))
       },
@@ -90,7 +91,7 @@ export class ProfesorProfesorComponent {
   }
 
   eliminarProfesor(id: number) {
-    this.aulaService.removeProfesor(this.id,id).subscribe({
+    this.claseService.removeProfesor(this.id,id).subscribe({
       next: () => {
         this.profesores = this.profesores.filter(p => p.id != id)
       },

@@ -1,13 +1,13 @@
 import {Component, EventEmitter, inject, Input, Output} from '@angular/core';
 import {FormsModule} from "@angular/forms";
 import {NgForOf} from "@angular/common";
-import {Option} from "../../../../interfaces/option";
-import {ModalComponent} from "../../../../util/modal/modal.component";
-import {FormModalComponent} from "../../../../util/form-modal/form-modal.component";
-import {Tema} from "../../../../interfaces/tema";
-import {TemaService} from "../../../../services/tema.service";
+import {Option} from "../../../../../interfaces/option";
+import {ModalComponent} from "../../../../../util/modal/modal.component";
+import {FormModalComponent} from "../../../../../util/form-modal/form-modal.component";
+import {Tema} from "../../../../../interfaces/tema";
+import {TemaService} from "../../../../../services/tema.service";
 import {TareaComponent} from "./tarea/tarea.component";
-import {Tarea} from "../../../../interfaces/tarea";
+import {Tarea} from "../../../../../interfaces/tarea";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({

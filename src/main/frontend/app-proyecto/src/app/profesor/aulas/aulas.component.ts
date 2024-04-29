@@ -7,7 +7,7 @@ import {StorageService} from "../../services/storage.service";
 import {FormsModule} from "@angular/forms";
 import {NgForOf} from "@angular/common";
 import {RouterLink} from "@angular/router";
-import {AulaEditModalComponent} from "../aula-edit-modal/aula-edit-modal.component";
+import {AulaEditModalComponent} from "./aula-edit-modal/aula-edit-modal.component";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {ModalComponent} from "../../util/modal/modal.component";
 
@@ -19,10 +19,10 @@ import {ModalComponent} from "../../util/modal/modal.component";
     NgForOf,
     RouterLink
   ],
-  templateUrl: './list-aulas.component.html',
-  styleUrl: './list-aulas.component.css'
+  templateUrl: './aulas.component.html',
+  styleUrl: './aulas.component.css'
 })
-export class ListAulasComponent {
+export class AulasComponent {
   private modalService = inject(NgbModal);
   aula:AulaForm={
     id:0,
@@ -108,7 +108,7 @@ export class ListAulasComponent {
   }
   eliminarAula(id: number) {
     this.aulaService.deleteAula(id).subscribe({
-      next: (data) => {
+      next: () => {
         this.aulas = this.aulas.filter(a => a.id != id)
       },
       error: (error) => {

@@ -10,17 +10,23 @@ import {ProfesorFormComponent} from "./admin/usuarios/profesor/form/form.compone
 import {EstudianteFormComponent} from "./admin/usuarios/estudiante/form/form.component";
 import {ProfesorComponent} from "./profesor/profesor.component";
 import {EstudianteComponent} from "./estudiante/estudiante.component";
-import {ListAulasComponent} from "./profesor/list-aulas/list-aulas.component";
-import {AulaComponent} from "./profesor/aula/aula.component";
-import {UsuariosProfesorComponent} from "./profesor/aula/usuarios/usuarios-profesor.component";
-import {TemasComponent} from "./profesor/aula/temas/temas.component";
+import {AulasComponent} from "./profesor/aulas/aulas.component";
+import {AulaComponent} from "./profesor/aulas/aula/aula.component";
+import {UsuariosProfesorComponent} from "./profesor/aulas/aula/usuarios/usuarios-profesor.component";
+import {TemasComponent} from "./profesor/aulas/aula/temas/temas.component";
+import {ClaseComponent} from "./admin/clases/clase/clase.component";
+import {ProfesorClaseComponent} from "./admin/clases/clase/profesor/profesor-clase.component";
+import {TareasComponent} from "./admin/clases/clase/tareas/tareas.component";
 
 export const routes: Routes = [
   {path:'login',component:LoginComponent},
   {path:'admin',component:AdminComponent, canActivate: [canActivateAdmin],children:[
       {path:'clases',component:ClasesComponent},
-      {path:'clases/:asignaturaId',component:ClasesComponent},
-      {path:'clases/:cursoId',component:ClasesComponent},
+      {path:'clases/:id',component:ClaseComponent,children:[
+          {path:'',component:TareasComponent},
+          {path:'profesores',component:ProfesorClaseComponent},
+          {path:'**',pathMatch:'full',redirectTo:''}
+        ]},
       {path:'cursos',component:CursosComponent},
       {path:'asignaturas',component:AsignaturasComponent},
       {path:'usuarios',component:UsuariosAdminComponent},
@@ -32,7 +38,7 @@ export const routes: Routes = [
       ]
   },
   {path:'profesor',component:ProfesorComponent, canActivate: [canActivateProfesor],children:[
-      {path:'',component:ListAulasComponent},
+      {path:'',component:AulasComponent},
       {path:'aula/:id',component:AulaComponent,children:[
           {path:'',component:TemasComponent},
           {path:'usuarios',component:UsuariosProfesorComponent},

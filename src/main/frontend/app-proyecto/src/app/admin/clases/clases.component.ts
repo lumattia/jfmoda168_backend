@@ -4,7 +4,7 @@ import {NgForOf} from "@angular/common";
 import {CursoService} from "../../services/curso.service";
 import {AsignaturaService} from "../../services/asignatura.service";
 import {FormsModule} from "@angular/forms";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, RouterLink} from "@angular/router";
 import {Option} from "../../interfaces/option";
 import {ModalComponent} from "../../util/modal/modal.component";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
@@ -14,7 +14,8 @@ import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
   standalone: true,
   imports: [
     NgForOf,
-    FormsModule
+    FormsModule,
+    RouterLink
   ],
   templateUrl: './clases.component.html',
   styleUrl: './clases.component.css'

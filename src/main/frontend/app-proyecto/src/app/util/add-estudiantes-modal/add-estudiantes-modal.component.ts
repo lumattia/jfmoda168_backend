@@ -2,8 +2,8 @@ import {Component, inject, Input} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NgClass, NgForOf, NgIf} from "@angular/common";
 import {NgbActiveModal, NgbPagination} from "@ng-bootstrap/ng-bootstrap";
-import {EstudianteRow} from "../../../../../interfaces/estudiante";
-import {EstudianteService} from "../../../../../services/estudiante.service";
+import {EstudianteRow} from "../../interfaces/estudiante";
+import {EstudianteService} from "../../services/estudiante.service";
 
 @Component({
   selector: 'app-add-estudiantes-modal',

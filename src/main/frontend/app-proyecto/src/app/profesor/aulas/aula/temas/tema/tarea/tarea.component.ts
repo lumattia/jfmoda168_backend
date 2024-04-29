@@ -1,8 +1,8 @@
 import {Component, EventEmitter, inject, Input, Output} from '@angular/core';
-import {Option} from "../../../../../interfaces/option";
-import {ModalComponent} from "../../../../../util/modal/modal.component";
-import {FormModalComponent} from "../../../../../util/form-modal/form-modal.component";
-import {TareaService} from "../../../../../services/tarea.service";
+import {Option} from "../../../../../../interfaces/option";
+import {ModalComponent} from "../../../../../../util/modal/modal.component";
+import {FormModalComponent} from "../../../../../../util/form-modal/form-modal.component";
+import {TareaService} from "../../../../../../services/tarea.service";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
@@ -46,7 +46,7 @@ export class TareaComponent {
   }
   eliminarTarea(id: number) {
     this.tareaService.deleteTarea(id).subscribe({
-      next: (data) => {
+      next: () => {
         this.delete.emit(this.tarea)
       },
       error: (error) => {

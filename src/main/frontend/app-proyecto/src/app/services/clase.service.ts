@@ -1,7 +1,8 @@
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, throwError } from 'rxjs';
+import { Observable} from 'rxjs';
 import {Option} from "../interfaces/option";
+import {ProfesorRow} from "../interfaces/profesor";
 
 //ENDPOINTS
 const CLASEURL="http://localhost:8080/v1/api/clases"
@@ -32,6 +33,13 @@ export class ClaseService {
     const url = `${CLASEURL}?curso=${curso}&asignatura=${asignatura}`
     return this.http.get<Option>(url);
   }
+  getProfesores(id:number,searchTerm:string):Observable<Array<ProfesorRow>>{
+    const url = `${CLASEURL}/${id}/profesores`
+    let options={
+      params:new HttpParams().set("buscar",searchTerm)
+    }
+    return this.http.get<Array<ProfesorRow>>(url,options);
+  }
   crearClase(curso:number,asignatura:number):Observable<Object>{
     return this.http.post<Option>(CLASEURL,
         {
@@ -39,8 +47,17 @@ export class ClaseService {
           "asignatura":{"id":asignatura},
         },HTTPOPTIONS)
   }
+  addProf(id:number,ids:number[]):Observable<Object>{
+    const url = `${CLASEURL}/${id}/addProf`
+    return this.http.post<Option>(url,
+      ids
+      ,HTTPOPTIONS)  }
   deleteClase(c:any):Observable<any>{
     const url = `${CLASEURL}/${c}`
     return this.http.delete(url, HTTPOPTIONS);
+  }
+  removeProfesor(idClase:number,idProfesor:number):Observable<any>{
+    const url = `${CLASEURL}/${idClase}/profesor/${idProfesor}`
+    return this.http.delete(url, HTTPOPTIONS)
   }
 }

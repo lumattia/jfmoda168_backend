@@ -1,25 +1,25 @@
 import {Component, inject} from '@angular/core';
 import {NgClass, NgFor, NgIf} from "@angular/common";
+import {ProfesorRow} from "../../../../../interfaces/profesor";
 import {NgbModal, NgbPaginationModule} from "@ng-bootstrap/ng-bootstrap";
 import {FormsModule} from "@angular/forms";
-import {Option} from "../../../../interfaces/option";
-import {ModalComponent} from "../../../../util/modal/modal.component";
+import {Option} from "../../../../../interfaces/option";
+import {ModalComponent} from "../../../../../util/modal/modal.component";
 import {ActivatedRoute, RouterLink} from "@angular/router";
-import {AulaService} from "../../../../services/aula.service";
-import {EstudianteRow} from "../../../../interfaces/estudiante";
-import {AddEstudiantesModalComponent} from "./add-estudiantes-modal/add-estudiantes-modal.component";
+import {AulaService} from "../../../../../services/aula.service";
+import {AddProfsModalComponent} from "../../../../../util/add-profs-modal/add-profs-modal.component";
 
 @Component({
-  selector: 'app-estudiante-profesor',
+  selector: 'app-profesor-profesor',
   standalone: true,
   imports: [NgFor, NgIf, NgbPaginationModule, NgClass, FormsModule, RouterLink,
   ],
-  templateUrl: './estudiante-profesor.component.html',
-  styleUrl: './estudiante-profesor.component.css'
+  templateUrl: './profesor-profesor.component.html',
+  styleUrl: './profesor-profesor.component.css'
 })
-export class EstudianteProfesorComponent {
+export class ProfesorProfesorComponent {
   private modalService = inject(NgbModal);
-  estudiantes:EstudianteRow[]=[];
+  profesores:ProfesorRow[]=[];
   searchTerm:string="";
   sortColumn= '';
   sortDirection= '';
@@ -27,7 +27,7 @@ export class EstudianteProfesorComponent {
   constructor(private aulaService:AulaService,private route:ActivatedRoute) {
     this.route.parent?.params.subscribe(p => {
       this.id = Number(p['id'])||0;
-      this.getEstudiantes();
+      this.getProfesores();
     })
   }
   onSort(column:string) {
@@ -44,19 +44,19 @@ export class EstudianteProfesorComponent {
   }
   sort(){
     if (!(this.sortDirection === '' || this.sortColumn === '')) {
-      const compare = (a: EstudianteRow, b: EstudianteRow) => {
+      const compare = (a: ProfesorRow, b: ProfesorRow) => {
         const v1 = a[this.sortColumn];
         const v2 = b[this.sortColumn];
         let res = v1 < v2 ? -1 : v1 > v2 ? 1 : 0
         return this.sortDirection === 'asc' ? res : -res;
       };
-      this.estudiantes.sort(compare);
+      this.profesores.sort(compare);
     }
   }
-  getEstudiantes(){
-    this.aulaService.getEstudiantes(this.id,this.searchTerm).subscribe({
+  getProfesores(){
+    this.aulaService.getProfesores(this.id,this.searchTerm).subscribe({
       next: (data:any) => {
-        this.estudiantes = (data as EstudianteRow[])
+        this.profesores = (data as ProfesorRow[])
         this.sort()
       },
       error: (error) => {
@@ -65,23 +65,23 @@ export class EstudianteProfesorComponent {
     })
   }
   abrirModalAnadir(){
-    const modalRef = this.modalService.open(AddEstudiantesModalComponent,{size: 'xl',centered: true, scrollable: true});
-    this.aulaService.getEstudiantes(this.id,"").subscribe({
+    const modalRef = this.modalService.open(AddProfsModalComponent,{size: 'lg',centered: true, scrollable: true});
+    this.aulaService.getProfesores(this.id,"").subscribe({
       next: (data:any) => {
-        modalRef.componentInstance.added=data as EstudianteRow[];
+        modalRef.componentInstance.added=data as ProfesorRow[];
       },
       error: (error) => {
         alert(error);
       }
     })
     modalRef.closed.subscribe((ids: number[]) => {
-      this.aniadirEstudiante(ids)
+      this.aniadirProfesor(ids)
     });
   }
-  aniadirEstudiante(ids:number[]){
-    this.aulaService.addEst(this.id,ids).subscribe({
+  aniadirProfesor(ids:number[]){
+    this.aulaService.addProf(this.id,ids).subscribe({
       next: (data:any) => {
-        this.estudiantes.push(...(data as EstudianteRow[]))
+        this.profesores.push(...(data as ProfesorRow[]))
       },
       error: (error) => {
         alert(error);
@@ -89,22 +89,22 @@ export class EstudianteProfesorComponent {
     })
   }
 
-  eliminarEstudiante(id: number) {
-    this.aulaService.removeEstudiante(this.id,id).subscribe({
+  eliminarProfesor(id: number) {
+    this.aulaService.removeProfesor(this.id,id).subscribe({
       next: () => {
-        this.estudiantes = this.estudiantes.filter(p => p.id != id)
+        this.profesores = this.profesores.filter(p => p.id != id)
       },
       error: (error) => {
         alert(error);
       }
     });
   }
-  openModal(option:EstudianteRow) {
+  openModal(option:ProfesorRow) {
     const modalRef = this.modalService.open(ModalComponent);
-    modalRef.componentInstance.name = 'estudiante';
+    modalRef.componentInstance.name = 'profesor';
     modalRef.componentInstance.option = {id: option.id, nombre: option.nombre + " " + option.apellidos};
     modalRef.closed.subscribe((o: Option) => {
-      this.eliminarEstudiante(o.id)
+      this.eliminarProfesor(o.id)
     });
   }
 }

@@ -2,6 +2,7 @@ package org.iesvdm.proyecto.repository;
 
 import org.iesvdm.proyecto.model.entity.Clase;
 import org.iesvdm.proyecto.model.view.Option;
+import org.iesvdm.proyecto.model.view.ProfesorRow;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -11,4 +12,6 @@ public interface ClaseRepository extends JpaRepository<Clase, Long> {
             "WHERE (:cursoId =-1 OR c.curso.id = :cursoId) " +
             "AND (:asignaturaId =-1 OR c.asignatura.id = :asignaturaId)")
     Set<Option> getButtonsFiltering(Long cursoId, Long asignaturaId);
+    @Query("SELECT p FROM Profesor p JOIN p.clases c WHERE c.id = ?1 and CONCAT(p.nombre, ' ', p.apellidos) LIKE %?2%")
+    Set<ProfesorRow> getProfesores(Long aulaId, String buscar);
 }

@@ -7,10 +7,11 @@ import org.iesvdm.proyecto.model.entity.Clase;
 import org.iesvdm.proyecto.model.entity.Profesor;
 import org.iesvdm.proyecto.exeption.NotFoundException;
 import org.iesvdm.proyecto.model.view.Option;
+import org.iesvdm.proyecto.model.view.ProfesorRow;
 import org.iesvdm.proyecto.repository.ClaseRepository;
 import org.springframework.stereotype.Service;
-import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class ClaseService {
@@ -25,16 +26,10 @@ public class ClaseService {
             return this.claseRepository.getButtonsFiltering(curso, asignatura);
     }
 
-
     @Transactional
     public Clase save(Clase clase) {
         this.claseRepository.save(clase);
         this.em.refresh(clase);
-        if (!clase.getProfesores().isEmpty()){
-            clase.setProfesores(getProfesores(clase.getId()));
-        }
-        //NO PUEDO REFRESCAR COLECCION
-        //this.em.refresh(clase.getProfesores());
         return clase;
     }
 
@@ -49,12 +44,36 @@ public class ClaseService {
                 .orElseThrow(() -> new NotFoundException(id,"clase"));
 
     }
-    public Clase add(Long id, Set<Profesor> profesor) {
-        return this.claseRepository.findById(id).map( c -> {
+    public Set<ProfesorRow> addProfs(Long id, Set<Profesor> profesor) {
+        this.claseRepository.findById(id).map( c -> {
                     c.getProfesores().addAll(profesor);
                     return claseRepository.save(c);
-                })
-                .orElseThrow(() -> new NotFoundException(id,"clase"));
+                }).orElseThrow(() -> new NotFoundException(id,"clase"));
+        return profesor.stream().map(p -> new ProfesorRow() {
+            @Override
+            public long getId() {
+                return p.getId();
+            }
+            @Override
+            public String getNombre() {
+                return p.getNombre();
+            }
+
+            @Override
+            public String getApellidos() {
+                return p.getApellidos();
+            }
+
+            @Override
+            public String getEmail() {
+                return p.getEmail();
+            }
+
+            @Override
+            public boolean isBlocked() {
+                return p.isBlocked();
+            }
+        }).collect(Collectors.toSet());
 
     }
     public void delete(Long id) {
@@ -63,9 +82,17 @@ public class ClaseService {
                     return c;})
                 .orElseThrow(() -> new NotFoundException(id,"clase"));
     }
-    private HashSet<Profesor> getProfesores(long id){
-        return new HashSet<>(em.createQuery("select C.profesores from Clase C where C.id = :id")
-                .setParameter("id",id)
-                .getResultList());
+    public void removeProf(long id,long idProf) {
+        Clase c=this.claseRepository.findById(id).orElseThrow(() -> new NotFoundException(id,"aula"));
+        Profesor p=new Profesor();
+        p.setId(idProf);
+        if (c.getProfesores().remove(p)){
+            this.claseRepository.save(c);
+        }else{
+            throw new NotFoundException("No se ha encontrado ese profesor en esa clase");
+        }
+    }
+    public Set<ProfesorRow> getProfesores(long id,String buscar) {
+        return this.claseRepository.getProfesores(id,buscar);
     }
 }
