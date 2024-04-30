@@ -17,6 +17,9 @@
     <th class="text-nowrap" (click)="onSort('email')">
       Correo <i *ngIf="sortColumn === 'email';else sort" class="fas" [ngClass]="sortDirection=='asc'?'fa-sort-up':'fa-sort-down'" ></i>
     </th>
+    <th class="text-nowrap" (click)="onSort('aula')">
+      Aula <i *ngIf="sortColumn === 'aula';else sort" class="fas" [ngClass]="sortDirection=='asc'?'fa-sort-up':'fa-sort-down'" ></i>
+    </th>
     <ng-template #sort>
       <i class="fas fa-sort"></i>
     </ng-template>
@@ -28,6 +31,7 @@
     <td class="overflow-hidden">{{estudiante.nombre}}</td>
     <td class="overflow-hidden">{{estudiante.apellidos}}</td>
     <td class="overflow-hidden">{{estudiante.email}}</td>
+    <td class="overflow-hidden">{{estudiante.aula}}</td>
     <td class="text-nowrap">
       <div class="text-end">
         <a class="p-1" [routerLink]="['../estudiante/edit',estudiante.id]">

@@ -14,14 +14,9 @@ import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 })
 export class AulaEditModalComponent {
   @Input() aula: AulaForm=<AulaForm>{};
-  ano:string="";
   activeModal = inject(NgbActiveModal);
 
-  ngOnInit(){
-    this.ano=this.aula.año;
-  }
   close(){
-    this.aula.año=this.ano
     this.activeModal.close(this.aula)
   }
 }

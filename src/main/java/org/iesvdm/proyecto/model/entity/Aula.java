@@ -18,7 +18,7 @@ public class Aula {
     private long id;
     private String grupo;
     @Column(nullable = false)
-    private String año;
+    private String anio;
     @ManyToMany
     private Set<Profesor> profesores=new HashSet<>();
     @ManyToOne(optional = false)
@@ -31,6 +31,6 @@ public class Aula {
     private Set<Tema> temas;
     private boolean eliminado;
     public String getNombre(){
-        return this.clase.getNombre()+" "+this.grupo+" "+this.año;
+        return this.clase.getNombre()+" "+this.grupo+" "+this.anio;
     }
 }

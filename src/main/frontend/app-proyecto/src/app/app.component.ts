@@ -42,7 +42,7 @@ export class AppComponent implements OnInit {
     if (this.nuevaContrasena !== this.confirmarContrasena) {
       return;
     }
-    this.usuarioService.cambiarContraseña(this.contrasenaAntigua,this.nuevaContrasena).subscribe({
+    this.usuarioService.cambiarContrasenia(this.contrasenaAntigua,this.nuevaContrasena).subscribe({
       next(){
         alert("Contraseña cambiada correctamente")
       },error(error){

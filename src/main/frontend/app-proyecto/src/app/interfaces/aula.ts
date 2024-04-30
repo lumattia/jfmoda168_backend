@@ -7,13 +7,13 @@ export interface AulaForm {
   id:number,
   clase:Option,
   grupo:string,
-  año:string,
+  anio:string,
 }
 export interface Aula {
   id:number,
   clase:Option,
   grupo:string,
-  año:string,
+  anio:string,
   temas:Tema[],
   propietario:number,
   profesores:ProfesorRow[],

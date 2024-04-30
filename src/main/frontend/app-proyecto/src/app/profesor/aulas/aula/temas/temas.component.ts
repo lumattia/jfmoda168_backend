@@ -59,9 +59,6 @@ export class TemasComponent {
   existe(nombre:string):boolean{
     return this.aula.temas.filter(a=>a.nombre==nombre).length==0;
   }
-  getYear() {
-    return this.aula.año;
-  }
   deleteTema(tema:Tema){
     this.aula.temas = this.aula.temas.filter(a => a.id != tema.id)
   }

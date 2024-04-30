@@ -124,7 +124,7 @@ public class AulaService {
         Aula a= one(id);
         if (id==a.getId()){
             a.setGrupo(aula.getGrupo());
-            a.setAño(aula.getAño());
+            a.setAnio(aula.getAnio());
             return this.aulaRepository.save(a);
         }
         return null;

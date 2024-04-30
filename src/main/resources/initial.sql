@@ -63,11 +63,11 @@ INSERT INTO clase_profesores (clases_id, profesores_id) VALUES (3, 4);
 INSERT INTO clase_profesores (clases_id, profesores_id) VALUES (4, 5);
 INSERT INTO clase_profesores (clases_id, profesores_id) VALUES (5, 6);
 
-INSERT INTO aula (año, eliminado, grupo, clase_id, propietario_id) VALUES ('23/24', 0, 'A', 1, 2);
-INSERT INTO aula (año, eliminado, grupo, clase_id, propietario_id) VALUES ('23/24', 0, 'B', 2, 2);
-INSERT INTO aula (año, eliminado, grupo, clase_id, propietario_id) VALUES ('23/24', 0, 'C', 3, 3);
-INSERT INTO aula (año, eliminado, grupo, clase_id, propietario_id) VALUES ('23/24', 0, 'D', 4, 4);
-INSERT INTO aula (año, eliminado, grupo, clase_id, propietario_id) VALUES ('23/24', 0, 'E', 5, 5);
+INSERT INTO aula (anio, eliminado, grupo, clase_id, propietario_id) VALUES ('23/24', 0, 'A', 1, 2);
+INSERT INTO aula (anio, eliminado, grupo, clase_id, propietario_id) VALUES ('23/24', 0, 'B', 2, 2);
+INSERT INTO aula (anio, eliminado, grupo, clase_id, propietario_id) VALUES ('23/24', 0, 'C', 3, 3);
+INSERT INTO aula (anio, eliminado, grupo, clase_id, propietario_id) VALUES ('23/24', 0, 'D', 4, 4);
+INSERT INTO aula (anio, eliminado, grupo, clase_id, propietario_id) VALUES ('23/24', 0, 'E', 5, 5);
 
 INSERT INTO aula_profesores (aulas_id, profesores_id) VALUES (1, 2);
 INSERT INTO aula_profesores (aulas_id, profesores_id) VALUES (1, 3);

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {StorageService} from "./storage.service";
 import {Observable} from "rxjs";
+import {Usuario} from "../interfaces/usuario";
 @Injectable({
   providedIn: 'root'
 })
@@ -19,8 +20,8 @@ export class AuthService {
 
 
 
-  login(email: string, password: string): Observable<any> {
-    return this.httpClient.post(
+  login(email: string, password: string): Observable<Usuario> {
+    return this.httpClient.post<Usuario>(
       this.apiAuthURL + 'login',
       {
         email,

@@ -37,6 +37,7 @@ export class EstudianteFormComponent {
             this.estudiante.nombre=data.nombre;
             this.estudiante.apellidos=data.apellidos;
             this.estudiante.email=data.email;
+            this.estudiante.aula=data.aula;
           },
           error:(error)=>{
             alert(error)

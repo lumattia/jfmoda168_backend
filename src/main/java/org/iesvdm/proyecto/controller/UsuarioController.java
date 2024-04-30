@@ -57,7 +57,7 @@ public class UsuarioController {
     }
     @ResponseBody
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @PutMapping("/cambiarContrasena/")
+    @PutMapping("/cambiarContrasenia")
     public void cambiarContrasena(@RequestBody Map<String, String> request) {
         String oldPassword = request.get("oldPassword");
         String newPassword = request.get("newPassword");
