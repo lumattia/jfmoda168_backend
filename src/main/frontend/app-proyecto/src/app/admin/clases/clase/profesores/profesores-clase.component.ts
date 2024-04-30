@@ -14,10 +14,10 @@ import {AddProfsModalComponent} from "../../../../util/add-profs-modal/add-profs
   standalone: true,
   imports: [NgFor, NgIf, NgbPaginationModule, NgClass, FormsModule, RouterLink,
   ],
-  templateUrl: './profesor-clase.component.html',
-  styleUrl: './profesor-clase.component.css'
+  templateUrl: './profesores-clase.component.html',
+  styleUrl: './profesores-clase.component.css'
 })
-export class ProfesorClaseComponent {
+export class ProfesoresClaseComponent {
   private modalService = inject(NgbModal);
   profesores:ProfesorRow[]=[];
   searchTerm:string="";
@@ -27,7 +27,6 @@ export class ProfesorClaseComponent {
   constructor(private claseService:ClaseService,private route:ActivatedRoute) {
     this.route.parent?.params.subscribe(p => {
       this.id = Number(p['id'])||0;
-      console.log(p['id'])
       this.getProfesores();
     })
   }
@@ -56,8 +55,8 @@ export class ProfesorClaseComponent {
   }
   getProfesores(){
     this.claseService.getProfesores(this.id,this.searchTerm).subscribe({
-      next: (data:any) => {
-        this.profesores = (data as ProfesorRow[])
+      next: (data) => {
+        this.profesores = data
         this.sort()
       },
       error: (error) => {
@@ -68,8 +67,8 @@ export class ProfesorClaseComponent {
   abrirModalAnadir(){
     const modalRef = this.modalService.open(AddProfsModalComponent,{size: 'lg',centered: true, scrollable: true});
     this.claseService.getProfesores(this.id,"").subscribe({
-      next: (data:any) => {
-        modalRef.componentInstance.added=data as ProfesorRow[];
+      next: (data) => {
+        modalRef.componentInstance.added=data;
       },
       error: (error) => {
         alert(error);
@@ -81,8 +80,8 @@ export class ProfesorClaseComponent {
   }
   aniadirProfesor(ids:number[]){
     this.claseService.addProf(this.id,ids).subscribe({
-      next: (data:any) => {
-        this.profesores.push(...(data as ProfesorRow[]))
+      next: (data) => {
+        this.profesores.push(...data)
       },
       error: (error) => {
         alert(error);

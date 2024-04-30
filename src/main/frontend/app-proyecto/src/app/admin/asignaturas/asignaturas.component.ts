@@ -46,8 +46,8 @@ export class AsignaturasComponent {
   }
     buscar(){
       this.asignaturaService.buscarAsignatura(this.searchTerm).subscribe({
-        next: (data:any) => {
-          this.asignaturas = (data as Option[])
+        next: (data) => {
+          this.asignaturas = (data)
         },
         error: (error) => {
           alert(error);
@@ -58,7 +58,7 @@ export class AsignaturasComponent {
         if (this.existe(this.nombreAsignatura)){
             this.asignaturaService.crearAsignatura(this.nombreAsignatura).subscribe({
                 next: (data) => {
-                    this.asignaturas.push(data as Option)
+                    this.asignaturas.push(data)
                 },
                 error: (error) => {
                   alert(error);
@@ -72,7 +72,7 @@ export class AsignaturasComponent {
       if (this.existe(o.nombre)){
           this.asignaturaService.actualizarAsignatura(o).subscribe({
           next: (data) => {
-            this.asignaturas.splice(this.asignaturas.findIndex(a=>a.id==o.id), 1, o);
+            this.asignaturas.splice(this.asignaturas.findIndex(a=>a.id==data.id), 1, o);
           },
           error: (error) => {
             alert(error);
@@ -84,7 +84,7 @@ export class AsignaturasComponent {
     }
     eliminarAsignatura(id: number) {
         this.asignaturaService.deleteAsignatura(id).subscribe({
-            next: (data) => {
+            next: () => {
                 this.asignaturas = this.asignaturas.filter(a => a.id != id)
             },
             error: (error) => {

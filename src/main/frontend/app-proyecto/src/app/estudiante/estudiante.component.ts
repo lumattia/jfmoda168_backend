@@ -22,8 +22,8 @@ export class EstudianteComponent {
   constructor(private estudianteService:EstudianteService,private storageService: StorageService) {
     var id=storageService.getUser().content.id
     estudianteService.getAulas(id).subscribe({
-      next: (a) => {
-        this.aulas = a as Option[]
+      next: (data) => {
+        this.aulas = data
       },
       error: (error) => {
         alert(error);

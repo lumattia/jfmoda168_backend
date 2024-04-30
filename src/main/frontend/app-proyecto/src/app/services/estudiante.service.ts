@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {EstudianteRow} from "../interfaces/estudiante";
+import {EstudianteForm, EstudianteRow} from "../interfaces/estudiante";
 import {Option} from "../interfaces/option";
-import {ProfesorRow} from "../interfaces/profesor";
 const ESTUDIANTEURL="http://localhost:8080/v1/api/estudiantes"
 
 const HTTPOPTIONS = {
@@ -19,17 +18,11 @@ export class EstudianteService {
 
   constructor(private http:HttpClient) {
   }
-
-  //Métodos (incluir tipos correctos en los argumentos)
-  getEstudiantes():Observable<Object>{
-    return this.http.get(ESTUDIANTEURL);
-  }
-  getEstudiante(id:number):Observable<Object>{
+  getEstudiante(id:number):Observable<EstudianteForm>{
     const url = `${ESTUDIANTEURL}/${id}`
-    return this.http.get<EstudianteRow>(url);
+    return this.http.get<EstudianteForm>(url);
   }
-  buscarNotBlocked(searchTerm:string,page:number,pageSize:number,sortColumn:string,sortDirection:string)
-  {
+  buscarNotBlocked(searchTerm:string,page:number,pageSize:number,sortColumn:string,sortDirection:string):Observable<any>{
     const url = `${ESTUDIANTEURL}/notBlocked`
     let options={
       params:new HttpParams().set("buscar",searchTerm)
@@ -37,32 +30,32 @@ export class EstudianteService {
         .set("size",pageSize)
         .set("sort",sortColumn+","+sortDirection)
     }
-    return this.http.get<ProfesorRow>(url,options)
+    return this.http.get<any>(url,options)
   }
-  buscarEstudiante(searchTerm:string,page:number,pageSize:number,sortColumn:string,sortDirection:string){
+  buscarEstudiante(searchTerm:string,page:number,pageSize:number,sortColumn:string,sortDirection:string):Observable<any>{
     let options={
       params:new HttpParams().set("buscar",searchTerm)
         .set("page",page-1)
         .set("size",pageSize)
         .set("sort",sortColumn+","+sortDirection)
     }
-    return this.http.get<EstudianteRow>(ESTUDIANTEURL,options)
+    return this.http.get<any>(ESTUDIANTEURL,options)
   }
-  getAulas(id:number):Observable<Object>{
+  getAulas(id:number):Observable<Option[]>{
     const url = `${ESTUDIANTEURL}/getAulas/${id}`
-    return this.http.get<Array<Option>>(url)
+    return this.http.get<Option[]>(url)
   }
-  crearEstudiante(e:any):Observable<Object>{
+  crearEstudiante(e:EstudianteForm):Observable<EstudianteRow>{
     return this.http.post<EstudianteRow>(ESTUDIANTEURL, e,HTTPOPTIONS)
   }
 
-  actualizarEstudiante(e:any):Observable<Object>{
+  actualizarEstudiante(e:EstudianteForm):Observable<EstudianteRow>{
     const url = `${ESTUDIANTEURL}/${e.id}`;
     return this.http.put<EstudianteRow>(url, e, HTTPOPTIONS);
   }
 
-  deleteEstudiante(e:any):Observable<any>{
-    const url = `${ESTUDIANTEURL}/${e}`
+  deleteEstudiante(id:number){
+    const url = `${ESTUDIANTEURL}/${id}`
     return this.http.delete(url, HTTPOPTIONS);
   }
 }

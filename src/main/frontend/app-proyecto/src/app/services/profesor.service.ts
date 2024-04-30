@@ -17,12 +17,11 @@ const HTTPOPTIONS = {
 export class ProfesorService {
   constructor(private http:HttpClient) {
   }
-  getProfesor(id:number):Observable<Object>{
+  getProfesor(id:number):Observable<ProfesorForm>{
     const url = `${PROFESORURL}/${id}`
-    return this.http.get<ProfesorRow>(url);
+    return this.http.get<ProfesorForm>(url);
   }
-  buscarNotBlocked(searchTerm:string,page:number,pageSize:number,sortColumn:string,sortDirection:string)
-  {
+  buscarNotBlocked(searchTerm:string,page:number,pageSize:number,sortColumn:string,sortDirection:string):Observable<any> {
     const url = `${PROFESORURL}/notBlocked`
     let options={
       params:new HttpParams().set("buscar",searchTerm)
@@ -30,35 +29,35 @@ export class ProfesorService {
         .set("size",pageSize)
         .set("sort",sortColumn+","+sortDirection)
     }
-    return this.http.get<ProfesorRow>(url,options)
+    return this.http.get<any>(url,options)
   }
-  buscarProfesor(searchTerm:string,page:number,pageSize:number,sortColumn:string,sortDirection:string){
+  buscarProfesor(searchTerm:string,page:number,pageSize:number,sortColumn:string,sortDirection:string):Observable<any>{
     let options={
       params:new HttpParams().set("buscar",searchTerm)
       .set("page",page-1)
       .set("size",pageSize)
       .set("sort",sortColumn+","+sortDirection)
     }
-    return this.http.get<ProfesorRow>(PROFESORURL,options)
+    return this.http.get<any>(PROFESORURL,options)
   }
-  getAulas(id:number):Observable<Object>{
+  getAulas(id:number):Observable<Option[]>{
     const url = `${PROFESORURL}/getAulas/${id}`
-    return this.http.get<Array<Option>>(url)
+    return this.http.get<Option[]>(url)
   }
-  getClases(id:number):Observable<Object>{
+  getClases(id:number):Observable<Option[]>{
     const url = `${PROFESORURL}/getClases/${id}`
-    return this.http.get<Array<Option>>(url)
+    return this.http.get<Option[]>(url)
   }
-  crearProfesor(p:ProfesorForm):Observable<Object>{
+  crearProfesor(p:ProfesorForm):Observable<ProfesorRow>{
     return this.http.post<ProfesorRow>(PROFESORURL, p,HTTPOPTIONS)
   }
 
-  actualizarProfesor(p:any):Observable<Object>{
+  actualizarProfesor(p:ProfesorForm):Observable<ProfesorRow>{
     const url = `${PROFESORURL}/${p.id}`;
     return this.http.put<ProfesorRow>(url, p, HTTPOPTIONS);
   }
 
-  deleteProfesor(id:number):Observable<any>{
+  deleteProfesor(id:number){
     const url = `${PROFESORURL}/${id}`
     return this.http.delete(url, HTTPOPTIONS);
   }

@@ -45,9 +45,9 @@ export class CursosComponent {
     });
   }
   buscar(){
-    this.cursoService.buscarAsignatura(this.searchTerm).subscribe({
-      next: (data:any) => {
-        this.cursos = (data as Option[])
+    this.cursoService.buscarCurso(this.searchTerm).subscribe({
+      next: (data) => {
+        this.cursos = (data)
       },
       error: (error) => {
         alert(error);
@@ -58,7 +58,7 @@ export class CursosComponent {
       if (this.existe(this.nombreCurso)){
           this.cursoService.crearCurso(this.nombreCurso).subscribe({
               next: (data) => {
-                  this.cursos.push(data as Option)
+                  this.cursos.push(data)
               },
               error: (error) => {
                   alert(error);
@@ -72,7 +72,7 @@ export class CursosComponent {
     if (this.existe(o.nombre)){
       this.cursoService.actualizarCurso(o).subscribe({
         next: (data) => {
-          this.cursos.splice(this.cursos.findIndex(a=>a.id==o.id), 1, o);
+          this.cursos.splice(this.cursos.findIndex(a=>a.id==data.id), 1, o);
         },
         error: (error) => {
           alert(error);
@@ -84,7 +84,7 @@ export class CursosComponent {
   }
     eliminarCurso(id: number) {
         this.cursoService.deleteCurso(id).subscribe({
-            next: (data) => {
+            next: () => {
                 this.cursos = this.cursos.filter(c => c.id != id)
             },
             error: (error) => {

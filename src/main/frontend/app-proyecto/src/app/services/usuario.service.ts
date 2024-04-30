@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {Usuario} from "../interfaces/usuario";
 const USUARIOURL="http://localhost:8080/v1/api/usuarios"
 
 const HTTPOPTIONS = {
@@ -16,16 +15,12 @@ const HTTPOPTIONS = {
 export class UsuarioService {
   constructor(private http:HttpClient) {
   }
-  actualizarUsuario(u:any):Observable<Object>{
-    const url = `${USUARIOURL}/${u.id}`;
-    return this.http.put<Usuario>(url, u, HTTPOPTIONS);
-  }
   cambiarEstado(id:number):Observable<boolean>{
     const url = `${USUARIOURL}/cambiarEstado/${id}`;
     return this.http.put<boolean>(url, HTTPOPTIONS);
   }
-  cambiarContraseña(oldPassword:string,newPassword:string):Observable<void>{
-    const url = `${USUARIOURL}/cambiarContrasena/`;
-    return this.http.put<void>(url,{oldPassword,newPassword},HTTPOPTIONS);
+  cambiarContrasenia(oldPassword:string, newPassword:string){
+    const url = `${USUARIOURL}/cambiarContrasenia`;
+    return this.http.put(url,{oldPassword,newPassword},HTTPOPTIONS);
   }
 }

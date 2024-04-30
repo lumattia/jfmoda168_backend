@@ -28,7 +28,7 @@ export class AulasComponent {
     id:0,
     clase:{id:-1,nombre:""},
     grupo:"",
-    año:""
+    anio:""
   }
   aulas:Option[]=[];
   clases:Option[]=[];
@@ -37,7 +37,7 @@ export class AulasComponent {
     let id=storageService.getUser().content.id;
     profesorService.getAulas(id).subscribe({
       next: (a) => {
-        this.aulas = a as Option[]
+        this.aulas = a
       },
       error: (error) => {
         alert(error);
@@ -45,7 +45,7 @@ export class AulasComponent {
     })
     profesorService.getClases(id).subscribe({
       next: (c) => {
-        this.clases = c as Option[]
+        this.clases = c
       },
       error: (error) => {
         alert(error);
@@ -67,7 +67,7 @@ export class AulasComponent {
         modalRef.componentInstance.aula = {
             id:a.id,
             grupo:a.grupo,
-            año:a.año,
+            anio:a.anio,
             clase:{nombre:a.clase.nombre},
             tema:[]
           };
@@ -82,13 +82,13 @@ export class AulasComponent {
   }
   ngOnInit(){
     const anioActual = new Date().getFullYear()-2000;
-    this.aula.año = `${anioActual}/${anioActual + 1}`;
+    this.aula.anio = `${anioActual}/${anioActual + 1}`;
   }
   crearAula(){
     if (this.aula.clase.id>0){
       this.aulaService.crearAula(this.aula).subscribe({
         next: (data) => {
-          this.aulas.push(data as Option)
+          this.aulas.push(data)
         },
         error: (error) => {
           alert(error);
@@ -99,7 +99,7 @@ export class AulasComponent {
   editarAula(o:Aula){
     this.aulaService.actualizarAula(o).subscribe({
       next: (data) => {
-        this.aulas.splice(this.aulas.findIndex(a=>a.id==o.id), 1, data as Option);
+        this.aulas.splice(this.aulas.findIndex(a=>a.id==o.id), 1, data);
       },
       error: (error) => {
         alert(error);

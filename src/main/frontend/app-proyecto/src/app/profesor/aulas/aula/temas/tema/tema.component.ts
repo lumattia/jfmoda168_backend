@@ -7,7 +7,6 @@ import {FormModalComponent} from "../../../../../util/form-modal/form-modal.comp
 import {Tema} from "../../../../../interfaces/tema";
 import {TemaService} from "../../../../../services/tema.service";
 import {TareaComponent} from "./tarea/tarea.component";
-import {Tarea} from "../../../../../interfaces/tarea";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
@@ -48,7 +47,7 @@ export class TemaComponent {
     editarTema(o: Option) {
         this.temaService.actualizarTema(o).subscribe({
             next: (data) => {
-                this.tema.nombre = o.nombre;
+                this.tema.nombre = data.nombre;
             },
             error: (error) => {
                 alert(error);
@@ -57,7 +56,7 @@ export class TemaComponent {
     }
     eliminarTema(id: number) {
         this.temaService.deleteTema(id).subscribe({
-            next: (data) => {
+            next: () => {
                 this.delete.emit(this.tema)
             },
             error: (error) => {
@@ -67,9 +66,9 @@ export class TemaComponent {
         });
     }
     crearTarea() {
-        this.temaService.crearTarea(this.tema.id,this.tareaACrear).subscribe({
+        this.temaService.crearTema(this.tema.id,this.tareaACrear).subscribe({
             next: (data) => {
-                this.tema.tareas.push(data as Tarea)
+                this.tema.tareas.push(data)
             },
             error: (error) => {
                 alert(error);

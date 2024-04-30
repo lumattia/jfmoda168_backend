@@ -25,7 +25,6 @@ public class ClaseController {
         this.claseService = claseService;
         this.profesorService = profesorService;
     }
-
     @GetMapping({"","/"})
     public Set<Option> all(@RequestParam(required = false, defaultValue = "-1") long curso,
                            @RequestParam(required = false, defaultValue = "-1") long asignatura) {
@@ -45,6 +44,11 @@ public class ClaseController {
     public Set<ProfesorRow> getProfesores(@PathVariable("id") long id,
                                           @RequestParam(value = "buscar",defaultValue = "") String buscar){
         return this.claseService.getProfesores(id,buscar);
+    }
+    @GetMapping("/{id}/aulas")
+    public Set<Option> getAulas(@PathVariable("id") long id,
+                                          @RequestParam(value = "buscar",defaultValue = "") String buscar){
+        return this.claseService.getAulas(id,buscar);
     }
     @PutMapping("/{id}")
     public Clase replace(@PathVariable("id") long id, @RequestBody Clase clase) {
@@ -66,5 +70,11 @@ public class ClaseController {
     @DeleteMapping("/{id}/profesor/{idProfesor}")
     public void removeProf(@PathVariable("id") long id,@PathVariable("idProfesor") long idProfesor){
         this.claseService.removeProf(id,idProfesor);
+    }
+    @ResponseBody
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping("{id}/aula/{idAula}")
+    public void deleteAula(@PathVariable("id") long id,@PathVariable("idAula") long idAula){
+        this.claseService.deleteAula(id,idAula);
     }
 }

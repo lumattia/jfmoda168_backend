@@ -15,8 +15,9 @@ import {AulaComponent} from "./profesor/aulas/aula/aula.component";
 import {UsuariosProfesorComponent} from "./profesor/aulas/aula/usuarios/usuarios-profesor.component";
 import {TemasComponent} from "./profesor/aulas/aula/temas/temas.component";
 import {ClaseComponent} from "./admin/clases/clase/clase.component";
-import {ProfesorClaseComponent} from "./admin/clases/clase/profesor/profesor-clase.component";
+import {ProfesoresClaseComponent} from "./admin/clases/clase/profesores/profesores-clase.component";
 import {TareasComponent} from "./admin/clases/clase/tareas/tareas.component";
+import {AulasClaseComponent} from "./admin/clases/clase/aulas/aulas-clase.component";
 
 export const routes: Routes = [
   {path:'login',component:LoginComponent},
@@ -24,7 +25,8 @@ export const routes: Routes = [
       {path:'clases',component:ClasesComponent},
       {path:'clases/:id',component:ClaseComponent,children:[
           {path:'',component:TareasComponent},
-          {path:'profesores',component:ProfesorClaseComponent},
+          {path:'aulas',component:AulasClaseComponent},
+          {path:'profesores',component:ProfesoresClaseComponent},
           {path:'**',pathMatch:'full',redirectTo:''}
         ]},
       {path:'cursos',component:CursosComponent},

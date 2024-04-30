@@ -28,8 +28,6 @@ export class ClasesComponent {
   cursoSeleccionado:number=-1;
   asignaturaSeleccionado:number=-1;
 
-  claseAborrar:Option={id:0,
-    nombre:""};
   constructor(private claseService: ClaseService,
               private cursoService:CursoService,
               private asignaturaService:AsignaturaService,
@@ -40,9 +38,9 @@ export class ClasesComponent {
     });
     this.claseService.filterClase(this.cursoSeleccionado,this.asignaturaSeleccionado).subscribe({
       next: (data) => {
-        this.clases = (data as Option[])
-        this.cursoService.getCursos().subscribe(cursos=>this.cursos = (cursos as Option[]));
-        this.asignaturaService.getAsignaturas().subscribe(asignaturas=>this.asignaturas = (asignaturas as Option[]));
+        this.clases = (data)
+        this.cursoService.getCursos().subscribe(cursos=>this.cursos = cursos);
+        this.asignaturaService.getAsignaturas().subscribe(asignaturas=>this.asignaturas = asignaturas);
       },
       error: (error) => {
         alert(error);
@@ -60,7 +58,7 @@ export class ClasesComponent {
   filtrarClases(){
     this.claseService.filterClase(this.cursoSeleccionado,this.asignaturaSeleccionado).subscribe({
       next: (data) => {
-        this.clases = (data as Option[])
+        this.clases = data
       },
       error: (error) => {
         alert(error);
@@ -70,7 +68,7 @@ export class ClasesComponent {
   crearClase(){
     this.claseService.crearClase(this.cursoSeleccionado,this.asignaturaSeleccionado).subscribe({
       next: (data) => {
-        this.clases.push(data as Option)
+        this.clases.push(data)
       },
       error: (error) => {
         alert(error);
@@ -79,7 +77,7 @@ export class ClasesComponent {
   }
   eliminarClase(id:number){
     this.claseService.deleteClase(id).subscribe({
-      next: (data) => {
+      next: () => {
         this.clases=this.clases.filter(c=>c.id!=id)
       },
       error: (error) => {

@@ -55,8 +55,8 @@ export class EstudianteProfesorComponent {
   }
   getEstudiantes(){
     this.aulaService.getEstudiantes(this.id,this.searchTerm).subscribe({
-      next: (data:any) => {
-        this.estudiantes = (data as EstudianteRow[])
+      next: (data) => {
+        this.estudiantes = data
         this.sort()
       },
       error: (error) => {
@@ -67,8 +67,8 @@ export class EstudianteProfesorComponent {
   abrirModalAnadir(){
     const modalRef = this.modalService.open(AddEstudiantesModalComponent,{size: 'xl',centered: true, scrollable: true});
     this.aulaService.getEstudiantes(this.id,"").subscribe({
-      next: (data:any) => {
-        modalRef.componentInstance.added=data as EstudianteRow[];
+      next: (data) => {
+        modalRef.componentInstance.added=data;
       },
       error: (error) => {
         alert(error);
@@ -80,8 +80,8 @@ export class EstudianteProfesorComponent {
   }
   aniadirEstudiante(ids:number[]){
     this.aulaService.addEst(this.id,ids).subscribe({
-      next: (data:any) => {
-        this.estudiantes.push(...(data as EstudianteRow[]))
+      next: (data) => {
+        this.estudiantes.push(...data)
       },
       error: (error) => {
         alert(error);

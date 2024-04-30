@@ -37,7 +37,7 @@ export class TareaComponent {
   editarTarea(o:Option){
     this.tareaService.actualizarTarea(o).subscribe({
       next: (data) => {
-        this.tarea=data as Option;
+        this.tarea=data;
       },
       error: (error) => {
         alert(error);

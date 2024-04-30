@@ -22,42 +22,61 @@ export class ClaseService {
   }
 
   //Métodos (incluir tipos correctos en los argumentos)
-  getClases():Observable<Object>{
-    return this.http.get(CLASEURL);
+  getClases():Observable<Option[]>{
+    return this.http.get<Option[]>(CLASEURL);
   }
-  getClase(id:number):Observable<Object>{
+  getClase(id:number):Observable<Option>{
     const url = `${CLASEURL}/${id}`
     return this.http.get<Option>(url);
   }
-  filterClase(curso:number,asignatura:number):Observable<Object>{
-    const url = `${CLASEURL}?curso=${curso}&asignatura=${asignatura}`
-    return this.http.get<Option>(url);
-  }
-  getProfesores(id:number,searchTerm:string):Observable<Array<ProfesorRow>>{
+  getProfesores(id:number,searchTerm:string):Observable<ProfesorRow[]>{
     const url = `${CLASEURL}/${id}/profesores`
     let options={
       params:new HttpParams().set("buscar",searchTerm)
     }
-    return this.http.get<Array<ProfesorRow>>(url,options);
+    return this.http.get<ProfesorRow[]>(url,options);
   }
-  crearClase(curso:number,asignatura:number):Observable<Object>{
+  getAulas(idClase:number,searchTerm:string):Observable<Option[]>{
+    const url = `${CLASEURL}/${idClase}/aulas`
+    let options={
+      params:new HttpParams().set("buscar",searchTerm)
+    }
+    return this.http.get<Option[]>(url,options);
+  }
+  filterClase(curso:number,asignatura:number):Observable<Option[]>{
+    const url = `${CLASEURL}?curso=${curso}&asignatura=${asignatura}`
+    return this.http.get<Option[]>(url);
+  }
+  filterTema(idsAulas:number[],idsProfesores:number[]):Observable<Option[]>{
+    const url = `${CLASEURL}?aulas=${idsAulas}&profesores=${idsProfesores}`
+    return this.http.get<Option[]>(url);
+  }
+  crearClase(curso:number,asignatura:number):Observable<Option>{
     return this.http.post<Option>(CLASEURL,
         {
           "curso":{"id":curso},
           "asignatura":{"id":asignatura},
         },HTTPOPTIONS)
   }
-  addProf(id:number,ids:number[]):Observable<Object>{
+  addProf(id:number,ids:number[]):Observable<ProfesorRow[]>{
     const url = `${CLASEURL}/${id}/addProf`
-    return this.http.post<Option>(url,
+    return this.http.post<ProfesorRow[]>(url,
       ids
       ,HTTPOPTIONS)  }
-  deleteClase(c:any):Observable<any>{
+  deleteClase(c:number){
     const url = `${CLASEURL}/${c}`
     return this.http.delete(url, HTTPOPTIONS);
   }
-  removeProfesor(idClase:number,idProfesor:number):Observable<any>{
+  removeProfesor(idClase:number,idProfesor:number){
     const url = `${CLASEURL}/${idClase}/profesor/${idProfesor}`
     return this.http.delete(url, HTTPOPTIONS)
+  }
+  deleteAula(idClase:number,idAula:number){
+    const url = `${CLASEURL}/${idClase}/aula/${idAula}`
+    return this.http.delete(url, HTTPOPTIONS);
+  }
+  deleteTema(idClase:number,idTema:number){
+    const url = `${CLASEURL}/${idClase}/tema/${idTema}`
+    return this.http.delete(url, HTTPOPTIONS);
   }
 }

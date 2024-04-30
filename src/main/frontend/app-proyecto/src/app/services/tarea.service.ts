@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpErrorResponse, HttpHeaders} from "@angular/common/http";
-import {catchError, Observable, throwError} from "rxjs";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {Observable} from "rxjs";
 import {Option} from "../interfaces/option";
 const TAREASURL="http://localhost:8080/v1/api/tareas"
 const HTTPOPTIONS = {
@@ -14,12 +14,12 @@ const HTTPOPTIONS = {
 export class TareaService {
   constructor(private http:HttpClient) {
   }
-  actualizarTarea(a:any):Observable<Object>{
+  actualizarTarea(a:Option):Observable<Option>{
     const url = `${TAREASURL}/${a.id}`;
     return this.http.put<Option>(url, a, HTTPOPTIONS);
   }
-  deleteTarea(a:any):Observable<any>{
-    const url = `${TAREASURL}/${a}`
+  deleteTarea(id:number){
+    const url = `${TAREASURL}/${id}`
     return this.http.delete(url, HTTPOPTIONS);
   }
 }

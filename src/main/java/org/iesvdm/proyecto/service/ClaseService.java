@@ -3,6 +3,7 @@ package org.iesvdm.proyecto.service;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
+import org.iesvdm.proyecto.model.entity.Aula;
 import org.iesvdm.proyecto.model.entity.Clase;
 import org.iesvdm.proyecto.model.entity.Profesor;
 import org.iesvdm.proyecto.exeption.NotFoundException;
@@ -25,24 +26,26 @@ public class ClaseService {
     public Set<Option> all(Long curso, Long asignatura) {
             return this.claseRepository.getButtonsFiltering(curso, asignatura);
     }
-
+    public Set<ProfesorRow> getProfesores(long id,String buscar) {
+        return this.claseRepository.getProfesores(id,buscar);
+    }
+    public Set<Option> getAulas(long id,String buscar) {
+        return this.claseRepository.getAulas(id,buscar);
+    }
+    public Clase one(Long id) {
+        return this.claseRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException(id,"clase"));
+    }
+    public Clase replace(Long id, Clase clase) {
+        return this.claseRepository.findById(id).map( c -> (id.equals(clase.getId())  ?
+                        this.claseRepository.save(clase) : null))
+                .orElseThrow(() -> new NotFoundException(id,"clase"));
+    }
     @Transactional
     public Clase save(Clase clase) {
         this.claseRepository.save(clase);
         this.em.refresh(clase);
         return clase;
-    }
-
-    public Clase one(Long id) {
-        return this.claseRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException(id,"clase"));
-    }
-
-    public Clase replace(Long id, Clase clase) {
-        return this.claseRepository.findById(id).map( c -> (id.equals(clase.getId())  ?
-                        this.claseRepository.save(clase) : null))
-                .orElseThrow(() -> new NotFoundException(id,"clase"));
-
     }
     public Set<ProfesorRow> addProfs(Long id, Set<Profesor> profesor) {
         this.claseRepository.findById(id).map( c -> {
@@ -74,7 +77,6 @@ public class ClaseService {
                 return p.isBlocked();
             }
         }).collect(Collectors.toSet());
-
     }
     public void delete(Long id) {
         this.claseRepository.findById(id).map(c -> {
@@ -92,7 +94,14 @@ public class ClaseService {
             throw new NotFoundException("No se ha encontrado ese profesor en esa clase");
         }
     }
-    public Set<ProfesorRow> getProfesores(long id,String buscar) {
-        return this.claseRepository.getProfesores(id,buscar);
+    public void deleteAula(long id,long idAula) {
+        Clase c=this.claseRepository.findById(id).orElseThrow(() -> new NotFoundException(id,"aula"));
+        Aula a=new Aula();
+        a.setId(idAula);
+        if (c.getAulas().remove(a)){
+            this.claseRepository.save(c);
+        }else{
+            throw new NotFoundException("No se ha encontrado esa aula en esa clase");
+        }
     }
 }

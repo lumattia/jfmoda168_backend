@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import {RouterLink, RouterOutlet} from "@angular/router";
+import {ActivatedRoute, RouterLink, RouterOutlet} from "@angular/router";
+import {ClaseService} from "../../../services/clase.service";
+import {Option} from "../../../interfaces/option";
 
 @Component({
   selector: 'app-clase',
@@ -12,5 +14,18 @@ import {RouterLink, RouterOutlet} from "@angular/router";
   styleUrl: './clase.component.css'
 })
 export class ClaseComponent {
-
+  clase:Option=<Option>{}
+  constructor(private claseService:ClaseService,private route:ActivatedRoute) {
+    this.route.params.subscribe(p => {
+      let id = Number(p['id'])||0;
+      claseService.getClase(id).subscribe({
+        next: (data) => {
+          this.clase = (data)
+        },
+        error: (error) => {
+          alert(error);
+        }
+      })
+    })
+  }
 }

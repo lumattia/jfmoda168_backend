@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams} from "@angular/common/http";
-import {catchError, Observable, throwError} from "rxjs";
+import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
+import {Observable} from "rxjs";
 import {Option} from "../interfaces/option";
 const CURSOSURL="http://localhost:8080/v1/api/cursos"
 
@@ -19,30 +19,26 @@ export class CursoService {
   }
 
   //Métodos (incluir tipos correctos en los argumentos)
-  getCursos():Observable<Object>{
-    return this.http.get(CURSOSURL);
+  getCursos():Observable<Option[]>{
+    return this.http.get<Option[]>(CURSOSURL);
   }
-  getCurso(id:number):Observable<Object>{
-    const url = `${CURSOSURL}/${id}`
-    return this.http.get<Option>(url);
-  }
-  buscarAsignatura(searchTerm:string){
+  buscarCurso(searchTerm:string):Observable<Option[]>{
     let options={
       params:new HttpParams().set("buscar",searchTerm)
     }
-    return this.http.get<Option>(CURSOSURL,options)
+    return this.http.get<Option[]>(CURSOSURL,options)
   }
-  crearCurso(nombre:any):Observable<Object>{
+  crearCurso(nombre:string):Observable<Option>{
     return this.http.post<Option>(CURSOSURL, {
       nombre
     },HTTPOPTIONS)
   }
-  actualizarCurso(c:any):Observable<Object>{
+  actualizarCurso(c:Option):Observable<Option>{
     const url = `${CURSOSURL}/${c.id}`;
     return this.http.put<Option>(url, c, HTTPOPTIONS);
   }
-  deleteCurso(c:any):Observable<any>{
-    const url = `${CURSOSURL}/${c}`
+  deleteCurso(id:number){
+    const url = `${CURSOSURL}/${id}`
     return this.http.delete(url, HTTPOPTIONS);
   }
 }

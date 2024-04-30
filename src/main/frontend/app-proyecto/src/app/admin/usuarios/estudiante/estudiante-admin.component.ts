@@ -50,7 +50,7 @@ export class EstudianteAdminComponent {
   }
   pageChanged(){
     this.estudianteService.buscarEstudiante(this.searchTerm,this.page,this.pageSize,this.sortColumn,this.sortDirection).subscribe({
-      next: (data:any) => {
+      next: (data) => {
         this.estudiantes = (data.content as EstudianteRow[])
         this.page=data.pageable.pageNumber+1
         this.collectionSize=data.totalElements

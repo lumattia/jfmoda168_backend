@@ -46,7 +46,7 @@ export class AddProfsModalComponent {
   }
   pageChanged(){
     this.profesorService.buscarNotBlocked(this.searchTerm,this.page,this.pageSize,this.sortColumn,this.sortDirection).subscribe({
-      next: (data:any) => {
+      next: (data) => {
         this.profesores = (data.content as ProfesorRow[])
         this.page=data.pageable.pageNumber+1
         this.collectionSize=data.totalElements

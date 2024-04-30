@@ -33,11 +33,10 @@ export class EstudianteFormComponent {
             /*el profesor que se obtiene desde el back tiene demasiados campos
            de las cuales hay algunas por ejemplo clase que está serializada
             y esto provoca un error*/
-            let estudiante=data as EstudianteForm;
-            this.estudiante.id=estudiante.id;
-            this.estudiante.nombre=estudiante.nombre;
-            this.estudiante.apellidos=estudiante.apellidos;
-            this.estudiante.email=estudiante.email;
+            this.estudiante.id=data.id;
+            this.estudiante.nombre=data.nombre;
+            this.estudiante.apellidos=data.apellidos;
+            this.estudiante.email=data.email;
           },
           error:(error)=>{
             alert(error)
