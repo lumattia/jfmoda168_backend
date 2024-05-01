@@ -40,10 +40,18 @@ public class ClaseController {
     public Clase one(@PathVariable("id") long id) {
         return this.claseService.one(id);
     }
+    @GetMapping("/{id}/profesoresWithTarea")
+    public Set<ProfesorRow> getProfesores(@PathVariable("id") long id){
+        return this.claseService.getProfesoresWithTarea(id);
+    }
     @GetMapping("/{id}/profesores")
     public Set<ProfesorRow> getProfesores(@PathVariable("id") long id,
                                           @RequestParam(value = "buscar",defaultValue = "") String buscar){
         return this.claseService.getProfesores(id,buscar);
+    }
+    @GetMapping(value = "/{id}/aulas",params = "!buscar")
+    public Set<Option> getAulas(@PathVariable("id") long id){
+        return this.claseService.getAllAulas(id);
     }
     @GetMapping("/{id}/aulas")
     public Set<Option> getAulas(@PathVariable("id") long id,

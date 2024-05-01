@@ -66,7 +66,7 @@ public class WebSecurityConfig {
                         //PARA LAS PETICIONES preflight OPTIONS DEL NAVEGADOR :p
                         //Ver https://stackoverflow.com/questions/76682586/allow-cors-with-spring-security-6-1-1-with-authenticated-requests
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                        .requestMatchers("/v1/api/usuarios/cambiarContrasena").authenticated()
+                        .requestMatchers("/v1/api/usuarios/cambiarContrasenia").authenticated()
                         .requestMatchers("/v1/api/asignaturas/**").hasAnyAuthority("ADMINISTRADOR")
                         .requestMatchers("/v1/api/cursos/**").hasAnyAuthority("ADMINISTRADOR")
                         .requestMatchers("/v1/api/clases/**").hasAnyAuthority("ADMINISTRADOR")

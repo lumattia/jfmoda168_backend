@@ -68,7 +68,7 @@ export class AulasComponent {
             id:a.id,
             grupo:a.grupo,
             anio:a.anio,
-            clase:{nombre:a.clase.nombre},
+            clase:{nombre:a.clase},
             tema:[]
           };
         modalRef.closed.subscribe((a: Aula) => {

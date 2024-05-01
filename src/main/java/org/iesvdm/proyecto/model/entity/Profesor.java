@@ -1,5 +1,6 @@
 package org.iesvdm.proyecto.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -14,7 +15,9 @@ import java.util.Set;
 @DiscriminatorValue("PROFESOR")
 public class Profesor extends Usuario{
     @ManyToMany(mappedBy = "profesores")
+    @JsonIgnore
     Set<Clase> clases = new HashSet<>();
+    @JsonIgnore
     @ManyToMany(mappedBy = "profesores")
     Set<Aula> aulas;
 }

@@ -49,7 +49,7 @@ public class UsuarioService {
         this.usuarioRepository.save(usuario);
         return usuario.isBlocked();
     }
-    public void cambiarContraseña(String email,String codedNewPassword) {
+    public void cambiarContrasenia(String email,String codedNewPassword) {
         Usuario usuario=one(email);
         usuario.setPassword(codedNewPassword);
         this.usuarioRepository.save(usuario);

@@ -1,5 +1,7 @@
 package org.iesvdm.proyecto.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -20,16 +22,26 @@ public class Aula {
     @Column(nullable = false)
     private String anio;
     @ManyToMany
+    @JsonIgnore
     private Set<Profesor> profesores=new HashSet<>();
     @ManyToOne(optional = false)
     private Profesor propietario;
     @ManyToMany
+    @JsonIgnore
     private Set<Estudiante> estudiantes;
     @ManyToOne(optional = false)
     private Clase clase;
     @OneToMany(mappedBy = "aula",cascade = CascadeType.ALL,orphanRemoval = true)
     private Set<Tema> temas;
     private boolean eliminado;
+    @JsonProperty("clase")
+    public String getClaseNombre() {
+        return this.clase.getNombre();
+    }
+    @JsonProperty("propietario")
+    public Long getPropietarioId() {
+        return this.propietario.getId();
+    }
     public String getNombre(){
         return this.clase.getNombre()+" "+this.grupo+" "+this.anio;
     }

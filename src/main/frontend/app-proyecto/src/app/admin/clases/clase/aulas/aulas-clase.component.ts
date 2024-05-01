@@ -27,9 +27,15 @@ export class AulasClaseComponent {
   constructor(private claseService:ClaseService,route:ActivatedRoute) {
     route.parent?.params.subscribe(p => {
       this.id = Number(p['id'])||0;
-      this.buscar();
+      this.claseService.getAllAulas(this.id).subscribe({
+        next: (data) => {
+          this.aulas = (data)
+        },
+        error: (error) => {
+          alert(error);
+        }
+      });
     })
-    this.buscar();
   }
   openEliminarModal(option:Option) {
     const modalRef = this.modalService.open(ModalComponent);

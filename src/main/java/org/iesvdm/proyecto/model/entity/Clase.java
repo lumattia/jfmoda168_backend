@@ -1,12 +1,11 @@
 package org.iesvdm.proyecto.model.entity;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import org.iesvdm.proyecto.serializer.ClaseSerializer;
 
 import java.util.Set;
 
@@ -15,7 +14,6 @@ import java.util.Set;
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 @Entity
-@JsonSerialize(using = ClaseSerializer.class)
 @Table(uniqueConstraints={
         @UniqueConstraint(columnNames = {"asignatura_id", "curso_id"})
 })
@@ -29,8 +27,10 @@ public class Clase {
     @ManyToOne(optional = false)
     private Asignatura asignatura;
     @ManyToOne(optional = false)
+    @JsonIgnore
     private Curso curso;
     @ManyToMany
+    @JsonIgnore
     private Set<Profesor> profesores;
     public String getNombre(){
         return this.curso.getNombre()+" "+this.asignatura.getNombre();

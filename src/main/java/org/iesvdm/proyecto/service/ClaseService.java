@@ -29,6 +29,12 @@ public class ClaseService {
     public Set<ProfesorRow> getProfesores(long id,String buscar) {
         return this.claseRepository.getProfesores(id,buscar);
     }
+    public Set<ProfesorRow> getProfesoresWithTarea(long id) {
+        return this.claseRepository.getProfesoresWithTareaInClass(id);
+    }
+    public Set<Option> getAllAulas(long id) {
+        return this.claseRepository.getAllAulas(id);
+    }
     public Set<Option> getAulas(long id,String buscar) {
         return this.claseRepository.getAulas(id,buscar);
     }

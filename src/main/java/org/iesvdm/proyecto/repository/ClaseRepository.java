@@ -14,6 +14,16 @@ public interface ClaseRepository extends JpaRepository<Clase, Long> {
     Set<Option> getButtonsFiltering(Long cursoId, Long asignaturaId);
     @Query("SELECT p FROM Profesor p JOIN p.clases c WHERE c.id = ?1 and CONCAT(p.nombre, ' ', p.apellidos) LIKE %?2%")
     Set<ProfesorRow> getProfesores(Long aulaId, String buscar);
+    @Query("SELECT DISTINCT p FROM Profesor p " +
+            "JOIN p.aulas a " +
+            "JOIN a.temas te " +
+            "JOIN te.tareas ta " +
+            "JOIN ta.propietario pr " +
+            "JOIN a.clase c " +
+            "WHERE c.id = :claseId and pr=p")
+    Set<ProfesorRow> getProfesoresWithTareaInClass(Long claseId);
+    @Query("SELECT a FROM Aula a JOIN a.clase c WHERE c.id = ?1")
+    Set<Option> getAllAulas(Long claseId);
     @Query("SELECT a FROM Aula a JOIN a.clase c WHERE c.id = ?1 and CONCAT(a.grupo, ' ', a.anio) LIKE %?2%")
-    Set<Option> getAulas(Long aulaId, String buscar);
+    Set<Option> getAulas(Long claseId, String buscar);
 }

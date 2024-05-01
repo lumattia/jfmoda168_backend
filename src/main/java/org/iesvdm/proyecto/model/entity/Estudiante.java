@@ -1,5 +1,6 @@
 package org.iesvdm.proyecto.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,7 +18,9 @@ import java.util.Set;
 public class Estudiante extends Usuario{
     String aula;
     @ManyToMany(mappedBy = "estudiantes")
+    @JsonIgnore
     Set<Aula> aulas;
     @OneToMany(mappedBy = "id.estudiante")
+    @JsonIgnore
     private Set<TareaEstudiante> tareaEstudiantes;
 }

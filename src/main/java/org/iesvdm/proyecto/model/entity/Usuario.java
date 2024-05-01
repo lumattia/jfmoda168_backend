@@ -1,13 +1,12 @@
 package org.iesvdm.proyecto.model.entity;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import org.iesvdm.proyecto.serializer.UsuarioSerializer;
 
 @Data
 @AllArgsConstructor
@@ -17,7 +16,6 @@ import org.iesvdm.proyecto.serializer.UsuarioSerializer;
 @DiscriminatorColumn(name = "rol", discriminatorType = DiscriminatorType.STRING)
 @DiscriminatorValue("ADMINISTRADOR")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@JsonSerialize(using = UsuarioSerializer.class)
 public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,6 +34,10 @@ public class Usuario {
     public String getRol() {
         DiscriminatorValue discriminatorValue = getClass().getAnnotation(DiscriminatorValue.class);
         return discriminatorValue.value();
+    }
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    public String getPassword() {
+        return password;
     }
     public String getNombreCompleto() {
         return this.getNombre()+" "+getApellidos();

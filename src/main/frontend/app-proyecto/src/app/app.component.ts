@@ -20,9 +20,9 @@ export class AppComponent implements OnInit {
 
   isLoggedIn  = false;
   usuario:Usuario;
-  contrasenaAntigua: string="";
-  nuevaContrasena: string="";
-  confirmarContrasena: string="";
+  contraseniaAntigua: string="";
+  nuevacontrasenia: string="";
+  confirmarcontrasenia: string="";
   constructor(private usuarioService:UsuarioService, private storageService: StorageService,private router: Router) {
     this.usuario=storageService.getUser().content;
   }
@@ -34,15 +34,15 @@ export class AppComponent implements OnInit {
     )
   }
   abrirModal() {
-    this.contrasenaAntigua = "";
-    this.nuevaContrasena = "";
-    this.confirmarContrasena = "";
+    this.contraseniaAntigua = "";
+    this.nuevacontrasenia = "";
+    this.confirmarcontrasenia = "";
   }
-  cambiarContrasena(){
-    if (this.nuevaContrasena !== this.confirmarContrasena) {
+  cambiarcontrasenia(){
+    if (this.nuevacontrasenia !== this.confirmarcontrasenia) {
       return;
     }
-    this.usuarioService.cambiarContrasenia(this.contrasenaAntigua,this.nuevaContrasena).subscribe({
+    this.usuarioService.cambiarContrasenia(this.contraseniaAntigua,this.nuevacontrasenia).subscribe({
       next(){
         alert("Contraseña cambiada correctamente")
       },error(error){

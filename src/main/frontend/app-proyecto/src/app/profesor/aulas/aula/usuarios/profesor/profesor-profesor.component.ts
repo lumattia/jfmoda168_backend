@@ -8,6 +8,7 @@ import {ModalComponent} from "../../../../../util/modal/modal.component";
 import {ActivatedRoute, RouterLink} from "@angular/router";
 import {AulaService} from "../../../../../services/aula.service";
 import {AddProfsModalComponent} from "../../../../../util/add-profs-modal/add-profs-modal.component";
+import {Aula} from "../../../../../interfaces/aula";
 
 @Component({
   selector: 'app-profesor-profesor',
@@ -23,11 +24,20 @@ export class ProfesorProfesorComponent {
   searchTerm:string="";
   sortColumn= '';
   sortDirection= '';
-  id:number=0
+  aula:Aula=<Aula>{}
   constructor(private aulaService:AulaService,private route:ActivatedRoute) {
     this.route.parent?.params.subscribe(p => {
-      this.id = Number(p['id'])||0;
-      this.getProfesores();
+      let id = Number(p['id'])||0;
+      aulaService.getAula(id).subscribe({
+        next: (data) => {
+          console.log(data)
+          this.aula = data
+          this.getProfesores();
+        },
+        error: (error) => {
+          alert(error);
+        }
+      })
     })
   }
   onSort(column:string) {
@@ -54,7 +64,7 @@ export class ProfesorProfesorComponent {
     }
   }
   getProfesores(){
-    this.aulaService.getProfesores(this.id,this.searchTerm).subscribe({
+    this.aulaService.getProfesores(this.aula.id,this.searchTerm).subscribe({
       next: (data) => {
         this.profesores = data
         this.sort()
@@ -66,7 +76,7 @@ export class ProfesorProfesorComponent {
   }
   abrirModalAnadir(){
     const modalRef = this.modalService.open(AddProfsModalComponent,{size: 'lg',centered: true, scrollable: true});
-    this.aulaService.getProfesores(this.id,"").subscribe({
+    this.aulaService.getProfesores(this.aula.id,"").subscribe({
       next: (data) => {
         modalRef.componentInstance.added=data;
       },
@@ -79,7 +89,7 @@ export class ProfesorProfesorComponent {
     });
   }
   aniadirProfesor(ids:number[]){
-    this.aulaService.addProf(this.id,ids).subscribe({
+    this.aulaService.addProf(this.aula.id,ids).subscribe({
       next: (data) => {
         this.profesores.push(...data)
       },
@@ -90,7 +100,7 @@ export class ProfesorProfesorComponent {
   }
 
   eliminarProfesor(id: number) {
-    this.aulaService.removeProfesor(this.id,id).subscribe({
+    this.aulaService.removeProfesor(this.aula.id,id).subscribe({
       next: () => {
         this.profesores = this.profesores.filter(p => p.id != id)
       },

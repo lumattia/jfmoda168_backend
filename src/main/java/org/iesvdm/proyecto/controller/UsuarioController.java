@@ -58,12 +58,12 @@ public class UsuarioController {
     @ResponseBody
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PutMapping("/cambiarContrasenia")
-    public void cambiarContrasena(@RequestBody Map<String, String> request) {
+    public void cambiarcontrasenia(@RequestBody Map<String, String> request) {
         String oldPassword = request.get("oldPassword");
         String newPassword = request.get("newPassword");
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (encoder.matches(oldPassword,usuarioService.one(auth.getName()).getPassword()))
-            usuarioService.cambiarContraseña(auth.getName(),encoder.encode(newPassword));
+            usuarioService.cambiarContrasenia(auth.getName(),encoder.encode(newPassword));
         else
             throw new AccessDeniedException("Contraseña incorrecta");
     }

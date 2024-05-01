@@ -28,7 +28,7 @@
       <td class="col overflow-hidden">{{profesor.apellidos}}</td>
       <td class="col overflow-hidden">{{profesor.email}}</td>
       <td class="col">
-        <div class="col text-end text-nowrap">
+        <div class="col text-end text-nowrap" *ngIf="profesor.id!=aula.propietario">
           <a class="p-1" (click)="openModal(profesor)">
             <i class="text-danger fa-solid fa-minus"></i>
           </a>

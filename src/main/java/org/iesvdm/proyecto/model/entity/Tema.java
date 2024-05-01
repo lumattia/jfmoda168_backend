@@ -1,13 +1,11 @@
 package org.iesvdm.proyecto.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import org.iesvdm.proyecto.serializer.TemaSerializer;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -20,7 +18,6 @@ import java.util.Set;
 @Table(uniqueConstraints={
         @UniqueConstraint(columnNames = {"aula_id", "nombre"})
 })
-@JsonSerialize(using = TemaSerializer.class)
 public class Tema {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

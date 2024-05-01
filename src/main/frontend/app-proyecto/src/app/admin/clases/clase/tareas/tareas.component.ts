@@ -6,6 +6,7 @@ import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {Option} from "../../../../interfaces/option";
 import {ClaseService} from "../../../../services/clase.service";
 import {ModalComponent} from "../../../../util/modal/modal.component";
+import {ProfesorRow} from "../../../../interfaces/profesor";
 
 @Component({
   selector: 'app-tareas',
@@ -21,7 +22,7 @@ import {ModalComponent} from "../../../../util/modal/modal.component";
 })
 export class TareasComponent {
   private modalService = inject(NgbModal);
-  profesores:Option[]=[];
+  profesores:ProfesorRow[]=[];
   aulas:Option[]=[];
   temas:Option[]=[];
   profesoresSeleccionados:number[]=[];
@@ -30,7 +31,26 @@ export class TareasComponent {
   constructor(private claseService:ClaseService,private route:ActivatedRoute) {
     this.route.parent?.params.subscribe(p => {
       this.id = Number(p['id'])||0;
-    })
+      this.claseService.getProfesoresWithTarea(this.id).subscribe({
+        next: (data) => {
+          console.log(data)
+          this.profesores = (data)
+        },
+        error: (error) => {
+          alert(error);
+        }
+      });
+      this.claseService.getAllAulas(this.id).subscribe({
+        next: (data) => {
+          this.aulas = (data)
+        },
+        error: (error) => {
+          alert(error);
+        }
+      });    })
+  }
+  ngOnInit(){
+
   }
   openModal(option:Option) {
     const modalRef = this.modalService.open(ModalComponent);

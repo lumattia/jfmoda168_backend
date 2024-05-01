@@ -36,12 +36,20 @@ export class ClaseService {
     }
     return this.http.get<ProfesorRow[]>(url,options);
   }
+  getProfesoresWithTarea(id:number):Observable<ProfesorRow[]>{
+    const url = `${CLASEURL}/${id}/profesoresWithTarea`
+    return this.http.get<ProfesorRow[]>(url);
+  }
   getAulas(idClase:number,searchTerm:string):Observable<Option[]>{
     const url = `${CLASEURL}/${idClase}/aulas`
     let options={
       params:new HttpParams().set("buscar",searchTerm)
     }
     return this.http.get<Option[]>(url,options);
+  }
+  getAllAulas(idClase:number):Observable<Option[]>{
+    const url = `${CLASEURL}/${idClase}/aulas`
+    return this.http.get<Option[]>(url);
   }
   filterClase(curso:number,asignatura:number):Observable<Option[]>{
     const url = `${CLASEURL}?curso=${curso}&asignatura=${asignatura}`
