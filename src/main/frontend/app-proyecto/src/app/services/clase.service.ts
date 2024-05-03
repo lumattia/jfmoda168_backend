@@ -51,12 +51,21 @@ export class ClaseService {
     const url = `${CLASEURL}/${idClase}/aulas`
     return this.http.get<Option[]>(url);
   }
+  getTareas(idClase:number,idAulas:number,idTema:number,idProfesores:number,page:number,pageSize:number):Observable<any>{
+    const url = `${CLASEURL}/${idClase}/tareas?aula=${idAulas}&profesor=${idProfesores}&tema=${idTema}`
+    let options={
+      params:new HttpParams()
+          .set("page",page-1)
+          .set("size",pageSize)
+    }
+    return this.http.get<any>(url,options);
+  }
   filterClase(curso:number,asignatura:number):Observable<Option[]>{
     const url = `${CLASEURL}?curso=${curso}&asignatura=${asignatura}`
     return this.http.get<Option[]>(url);
   }
-  filterTema(idsAulas:number[],idsProfesores:number[]):Observable<Option[]>{
-    const url = `${CLASEURL}?aulas=${idsAulas}&profesores=${idsProfesores}`
+  filterTema(idClase:number,idAulas:number,idProfesores:number):Observable<Option[]>{
+    const url = `${CLASEURL}/${idClase}/temas?aula=${idAulas}&profesor=${idProfesores}`
     return this.http.get<Option[]>(url);
   }
   crearClase(curso:number,asignatura:number):Observable<Option>{

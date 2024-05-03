@@ -33,6 +33,7 @@ public class Aula {
     private Clase clase;
     @OneToMany(mappedBy = "aula",cascade = CascadeType.ALL,orphanRemoval = true)
     private Set<Tema> temas;
+    @JsonIgnore
     private boolean eliminado;
     @JsonProperty("clase")
     public String getClaseNombre() {

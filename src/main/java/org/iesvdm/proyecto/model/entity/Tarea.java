@@ -29,16 +29,24 @@ public class Tarea {
     @ManyToOne
     @JsonIgnore
     Tema tema;
-    @OneToMany(mappedBy = "id.tarea")
+    @OneToMany(mappedBy = "id.tarea",cascade = CascadeType.ALL,orphanRemoval = true)
     @JsonIgnore
     Set<TareaEstudiante> tareaEstudiantes=new HashSet<>();
-    @OneToOne(cascade = CascadeType.ALL,orphanRemoval = true)
-    Fase basico=new Fase((short)1);
-    @OneToOne(cascade = CascadeType.ALL,orphanRemoval = true)
-    Fase intermedio=new Fase((short)2);
-    @OneToOne(cascade = CascadeType.ALL,orphanRemoval = true)
-    Fase avanzado=new Fase((short)3);
+    @OneToMany(mappedBy = "tarea",cascade = CascadeType.ALL,orphanRemoval = true)
+    Set<Fase> fases;
+    @JsonIgnore
+    boolean eliminado;
+    boolean visible;
     public String getRoute(){
         return this.tema.getRoute()+" "+this.nombre;
+    }
+    public String getPropietarioNombre() {
+        return this.propietario.getNombre();
+    }
+    public String getTemaNombre() {
+        return this.tema.getNombre();
+    }
+    public String getAulaGrupoAnio() {
+        return this.tema.aula.getGrupo()+" "+this.tema.aula.getAnio();
     }
 }

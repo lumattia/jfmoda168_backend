@@ -34,9 +34,10 @@ public class TemaService {
     }
 
     public void delete(long id) {
-        this.temaRepository.findById(id).map(c -> {
-                    this.temaRepository.delete(c);
-                    return c;})
-                .orElseThrow(() -> new NotFoundException(id,"tema"));
+        this.temaRepository.findById(id).map(t -> {
+            t.setEliminado(true);
+            this.temaRepository.save(t);
+            return t;
+        }).orElseThrow(() -> new NotFoundException(id,"tema"));
     }
 }

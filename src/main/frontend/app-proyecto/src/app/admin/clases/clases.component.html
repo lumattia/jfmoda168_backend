@@ -9,11 +9,11 @@
       <form action="">
         <div class="input-group">
           <select class="form-select" aria-label="Curso" name="cursoSeleccionado" [(ngModel)]="cursoSeleccionado" (ngModelChange)="filtrarClases()">
-            <option value="-1" selected>Selecciona un curso</option>
+            <option value="-1">Selecciona un curso</option>
             <option *ngFor="let curso of cursos" [value]="curso.id">{{curso.nombre}}</option>
           </select>
           <select class="form-select" aria-label="Asignatura" name="asignaturaSeleccionado" [(ngModel)]="asignaturaSeleccionado" (ngModelChange)="filtrarClases()">
-            <option value="-1" selected>Selecciona una asignatura</option>
+            <option value="-1">Selecciona una asignatura</option>
             <option *ngFor="let asignatura of asignaturas" [value]="asignatura.id">{{asignatura.nombre}}</option>
           </select>
           <button class="btn btn-outline-success" type="submit" (click)="crearClase()" [disabled]="cursoSeleccionado==-1 || asignaturaSeleccionado==-1 || clases.length > 0">Crear</button>

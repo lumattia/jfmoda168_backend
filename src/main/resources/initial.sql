@@ -63,11 +63,12 @@ INSERT INTO clase_profesores (clases_id, profesores_id) VALUES (3, 4);
 INSERT INTO clase_profesores (clases_id, profesores_id) VALUES (4, 5);
 INSERT INTO clase_profesores (clases_id, profesores_id) VALUES (5, 6);
 
-INSERT INTO aula (anio, eliminado, grupo, clase_id, propietario_id) VALUES ('23/24', 0, 'A', 1, 2);
-INSERT INTO aula (anio, eliminado, grupo, clase_id, propietario_id) VALUES ('23/24', 0, 'B', 2, 2);
-INSERT INTO aula (anio, eliminado, grupo, clase_id, propietario_id) VALUES ('23/24', 0, 'C', 3, 3);
-INSERT INTO aula (anio, eliminado, grupo, clase_id, propietario_id) VALUES ('23/24', 0, 'D', 4, 4);
-INSERT INTO aula (anio, eliminado, grupo, clase_id, propietario_id) VALUES ('23/24', 0, 'E', 5, 5);
+INSERT INTO aula (anio, grupo, clase_id, propietario_id, eliminado) VALUES ('23/24', 'A', 1, 2, false);
+INSERT INTO aula (anio, grupo, clase_id, propietario_id, eliminado) VALUES ('23/24', 'B', 2, 2, false);
+INSERT INTO aula (anio, grupo, clase_id, propietario_id, eliminado) VALUES ('23/24', 'C', 3, 3, false);
+INSERT INTO aula (anio, grupo, clase_id, propietario_id, eliminado) VALUES ('23/24', 'D', 4, 4, false);
+INSERT INTO aula (anio, grupo, clase_id, propietario_id, eliminado) VALUES ('23/24', 'E', 5, 5, false);
+
 
 INSERT INTO aula_profesores (aulas_id, profesores_id) VALUES (1, 2);
 INSERT INTO aula_profesores (aulas_id, profesores_id) VALUES (1, 3);
@@ -86,23 +87,27 @@ INSERT INTO aula_estudiantes (aulas_id, estudiantes_id) VALUES (1, 22);
 INSERT INTO aula_estudiantes (aulas_id, estudiantes_id) VALUES (1, 23);
 INSERT INTO aula_estudiantes (aulas_id, estudiantes_id) VALUES (1, 24);
 
-INSERT INTO tema (nombre, aula_id) VALUES ('Tema 1', 1);
-INSERT INTO tema (nombre, aula_id) VALUES ('Tema 2', 2);
-INSERT INTO tema (nombre, aula_id) VALUES ('Tema 3', 3);
-INSERT INTO tema (nombre, aula_id) VALUES ('Tema 4', 4);
-INSERT INTO tema (nombre, aula_id) VALUES ('Tema 5', 5);
--- Insertar datos en la tabla fase
-INSERT INTO fase (nombre_archivo,nivel) VALUES ('video',1);
-INSERT INTO fase (nombre_archivo,nivel) VALUES ('foto',2);
-INSERT INTO fase (nombre_archivo,nivel) VALUES ('audio',3);
+INSERT INTO tema (nombre, aula_id, eliminado) VALUES ('Tema 1', 1, false);
+INSERT INTO tema (nombre, aula_id, eliminado) VALUES ('Tema 2', 2, false);
+INSERT INTO tema (nombre, aula_id, eliminado) VALUES ('Tema 3', 3, false);
+INSERT INTO tema (nombre, aula_id, eliminado) VALUES ('Tema 4', 4, false);
+INSERT INTO tema (nombre, aula_id, eliminado) VALUES ('Tema 5', 5, false);
 
 -- Insertar datos en la tabla tarea con propietario como uno de los profesores del aula que contiene el tema
-INSERT INTO tarea (nombre, avanzado_id, basico_id, intermedio_id, propietario_id, tema_id)
-VALUES ('Tarea 1', 1, 2, 3, 2, 1);
-INSERT INTO tarea (nombre, avanzado_id, basico_id, intermedio_id, propietario_id, tema_id)
-VALUES ('Tarea 2', 2, 3, 1, 3, 2);
-INSERT INTO tarea (nombre, avanzado_id, basico_id, intermedio_id, propietario_id, tema_id)
-VALUES ('Tarea 3', 3, 1, 2, 3, 3);
+INSERT INTO tarea (nombre, propietario_id, tema_id, eliminado, visible)
+VALUES ('Tarea 1', 2, 1, false, true);
+
+INSERT INTO tarea (nombre, propietario_id, tema_id, eliminado, visible)
+VALUES ('Tarea 2', 3, 2, false, true);
+
+INSERT INTO tarea (nombre, propietario_id, tema_id, eliminado, visible)
+VALUES ('Tarea 3', 3, 3, false, true);
+
+-- Insertar datos en la tabla fase
+INSERT INTO fase (tarea_id,nombre_archivo,nivel) VALUES (1,'video',1);
+INSERT INTO fase (tarea_id,nombre_archivo,nivel) VALUES (1,'foto',2);
+INSERT INTO fase (tarea_id,nombre_archivo,nivel) VALUES (1,'audio',3);
+
 -- Insertar datos en la tabla tarea_estudiante
 INSERT INTO tarea_estudiante (fase, estudiante_id, tarea_id)
 VALUES (1, 20, 2);

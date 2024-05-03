@@ -1,22 +1,25 @@
 import {Component, inject} from '@angular/core';
 import {ActivatedRoute, RouterLink} from "@angular/router";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {NgForOf} from "@angular/common";
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {NgForOf, NgIf} from "@angular/common";
+import {NgbModal, NgbPagination} from "@ng-bootstrap/ng-bootstrap";
 import {Option} from "../../../../interfaces/option";
 import {ClaseService} from "../../../../services/clase.service";
 import {ModalComponent} from "../../../../util/modal/modal.component";
 import {ProfesorRow} from "../../../../interfaces/profesor";
+import {TareaRow} from "../../../../interfaces/tarea";
 
 @Component({
   selector: 'app-tareas',
   standalone: true,
-    imports: [
-        RouterLink,
-        FormsModule,
-        NgForOf,
-        ReactiveFormsModule
-    ],
+  imports: [
+    RouterLink,
+    FormsModule,
+    NgForOf,
+    ReactiveFormsModule,
+    NgIf,
+    NgbPagination
+  ],
   templateUrl: './tareas.component.html',
   styleUrl: './tareas.component.css'
 })
@@ -25,9 +28,16 @@ export class TareasComponent {
   profesores:ProfesorRow[]=[];
   aulas:Option[]=[];
   temas:Option[]=[];
-  profesoresSeleccionados:number[]=[];
-  aulasSeleccionados:number[]=[];
+  tareas:TareaRow[]=[]
+  profesorSeleccionado:number=-1;
+  temaSeleccionado:number=-1;
+  aulaSeleccionado:number=-1;
   id:number=0;
+
+  page:number= 1;
+  pageSize:number=10;
+  collectionSize:number=0;
+
   constructor(private claseService:ClaseService,private route:ActivatedRoute) {
     this.route.parent?.params.subscribe(p => {
       this.id = Number(p['id'])||0;
@@ -47,7 +57,9 @@ export class TareasComponent {
         error: (error) => {
           alert(error);
         }
-      });    })
+      });
+      this.pageChanged()
+    })
   }
   ngOnInit(){
 
@@ -61,14 +73,18 @@ export class TareasComponent {
     });
   }
   filter(){
-    this.claseService.filterTema(this.profesoresSeleccionados,this.aulasSeleccionados).subscribe({
-      next: (data) => {
-        this.temas = (data)
-      },
-      error: (error) => {
-        alert(error);
-      }
-    });
+    if (this.aulaSeleccionado==-1){
+      this.temas=[];
+    }else{
+        this.claseService.filterTema(this.id,this.aulaSeleccionado,this.profesorSeleccionado).subscribe({
+            next: (data) => {
+                this.temas = (data)
+            },
+            error: (error) => {
+                alert(error);
+            }
+        });
+    }
   }
   eliminarTema(id:number){
     this.claseService.deleteTema(this.id,id).subscribe({
@@ -79,5 +95,17 @@ export class TareasComponent {
         alert(error);
       }
     });
+  }
+  pageChanged(){
+    this.claseService.getTareas(this.id,this.aulaSeleccionado,this.temaSeleccionado,this.profesorSeleccionado,this.page,this.pageSize).subscribe({
+        next:(data)=>{
+            this.tareas = (data.content as TareaRow[])
+            this.page=data.pageable.pageNumber+1
+            this.collectionSize=data.totalElements
+        },
+        error:(error)=>{
+            alert(error);
+        }
+    })
   }
 }

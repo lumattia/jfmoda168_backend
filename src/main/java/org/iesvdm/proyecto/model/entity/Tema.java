@@ -30,7 +30,8 @@ public class Tema {
     Aula aula;
     @OneToMany(mappedBy = "tema",cascade = CascadeType.ALL,orphanRemoval = true)
     Set<Tarea> tareas=new HashSet<>();
-
+    @JsonIgnore
+    boolean eliminado;
     public String getRoute(){
         return this.aula.getNombre()+" "+this.nombre;
     }

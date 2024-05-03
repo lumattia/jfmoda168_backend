@@ -1,12 +1,17 @@
 package org.iesvdm.proyecto.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import org.iesvdm.proyecto.exeption.NotFoundException;
 import org.iesvdm.proyecto.model.entity.Clase;
 import org.iesvdm.proyecto.model.entity.Profesor;
+import org.iesvdm.proyecto.model.entity.Tema;
 import org.iesvdm.proyecto.model.view.Option;
 import org.iesvdm.proyecto.model.view.ProfesorRow;
+import org.iesvdm.proyecto.model.view.TareaRow;
 import org.iesvdm.proyecto.service.ClaseService;
 import org.iesvdm.proyecto.service.ProfesorService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -58,6 +63,25 @@ public class ClaseController {
                                           @RequestParam(value = "buscar",defaultValue = "") String buscar){
         return this.claseService.getAulas(id,buscar);
     }
+    @GetMapping("/{id}/temas")
+    public Set<Tema> getTemas(@PathVariable("id") long id,
+                               @RequestParam(value = "aula") long idAula,
+                               @RequestParam(value = "profesor") long idProfesor){
+        if (one(id).getAulas().stream().anyMatch(aula -> aula.getId()==idAula))
+            return this.claseService.getTemas(idAula);
+        else{
+            throw new NotFoundException("No se ha encontrado esa aula en esa clase.");
+        }
+    }
+    @GetMapping("/{id}/tareas")
+    public Page<TareaRow> getTareas(@PathVariable("id") long id,
+                                    @RequestParam(value = "aula") long idAula,
+                                    @RequestParam(value = "tema") long idTema,
+                                    @RequestParam(value = "profesor") long idProfesor,
+                                    Pageable pageable){
+        return this.claseService.getTareas(id,idAula,idTema,idProfesor,pageable);
+    }
+
     @PutMapping("/{id}")
     public Clase replace(@PathVariable("id") long id, @RequestBody Clase clase) {
         return this.claseService.replace(id, clase);

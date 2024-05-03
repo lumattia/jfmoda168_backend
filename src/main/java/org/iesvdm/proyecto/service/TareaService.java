@@ -29,9 +29,10 @@ public class TareaService {
         return null;
     }
     public void delete(long id) {
-        this.tareaRepository.findById(id).map(c -> {
-                    this.tareaRepository.delete(c);
-                    return c;})
-                .orElseThrow(() -> new NotFoundException(id,"tarea"));
+        this.tareaRepository.findById(id).map(t -> {
+            t.setEliminado(true);
+            this.tareaRepository.save(t);
+            return t;
+        }).orElseThrow(() -> new NotFoundException(id,"tarea"));
     }
 }

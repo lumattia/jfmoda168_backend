@@ -1,8 +1,12 @@
 package org.iesvdm.proyecto.repository;
 
 import org.iesvdm.proyecto.model.entity.Clase;
+import org.iesvdm.proyecto.model.entity.Tema;
 import org.iesvdm.proyecto.model.view.Option;
 import org.iesvdm.proyecto.model.view.ProfesorRow;
+import org.iesvdm.proyecto.model.view.TareaRow;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -21,9 +25,20 @@ public interface ClaseRepository extends JpaRepository<Clase, Long> {
             "JOIN ta.propietario pr " +
             "JOIN a.clase c " +
             "WHERE c.id = :claseId and pr=p")
-    Set<ProfesorRow> getProfesoresWithTareaInClass(Long claseId);
+    Set<ProfesorRow> getProfesoresWithTarea(Long claseId);
+    @Query("SELECT te FROM Tema te " +
+            "JOIN te.aula a " +
+            "WHERE a.id=:aulaId")
+    Set<Tema> getTemas(Long aulaId);
+    @Query("SELECT ta FROM Tarea ta " +
+            "WHERE :claseId=ta.tema.aula.clase.id " +
+            "AND (:aulaId =-1 OR ta.tema.aula.id = :aulaId)"+
+            "AND (:temaId =-1 OR ta.tema.id = :temaId)"+
+            "AND (:profesorId =-1 OR ta.propietario.id = :profesorId)")
+    Page<TareaRow> getTareas(Long claseId, Long aulaId, Long temaId, Long profesorId, Pageable pageable);
     @Query("SELECT a FROM Aula a JOIN a.clase c WHERE c.id = ?1")
     Set<Option> getAllAulas(Long claseId);
     @Query("SELECT a FROM Aula a JOIN a.clase c WHERE c.id = ?1 and CONCAT(a.grupo, ' ', a.anio) LIKE %?2%")
     Set<Option> getAulas(Long claseId, String buscar);
 }
+

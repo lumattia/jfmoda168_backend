@@ -7,10 +7,15 @@ import org.iesvdm.proyecto.model.entity.Aula;
 import org.iesvdm.proyecto.model.entity.Clase;
 import org.iesvdm.proyecto.model.entity.Profesor;
 import org.iesvdm.proyecto.exeption.NotFoundException;
+import org.iesvdm.proyecto.model.entity.Tema;
 import org.iesvdm.proyecto.model.view.Option;
 import org.iesvdm.proyecto.model.view.ProfesorRow;
+import org.iesvdm.proyecto.model.view.TareaRow;
 import org.iesvdm.proyecto.repository.ClaseRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -30,13 +35,19 @@ public class ClaseService {
         return this.claseRepository.getProfesores(id,buscar);
     }
     public Set<ProfesorRow> getProfesoresWithTarea(long id) {
-        return this.claseRepository.getProfesoresWithTareaInClass(id);
+        return this.claseRepository.getProfesoresWithTarea(id);
     }
     public Set<Option> getAllAulas(long id) {
         return this.claseRepository.getAllAulas(id);
     }
     public Set<Option> getAulas(long id,String buscar) {
         return this.claseRepository.getAulas(id,buscar);
+    }
+    public Set<Tema> getTemas(Long idAula) {
+        return this.claseRepository.getTemas(idAula);
+    }
+    public Page<TareaRow> getTareas(Long claseId, Long idAula, Long idTema, Long idProfesor, Pageable pageable) {
+        return this.claseRepository.getTareas(claseId,idAula, idTema, idProfesor,pageable);
     }
     public Clase one(Long id) {
         return this.claseRepository.findById(id)
@@ -67,17 +78,14 @@ public class ClaseService {
             public String getNombre() {
                 return p.getNombre();
             }
-
             @Override
             public String getApellidos() {
                 return p.getApellidos();
             }
-
             @Override
             public String getEmail() {
                 return p.getEmail();
             }
-
             @Override
             public boolean isBlocked() {
                 return p.isBlocked();
@@ -91,7 +99,7 @@ public class ClaseService {
                 .orElseThrow(() -> new NotFoundException(id,"clase"));
     }
     public void removeProf(long id,long idProf) {
-        Clase c=this.claseRepository.findById(id).orElseThrow(() -> new NotFoundException(id,"aula"));
+        Clase c=this.claseRepository.findById(id).orElseThrow(() -> new NotFoundException(id,"clase"));
         Profesor p=new Profesor();
         p.setId(idProf);
         if (c.getProfesores().remove(p)){
@@ -101,13 +109,14 @@ public class ClaseService {
         }
     }
     public void deleteAula(long id,long idAula) {
-        Clase c=this.claseRepository.findById(id).orElseThrow(() -> new NotFoundException(id,"aula"));
-        Aula a=new Aula();
-        a.setId(idAula);
-        if (c.getAulas().remove(a)){
-            this.claseRepository.save(c);
-        }else{
-            throw new NotFoundException("No se ha encontrado esa aula en esa clase");
-        }
+        Clase c=this.claseRepository.findById(id).orElseThrow(() -> new NotFoundException(id,"clase"));
+        Aula a=c.getAulas().stream()
+                .filter(aula -> aula.getId()==idAula)
+                .findFirst()
+                .orElseThrow(()->new NotFoundException("No se ha encontrado esa aula en esa clase"));
+        a.setEstudiantes(null);
+        a.setProfesores(null);
+        c.getAulas().remove(a);
+        this.claseRepository.save(c);
     }
 }

@@ -134,8 +134,6 @@ public class AulaService {
         Aula a=this.aulaRepository.findById(id).orElseThrow(() -> new NotFoundException(id,"aula"));
         if (a.getPropietario().equals(prof)){
             a.setEliminado(true);
-            a.setProfesores(null);
-            a.setEstudiantes(null);
             this.aulaRepository.save(a);
         }else{
             a.getProfesores().remove(prof);
