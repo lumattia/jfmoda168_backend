@@ -39,6 +39,9 @@ export class TareasComponent {
   collectionSize:number=0;
 
   constructor(private claseService:ClaseService,private route:ActivatedRoute) {
+    this.route.queryParams.subscribe(p => {
+      this.aulaSeleccionado=Number(p['aulaId'])||-1;
+    });
     this.route.parent?.params.subscribe(p => {
       this.id = Number(p['id'])||0;
       this.claseService.getProfesoresWithTarea(this.id).subscribe({
@@ -61,35 +64,52 @@ export class TareasComponent {
       this.pageChanged()
     })
   }
-  ngOnInit(){
-
-  }
-  openModal(option:Option) {
+  openModalTema() {
     const modalRef = this.modalService.open(ModalComponent);
-    modalRef.componentInstance.name = 'clase';
-    modalRef.componentInstance.option = option;
+    modalRef.componentInstance.name = 'tema';
+    modalRef.componentInstance.option = this.temas.filter(t=>t.id==this.temaSeleccionado).at(0);
     modalRef.closed.subscribe((o: Option) => {
       this.eliminarTema(o.id)
+    });
+  }
+  openModalTarea(option:TareaRow) {
+    const modalRef = this.modalService.open(ModalComponent);
+    modalRef.componentInstance.name = 'tarea';
+    modalRef.componentInstance.option = option as Option;
+    modalRef.closed.subscribe((o: Option) => {
+      this.eliminarTarea(o.id)
     });
   }
   filter(){
     if (this.aulaSeleccionado==-1){
       this.temas=[];
+      this.temaSeleccionado=-1;
     }else{
-        this.claseService.filterTema(this.id,this.aulaSeleccionado,this.profesorSeleccionado).subscribe({
-            next: (data) => {
-                this.temas = (data)
-            },
-            error: (error) => {
-                alert(error);
-            }
-        });
+      this.claseService.filterTema(this.id,this.aulaSeleccionado).subscribe({
+          next: (data) => {
+              this.temas = (data)
+          },
+          error: (error) => {
+              alert(error);
+          }
+      });
     }
   }
   eliminarTema(id:number){
-    this.claseService.deleteTema(this.id,id).subscribe({
+    this.claseService.deleteTema(id).subscribe({
       next: () => {
         this.temas=this.temas.filter(t=>t.id!=id)
+        this.pageChanged();
+      },
+      error: (error) => {
+        alert(error);
+      }
+    });
+  }
+  eliminarTarea(id:number){
+    this.claseService.deleteTarea(id).subscribe({
+      next: () => {
+        this.pageChanged();
       },
       error: (error) => {
         alert(error);

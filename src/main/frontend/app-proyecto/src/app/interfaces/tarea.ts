@@ -8,7 +8,7 @@ export interface Tarea {
 export interface TareaRow {
   id:number,
   nombre:string,
-  propietarioNombre:string,
+  propietarioNombreCompleto:string,
   temaNombre:string,
   aulaGrupoAnio:string
 }

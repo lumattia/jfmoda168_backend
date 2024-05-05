@@ -25,12 +25,9 @@
         <button class="w-100 btn btn-primary text-start" [routerLink]="[clase.id]">
           {{clase.nombre}}
         </button>
-        <button class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-          <i class="fa-solid fa-ellipsis-vertical"></i>
+        <button class="btn btn-primary text-hover-danger" (click)="openModal(clase)">
+          <i class="fa-solid fa-x"></i>
         </button>
-        <ul class="dropdown-menu">
-          <li><a class="dropdown-item text-danger" (click)="openModal(clase)">Eliminar</a></li>
-        </ul>
       </div>
     </div>
   </div>

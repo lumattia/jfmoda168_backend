@@ -64,8 +64,8 @@ export class ClaseService {
     const url = `${CLASEURL}?curso=${curso}&asignatura=${asignatura}`
     return this.http.get<Option[]>(url);
   }
-  filterTema(idClase:number,idAulas:number,idProfesores:number):Observable<Option[]>{
-    const url = `${CLASEURL}/${idClase}/temas?aula=${idAulas}&profesor=${idProfesores}`
+  filterTema(idClase:number,idAulas:number):Observable<Option[]>{
+    const url = `${CLASEURL}/${idClase}/temas?aula=${idAulas}`
     return this.http.get<Option[]>(url);
   }
   crearClase(curso:number,asignatura:number):Observable<Option>{
@@ -88,12 +88,16 @@ export class ClaseService {
     const url = `${CLASEURL}/${idClase}/profesor/${idProfesor}`
     return this.http.delete(url, HTTPOPTIONS)
   }
-  deleteAula(idClase:number,idAula:number){
-    const url = `${CLASEURL}/${idClase}/aula/${idAula}`
+  deleteAula(idAula:number){
+    const url = `${CLASEURL}/aula/${idAula}`
     return this.http.delete(url, HTTPOPTIONS);
   }
-  deleteTema(idClase:number,idTema:number){
-    const url = `${CLASEURL}/${idClase}/tema/${idTema}`
+  deleteTema(idTema:number){
+    const url = `${CLASEURL}/tema/${idTema}`
+    return this.http.delete(url, HTTPOPTIONS);
+  }
+  deleteTarea(idTarea:number){
+    const url = `${CLASEURL}/tarea/${idTarea}`
     return this.http.delete(url, HTTPOPTIONS);
   }
 }

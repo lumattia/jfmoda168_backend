@@ -46,7 +46,7 @@ public class ClaseController {
         return this.claseService.one(id);
     }
     @GetMapping("/{id}/profesoresWithTarea")
-    public Set<ProfesorRow> getProfesores(@PathVariable("id") long id){
+    public Set<Profesor> getProfesores(@PathVariable("id") long id){
         return this.claseService.getProfesoresWithTarea(id);
     }
     @GetMapping("/{id}/profesores")
@@ -65,8 +65,7 @@ public class ClaseController {
     }
     @GetMapping("/{id}/temas")
     public Set<Tema> getTemas(@PathVariable("id") long id,
-                               @RequestParam(value = "aula") long idAula,
-                               @RequestParam(value = "profesor") long idProfesor){
+                               @RequestParam(value = "aula") long idAula){
         if (one(id).getAulas().stream().anyMatch(aula -> aula.getId()==idAula))
             return this.claseService.getTemas(idAula);
         else{
@@ -105,8 +104,20 @@ public class ClaseController {
     }
     @ResponseBody
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @DeleteMapping("{id}/aula/{idAula}")
-    public void deleteAula(@PathVariable("id") long id,@PathVariable("idAula") long idAula){
-        this.claseService.deleteAula(id,idAula);
+    @DeleteMapping("aula/{idAula}")
+    public void deleteAula(@PathVariable("idAula") long idAula){
+        this.claseService.deleteAula(idAula);
+    }
+    @ResponseBody
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping("tema/{idTema}")
+    public void deleteTema(@PathVariable("idTema") long idTema){
+        this.claseService.deleteTema(idTema);
+    }
+    @ResponseBody
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping("tarea/{idTarea}")
+    public void deleteTarea(@PathVariable("idTarea") long idTarea){
+        this.claseService.deleteTarea(idTarea);
     }
 }

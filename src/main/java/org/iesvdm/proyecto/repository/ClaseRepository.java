@@ -1,6 +1,8 @@
 package org.iesvdm.proyecto.repository;
 
+import jakarta.transaction.Transactional;
 import org.iesvdm.proyecto.model.entity.Clase;
+import org.iesvdm.proyecto.model.entity.Profesor;
 import org.iesvdm.proyecto.model.entity.Tema;
 import org.iesvdm.proyecto.model.view.Option;
 import org.iesvdm.proyecto.model.view.ProfesorRow;
@@ -18,14 +20,14 @@ public interface ClaseRepository extends JpaRepository<Clase, Long> {
     Set<Option> getButtonsFiltering(Long cursoId, Long asignaturaId);
     @Query("SELECT p FROM Profesor p JOIN p.clases c WHERE c.id = ?1 and CONCAT(p.nombre, ' ', p.apellidos) LIKE %?2%")
     Set<ProfesorRow> getProfesores(Long aulaId, String buscar);
-    @Query("SELECT DISTINCT p FROM Profesor p " +
-            "JOIN p.aulas a " +
+    @Transactional
+    @Query("SELECT DISTINCT p FROM Clase c " +
+            "JOIN c.aulas a " +
             "JOIN a.temas te " +
             "JOIN te.tareas ta " +
-            "JOIN ta.propietario pr " +
-            "JOIN a.clase c " +
-            "WHERE c.id = :claseId and pr=p")
-    Set<ProfesorRow> getProfesoresWithTarea(Long claseId);
+            "JOIN ta.propietario p " +
+            "WHERE c.id = :claseId")
+    Set<Profesor> getProfesoresWithTarea(Long claseId);
     @Query("SELECT te FROM Tema te " +
             "JOIN te.aula a " +
             "WHERE a.id=:aulaId")

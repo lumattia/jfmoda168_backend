@@ -56,7 +56,7 @@ export class AulasClaseComponent {
     })
   }
   eliminarAula(id: number) {
-    this.claseService.deleteAula(this.id,id).subscribe({
+    this.claseService.deleteAula(id).subscribe({
       next: () => {
         this.aulas = this.aulas.filter(a => a.id != id)
       },

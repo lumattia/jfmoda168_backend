@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.iesvdm.proyecto.model.view.EstudianteRow;
 
 import java.util.Set;
 
@@ -23,4 +24,32 @@ public class Estudiante extends Usuario{
     @OneToMany(mappedBy = "id.estudiante")
     @JsonIgnore
     private Set<TareaEstudiante> tareaEstudiantes;
+    public EstudianteRow toEstudianteRow() {
+        return new EstudianteRow() {
+            @Override
+            public long getId() {
+                return Estudiante.this.getId();
+            }
+            @Override
+            public String getNombre() {
+                return Estudiante.this.getNombre();
+            }
+            @Override
+            public String getApellidos() {
+                return Estudiante.this.getApellidos();
+            }
+            @Override
+            public String getEmail() {
+                return Estudiante.this.getEmail();
+            }
+            @Override
+            public String getAula() {
+                return Estudiante.this.getAula();
+            }
+            @Override
+            public boolean isBlocked() {
+                return Estudiante.this.isBlocked();
+            }
+        };
+    }
 }

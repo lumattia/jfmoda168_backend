@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.iesvdm.proyecto.model.view.TareaRow;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -18,7 +19,7 @@ import java.util.Set;
 @Table(uniqueConstraints={
         @UniqueConstraint(columnNames = {"tema_id", "nombre"})
 })
-public class Tarea {
+public class Tarea implements TareaRow {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
@@ -40,8 +41,8 @@ public class Tarea {
     public String getRoute(){
         return this.tema.getRoute()+" "+this.nombre;
     }
-    public String getPropietarioNombre() {
-        return this.propietario.getNombre();
+    public String getPropietarioNombreCompleto() {
+        return this.propietario.getNombreCompleto();
     }
     public String getTemaNombre() {
         return this.tema.getNombre();
