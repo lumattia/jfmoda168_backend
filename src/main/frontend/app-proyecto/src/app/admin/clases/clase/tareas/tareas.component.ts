@@ -46,7 +46,6 @@ export class TareasComponent {
       this.id = Number(p['id'])||0;
       this.claseService.getProfesoresWithTarea(this.id).subscribe({
         next: (data) => {
-          console.log(data)
           this.profesores = (data)
         },
         error: (error) => {
@@ -99,6 +98,7 @@ export class TareasComponent {
     this.claseService.deleteTema(id).subscribe({
       next: () => {
         this.temas=this.temas.filter(t=>t.id!=id)
+        this.temaSeleccionado=-1;
         this.pageChanged();
       },
       error: (error) => {

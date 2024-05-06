@@ -30,7 +30,6 @@ export class ProfesorProfesorComponent {
       let id = Number(p['id'])||0;
       aulaService.getAula(id).subscribe({
         next: (data) => {
-          console.log(data)
           this.aula = data
           this.getProfesores();
         },
@@ -75,7 +74,7 @@ export class ProfesorProfesorComponent {
     })
   }
   abrirModalAnadir(){
-    const modalRef = this.modalService.open(AddProfsModalComponent,{size: 'lg',centered: true, scrollable: true});
+    const modalRef = this.modalService.open(AddProfsModalComponent,{size: 'lg',centered: true, scrollable: true,backdrop:"static"});
     this.aulaService.getProfesores(this.aula.id,"").subscribe({
       next: (data) => {
         modalRef.componentInstance.added=data;

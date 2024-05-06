@@ -9,7 +9,7 @@ export interface AulaForm {
 }
 export interface Aula {
   id:number,
-  clase:string,
+  clase:Option,
   grupo:string,
   anio:string,
   temas:Tema[],

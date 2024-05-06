@@ -8,6 +8,8 @@ import {Tema} from "../../../../../interfaces/tema";
 import {TemaService} from "../../../../../services/tema.service";
 import {TareaComponent} from "./tarea/tarea.component";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {ImportTareasComponent} from "./import-tareas/import-tareas.component";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-tema',
@@ -26,7 +28,7 @@ export class TemaComponent {
     @Output() delete = new EventEmitter<Tema>;
     tareaACrear: string = "";
 
-    constructor(private temaService: TemaService) {
+    constructor(private temaService: TemaService,private route:ActivatedRoute) {
     }
     openEliminarModal(option:Option) {
         const modalRef = this.modalService.open(ModalComponent);
@@ -43,6 +45,16 @@ export class TemaComponent {
         modalRef.closed.subscribe((o: Option) => {
             this.editarTema(o)
         });
+    }
+    openImportModal() {
+      const modalRef = this.modalService.open(ImportTareasComponent,{size:"xl",centered:true,scrollable: true,backdrop:"static"});
+      this.route.parent?.params.subscribe(p => {
+        modalRef.componentInstance.idAula = Number(p['id']) || 0;
+      });
+      modalRef.componentInstance.added=this.tema.tareas;
+      modalRef.closed.subscribe((ids: number[]) => {
+        this.addTareas(ids)
+      });
     }
     editarTema(o: Option) {
         this.temaService.actualizarTema(o).subscribe({
@@ -74,6 +86,16 @@ export class TemaComponent {
                 alert(error);
             }
         });
+    }
+    addTareas(ids:number[]){
+      this.temaService.addTareas(this.tema.id,ids).subscribe({
+        next: (data) => {
+          this.tema.tareas=data;
+        },
+        error: (error) => {
+          alert(error);
+        }
+      })
     }
     deleteTarea(tarea:Option){
         this.tema.tareas = this.tema.tareas.filter(a => a.id != tarea.id)

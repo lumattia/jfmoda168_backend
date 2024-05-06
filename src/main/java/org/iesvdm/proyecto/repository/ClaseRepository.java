@@ -38,8 +38,6 @@ public interface ClaseRepository extends JpaRepository<Clase, Long> {
             "AND (:temaId =-1 OR ta.tema.id = :temaId)"+
             "AND (:profesorId =-1 OR ta.propietario.id = :profesorId)")
     Page<TareaRow> getTareas(Long claseId, Long aulaId, Long temaId, Long profesorId, Pageable pageable);
-    @Query("SELECT a FROM Aula a JOIN a.clase c WHERE c.id = ?1")
-    Set<Option> getAllAulas(Long claseId);
     @Query("SELECT a FROM Aula a JOIN a.clase c WHERE c.id = ?1 and CONCAT(a.grupo, ' ', a.anio) LIKE %?2%")
     Set<Option> getAulas(Long claseId, String buscar);
 }

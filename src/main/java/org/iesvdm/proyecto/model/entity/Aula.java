@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
+import org.iesvdm.proyecto.model.view.Option;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -36,8 +37,17 @@ public class Aula {
     @JsonIgnore
     private boolean eliminado;
     @JsonProperty("clase")
-    public String getClaseNombre() {
-        return this.clase.getNombre();
+    public Option getClaseOption() {
+        return new Option(){
+            @Override
+            public Long getId() {
+                return Aula.this.getClase().getId();
+            }
+            @Override
+            public String getNombre() {
+                return Aula.this.getClase().getNombre();
+            }
+        };
     }
     @JsonProperty("propietario")
     public Long getPropietarioId() {

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Option} from "../interfaces/option";
-import {Tarea} from "../interfaces/tarea";
+import {TareaDetail} from "../interfaces/tarea";
 
 const TEMAURL="http://localhost:8080/v1/api/temas"
 const HTTPOPTIONS = {
@@ -18,11 +18,18 @@ export class TemaService {
 
   constructor(private http:HttpClient) {
   }
-  crearTema(id:number,nombre:string):Observable<Tarea>{
+  crearTema(id:number,nombre:string):Observable<TareaDetail>{
     const url = `${TEMAURL}/${id}`;
-    return this.http.post<Tarea>(url,
+    return this.http.post<TareaDetail>(url,
         {nombre}
-    ,HTTPOPTIONS)  }
+    ,HTTPOPTIONS)
+  }
+  addTareas(id:number,ids:number[]):Observable<TareaDetail[]>{
+    const url = `${TEMAURL}/${id}/addTareas`
+    return this.http.post<TareaDetail[]>(url,
+      ids
+      ,HTTPOPTIONS)
+  }
   actualizarTema(a:Option):Observable<Option>{
     const url = `${TEMAURL}/${a.id}`;
     return this.http.put<Option>(url, a, HTTPOPTIONS);

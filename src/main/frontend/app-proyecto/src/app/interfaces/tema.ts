@@ -1,6 +1,6 @@
-import {Option} from "./option";
+import {TareaDetail} from "./tarea";
 export interface Tema {
   id:number,
   nombre:string,
-  tareas:Option[]
+  tareas:TareaDetail[]
 }

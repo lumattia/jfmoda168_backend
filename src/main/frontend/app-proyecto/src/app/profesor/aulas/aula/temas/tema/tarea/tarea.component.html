@@ -1,6 +1,9 @@
 <td class="row">
     <div class="col me-auto">{{tarea.nombre}}</div>
     <div class="w-auto ">
+        <a class="p-1" (click)="cambiarEstado()">
+            <i class="fa" [ngClass]="tarea.visible?'fa-eye':'fa-eye-slash'"></i>
+        </a>
         <a class="p-1" (click)="openEditarModal(tarea)"> <i class="fa-solid fa-pen-to-square"></i></a>
         <a class="p-1 text-danger" (click)="openEliminarModal(tarea)">  <i class="text-danger fa-solid fa-x" ></i></a>
     </div>

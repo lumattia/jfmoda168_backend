@@ -2,6 +2,7 @@ package org.iesvdm.proyecto.service;
 
 import org.iesvdm.proyecto.exeption.NotFoundException;
 import org.iesvdm.proyecto.model.entity.Tarea;
+import org.iesvdm.proyecto.model.view.TareaDetail;
 import org.iesvdm.proyecto.repository.TareaRepository;
 import org.springframework.stereotype.Service;
 
@@ -12,27 +13,29 @@ public class TareaService {
     public TareaService(TareaRepository tareaRepository) {
         this.tareaRepository = tareaRepository;
     }
-    public Tarea save(Tarea tarea) {
-        return this.tareaRepository.save(tarea);
-    }
+
     public Tarea one(long id) {
         return this.tareaRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(id,"tarea"));
     }
-
-    public Tarea replace(long id, Tarea tarea) {
-        Tarea t=one(id);
-        if (id==tarea.getId()){
+    public Tarea oneIncluding(long id) {
+        return this.tareaRepository.findByIdIncluding(id)
+                .orElseThrow(() -> new NotFoundException(id,"tarea"));
+    }
+    public TareaDetail replace(Tarea t, Tarea tarea) {
+        if (t.getId()==tarea.getId()){
             t.setNombre(tarea.getNombre());
             return this.tareaRepository.save(t);
         }
         return null;
     }
-    public void delete(long id) {
-        this.tareaRepository.findById(id).map(t -> {
-            t.setEliminado(true);
-            this.tareaRepository.save(t);
-            return t;
-        }).orElseThrow(() -> new NotFoundException(id,"tarea"));
+    public boolean cambiarEstado(Tarea t) {
+        t.setVisible(!t.getVisible());
+        this.tareaRepository.save(t);
+        return t.getVisible();
+    }
+    public void delete(Tarea t) {
+        t.setEliminado(true);
+        this.tareaRepository.save(t);
     }
 }

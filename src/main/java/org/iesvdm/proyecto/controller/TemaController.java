@@ -4,7 +4,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.iesvdm.proyecto.model.entity.Profesor;
 import org.iesvdm.proyecto.model.entity.Tarea;
 import org.iesvdm.proyecto.model.entity.Tema;
+import org.iesvdm.proyecto.model.view.TareaDetail;
 import org.iesvdm.proyecto.service.ProfesorService;
+import org.iesvdm.proyecto.service.TareaService;
 import org.iesvdm.proyecto.service.TemaService;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
@@ -12,15 +14,20 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Set;
+import java.util.stream.Collectors;
+
 @Slf4j
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/v1/api/temas")
 public class TemaController {
     private final TemaService temaService;
+    private final TareaService tareaService;
     private final ProfesorService profesorService;
-    public TemaController(TemaService temaService, ProfesorService profesorService) {
+    public TemaController(TemaService temaService, TareaService tareaService, ProfesorService profesorService) {
         this.temaService = temaService;
+        this.tareaService = tareaService;
         this.profesorService = profesorService;
     }
     private Profesor comprobarAccesoAula(long idAula) {
@@ -39,27 +46,37 @@ public class TemaController {
         return t;
     }
     @PostMapping("/{id}")
-    public Tarea createTarea(@PathVariable("id") long id, @RequestBody Tarea tarea) {
+    public TareaDetail createTarea(@PathVariable("id") long id, @RequestBody Tarea tarea) {
         Tema t=this.temaService.one(id);
         Profesor p=comprobarAccesoAula(t.getAula().getId());
         tarea.setPropietario(p);
+        log.info("Guardando una tarea");
+        return this.temaService.createTarea(t, tarea);
+    }
+    @PostMapping("/{id}/addTareas")
+    public Set<TareaDetail> addTareas(@PathVariable("id") long id, @RequestBody Set<Long> ids) {
+        Tema t=this.temaService.one(id);
+        Profesor p=comprobarAccesoAula(t.getAula().getId());
+
+        long idClase=t.getAula().getClase().getId();
+        Set<Tarea> tareas=ids.stream()
+                .map(tareaService::oneIncluding)
+                .filter(tarea -> tarea.getTema().getAula().getClase().getId()==idClase)
+                .peek(tarea -> tarea.setPropietario(p))
+                .collect(Collectors.toSet());
         log.info("Guardando una aula");
-        return this.temaService.createTarea(id, tarea);
+        return this.temaService.addTareas(t, tareas);
     }
     @PutMapping("/{id}")
     public Tema replace(@PathVariable("id") long id, @RequestBody Tema tema) {
-        Tema t=this.temaService.one(id);
-        comprobarAccesoAula(t.getAula().getId());
-        one(id);
-        return this.temaService.replace(id, tema);
+        Tema t=one(id);
+        return this.temaService.replace(t, tema);
     }
     @ResponseBody
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
     public void delete(@PathVariable("id") long id){
-        Tema t=this.temaService.one(id);
-        comprobarAccesoAula(t.getAula().getId());
-        one(id);
-        this.temaService.delete(id);
+        Tema t=one(id);
+        this.temaService.delete(t);
     }
 }

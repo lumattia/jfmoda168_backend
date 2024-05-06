@@ -69,6 +69,7 @@ public class WebSecurityConfig {
                         .requestMatchers("/v1/api/usuarios/cambiarContrasenia").authenticated()
                         .requestMatchers("/v1/api/asignaturas/**").hasAnyAuthority("ADMINISTRADOR")
                         .requestMatchers("/v1/api/cursos/**").hasAnyAuthority("ADMINISTRADOR")
+                        .requestMatchers(HttpMethod.GET,"/v1/api/clases/**").hasAnyAuthority("PROFESOR","ADMINISTRADOR")
                         .requestMatchers("/v1/api/clases/**").hasAnyAuthority("ADMINISTRADOR")
                         .requestMatchers("/v1/api/usuarios/**").hasAnyAuthority("ADMINISTRADOR")
                         .requestMatchers(HttpMethod.GET,"/v1/api/profesores/**").hasAnyAuthority("PROFESOR","ADMINISTRADOR")

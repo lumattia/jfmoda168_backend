@@ -5,10 +5,15 @@ export interface Tarea {
   nombre:string,
   facil:Fase[],
 }
+export interface TareaDetail {
+  id:number,
+  nombre:string,
+  visible:boolean,
+}
 export interface TareaRow {
   id:number,
   nombre:string,
-  propietarioNombreCompleto:string,
+  propietario:string,
   temaNombre:string,
-  aulaGrupoAnio:string
+  aulaGrupoAnio:string,
 }

@@ -4,17 +4,21 @@ import {ModalComponent} from "../../../../../../util/modal/modal.component";
 import {FormModalComponent} from "../../../../../../util/form-modal/form-modal.component";
 import {TareaService} from "../../../../../../services/tarea.service";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {TareaDetail} from "../../../../../../interfaces/tarea";
+import {NgClass} from "@angular/common";
 
 @Component({
   selector: 'app-tarea',
   standalone: true,
-  imports: [],
+  imports: [
+    NgClass
+  ],
   templateUrl: './tarea.component.html',
   styleUrl: './tarea.component.css'
 })
 export class TareaComponent {
   private modalService = inject(NgbModal);
-  @Input() tarea: Option = <Option>{};
+  @Input() tarea: TareaDetail = <TareaDetail>{};
   @Output() delete = new EventEmitter<Option>;
   constructor(private tareaService: TareaService) {
   }
@@ -43,6 +47,16 @@ export class TareaComponent {
         alert(error);
       }
     })
+  }
+  cambiarEstado(){
+    this.tareaService.cambiarEstado(this.tarea.id).subscribe({
+      next: () => {
+        this.tarea.visible=!this.tarea.visible
+      },
+      error: (error) => {
+        alert(error);
+      }
+    });
   }
   eliminarTarea(id: number) {
     this.tareaService.deleteTarea(id).subscribe({
