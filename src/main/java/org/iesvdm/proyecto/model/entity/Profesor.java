@@ -14,35 +14,11 @@ import java.util.Set;
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
 @DiscriminatorValue("PROFESOR")
-public class Profesor extends Usuario{
+public class Profesor extends Usuario implements ProfesorRow{
     @ManyToMany(mappedBy = "profesores")
     @JsonIgnore
     Set<Clase> clases = new HashSet<>();
     @JsonIgnore
     @ManyToMany(mappedBy = "profesores")
     Set<Aula> aulas;
-    public ProfesorRow toProfesorRow() {
-        return new ProfesorRow() {
-            @Override
-            public long getId() {
-                return Profesor.this.getId();
-            }
-            @Override
-            public String getNombre() {
-                return Profesor.this.getNombre();
-            }
-            @Override
-            public String getApellidos() {
-                return Profesor.this.getApellidos();
-            }
-            @Override
-            public String getEmail() {
-                return Profesor.this.getEmail();
-            }
-            @Override
-            public boolean isBlocked() {
-                return Profesor.this.isBlocked();
-            }
-        };
-    }
 }

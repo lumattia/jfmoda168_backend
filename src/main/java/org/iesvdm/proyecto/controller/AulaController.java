@@ -1,15 +1,13 @@
 package org.iesvdm.proyecto.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import org.iesvdm.proyecto.model.entity.Aula;
-import org.iesvdm.proyecto.model.entity.Estudiante;
-import org.iesvdm.proyecto.model.entity.Profesor;
-import org.iesvdm.proyecto.model.entity.Tema;
+import org.iesvdm.proyecto.model.entity.*;
 import org.iesvdm.proyecto.model.view.EstudianteRow;
 import org.iesvdm.proyecto.model.view.ProfesorRow;
 import org.iesvdm.proyecto.service.AulaService;
 import org.iesvdm.proyecto.service.EstudianteService;
 import org.iesvdm.proyecto.service.ProfesorService;
+import org.iesvdm.proyecto.service.UsuarioService;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import org.springframework.security.access.AccessDeniedException;
 
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -27,11 +26,13 @@ import java.util.stream.Collectors;
 public class AulaController {
     private final ProfesorService profesorService;
     private final EstudianteService estudianteService;
+    private final UsuarioService usuarioService;
     private final AulaService aulaService;
 
-    public AulaController(ProfesorService profesorService, EstudianteService estudianteService, AulaService aulaService) {
+    public AulaController(ProfesorService profesorService, EstudianteService estudianteService, UsuarioService usuarioService, AulaService aulaService) {
         this.profesorService = profesorService;
         this.estudianteService = estudianteService;
+        this.usuarioService = usuarioService;
         this.aulaService = aulaService;
     }
     private Profesor comprobarAccesoAula(long idAula) {
@@ -63,14 +64,42 @@ public class AulaController {
     @GetMapping("/{id}/profesores")
     public Set<ProfesorRow> getProfesores(@PathVariable("id") long id,
                                           @RequestParam(value = "buscar",defaultValue = "") String buscar){
-        comprobarAccesoAula(id);
-        return this.aulaService.getProfesores(id,buscar);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Usuario p=usuarioService.one(auth.getName());
+        Aula a=get(id);
+        boolean found;
+        found=a.getProfesores().stream()
+                .map(Usuario::getId)
+                .anyMatch(i-> Objects.equals(i, p.getId()));
+        if (!found)
+            found=a.getEstudiantes().stream()
+                    .map(Usuario::getId)
+                    .anyMatch(i-> Objects.equals(i, p.getId()));
+        if (!found){
+            throw new AccessDeniedException("No eres usuario de esa aula");
+        }else{
+            return this.aulaService.getProfesores(id,buscar);
+        }
     }
     @GetMapping("/{id}/estudiantes")
     public Set<EstudianteRow> getEstudiantes(@PathVariable("id") long id,
                                              @RequestParam(value = "buscar",defaultValue = "") String buscar){
-        comprobarAccesoAula(id);
-        return this.aulaService.getEstudiantes(id,buscar);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Usuario p=usuarioService.one(auth.getName());
+        Aula a=get(id);
+        boolean found;
+        found=a.getProfesores().stream()
+                .map(Usuario::getId)
+                .anyMatch(i-> Objects.equals(i, p.getId()));
+        if (!found)
+            found=a.getEstudiantes().stream()
+                    .map(Usuario::getId)
+                    .anyMatch(i-> Objects.equals(i, p.getId()));
+        if (!found){
+            throw new AccessDeniedException("No eres usuario de esa aula");
+        }else{
+            return this.aulaService.getEstudiantes(id,buscar);
+        }
     }
     @PutMapping("/{id}")
     public Aula replace(@PathVariable("id") long id, @RequestBody Aula aula) {
@@ -116,5 +145,8 @@ public class AulaController {
     public void removeEst(@PathVariable("id") long id,@PathVariable("idEstudiante") long idEstudiante){
         comprobarAccesoAula(id);
         this.aulaService.removeEst(id,idEstudiante);
+    }
+    private Aula get(long id) {
+        return this.aulaService.one(id);
     }
 }

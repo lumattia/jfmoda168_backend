@@ -40,12 +40,12 @@ export class ProfesorService {
     }
     return this.http.get<any>(PROFESORURL,options)
   }
-  getAulas(id:number):Observable<Option[]>{
-    const url = `${PROFESORURL}/getAulas/${id}`
+  getAulas():Observable<Option[]>{
+    const url = `${PROFESORURL}/getAulas`
     return this.http.get<Option[]>(url)
   }
-  getClases(id:number):Observable<Option[]>{
-    const url = `${PROFESORURL}/getClases/${id}`
+  getClases():Observable<Option[]>{
+    const url = `${PROFESORURL}/getClases`
     return this.http.get<Option[]>(url)
   }
   crearProfesor(p:ProfesorForm):Observable<ProfesorRow>{

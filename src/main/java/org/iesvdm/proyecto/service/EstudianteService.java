@@ -1,5 +1,9 @@
 package org.iesvdm.proyecto.service;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.transaction.Transactional;
+import org.iesvdm.proyecto.model.entity.Aula;
 import org.iesvdm.proyecto.model.entity.Estudiante;
 import org.iesvdm.proyecto.exeption.NotFoundException;
 import org.iesvdm.proyecto.model.view.EstudianteRow;
@@ -9,10 +13,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class EstudianteService {
+    @PersistenceContext
+    EntityManager em;
     private final EstudianteRepository estudianteRepository;
     public EstudianteService(EstudianteRepository estudianteRepository ) {
         this.estudianteRepository = estudianteRepository;
@@ -35,6 +43,22 @@ public class EstudianteService {
         return this.estudianteRepository.findByEmail(email)
                 .orElseThrow(() -> new NotFoundException("Estudiante with Email: "+email+" not found"));
     }
+    public Aula getAula(Long id) {
+        Aula a= this.estudianteRepository.getAula(id)
+                .orElseThrow(() -> new NotFoundException(id,"aula"));
+        if (a.isEliminado()){
+            throw new NotFoundException("Aula eliminada");
+        }
+        a.setTemas(a.getTemas().stream()
+                .filter(tema -> !tema.isEliminado())
+                .sorted()
+                .peek(tema -> tema.setTareas(tema.getTareas().stream()
+                        .filter(tarea -> !tarea.isEliminado()&& tarea.getVisible())
+                        .sorted()
+                        .collect(Collectors.toCollection(LinkedHashSet::new))))
+                .collect(Collectors.toCollection(LinkedHashSet::new)));
+        return a;
+    }
     public Set<Option> getAulas(Long id) {
         return this.estudianteRepository.getAulas(id);
     }
@@ -54,5 +78,14 @@ public class EstudianteService {
                     this.estudianteRepository.delete(e);
                     return e;})
                 .orElseThrow(() -> new NotFoundException(id,"estudiante"));
+    }
+    @Transactional
+    public void salirAula(Estudiante e,Long idAula) {
+        Aula a=em.find(Aula.class,idAula);
+        if (a.getEstudiantes().remove(e)){
+            em.merge(a);
+        }else{
+            throw new NotFoundException("No se ha encontrado ese estudiante en esa aula");
+        }
     }
 }

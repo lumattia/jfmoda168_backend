@@ -3,7 +3,6 @@ import {Aula, AulaForm} from "../../interfaces/aula";
 import {Option} from "../../interfaces/option";
 import {ProfesorService} from "../../services/profesor.service";
 import {AulaService} from "../../services/aula.service";
-import {StorageService} from "../../services/storage.service";
 import {FormsModule} from "@angular/forms";
 import {NgForOf} from "@angular/common";
 import {RouterLink} from "@angular/router";
@@ -19,10 +18,10 @@ import {ModalComponent} from "../../util/modal/modal.component";
     NgForOf,
     RouterLink
   ],
-  templateUrl: './aulas.component.html',
-  styleUrl: './aulas.component.css'
+  templateUrl: './aulas-profesor.component.html',
+  styleUrl: './aulas-profesor.component.css'
 })
-export class AulasComponent {
+export class AulasProfesorComponent {
   private modalService = inject(NgbModal);
   aula:AulaForm={
     id:0,
@@ -32,10 +31,8 @@ export class AulasComponent {
   }
   aulas:Option[]=[];
   clases:Option[]=[];
-  constructor(profesorService:ProfesorService,private aulaService:AulaService,
-              storageService: StorageService) {
-    let id=storageService.getUser().content.id;
-    profesorService.getAulas(id).subscribe({
+  constructor(profesorService:ProfesorService,private aulaService:AulaService) {
+    profesorService.getAulas().subscribe({
       next: (a) => {
         this.aulas = a
       },
@@ -43,7 +40,7 @@ export class AulasComponent {
         alert(error);
       }
     })
-    profesorService.getClases(id).subscribe({
+    profesorService.getClases().subscribe({
       next: (c) => {
         this.clases = c
       },

@@ -29,7 +29,7 @@ public class Aula {
     private Profesor propietario;
     @ManyToMany
     @JsonIgnore
-    private Set<Estudiante> estudiantes;
+    private Set<Estudiante> estudiantes=new HashSet<>();
     @ManyToOne(optional = false)
     private Clase clase;
     @OneToMany(mappedBy = "aula",cascade = CascadeType.ALL,orphanRemoval = true)

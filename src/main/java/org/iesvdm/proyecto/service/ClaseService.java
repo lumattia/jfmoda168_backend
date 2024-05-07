@@ -63,7 +63,7 @@ public class ClaseService {
                     c.getProfesores().addAll(profesor);
                     return claseRepository.save(c);
                 }).orElseThrow(() -> new NotFoundException(id,"clase"));
-        return profesor.stream().map(Profesor::toProfesorRow).collect(Collectors.toSet());
+        return profesor.stream().map(pr->(ProfesorRow)pr).collect(Collectors.toSet());
     }
     public void delete(Long id) {
         this.claseRepository.findById(id).map(c -> {

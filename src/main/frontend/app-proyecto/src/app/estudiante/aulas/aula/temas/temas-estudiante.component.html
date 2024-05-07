@@ -1,0 +1,15 @@
+<div class="row">
+  <div class="col me-auto">
+    <a [routerLink]="['usuarios/']">Usuarios</a>
+  </div>
+</div>
+<div class="row">
+  <div class="col me-auto">
+    <h1>{{aula.clase.nombre}} {{aula.grupo}} {{aula.anio}}</h1>
+  </div>
+</div>
+<div class="accordion accordion-flush" id="accordion">
+  <div class="accordion-item" *ngFor="let tema of aula.temas" >
+    <app-tema [tema]="tema"></app-tema>
+  </div>
+</div>

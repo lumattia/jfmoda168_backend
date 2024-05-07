@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {EstudianteForm, EstudianteRow} from "../interfaces/estudiante";
 import {Option} from "../interfaces/option";
+import {Aula} from "../interfaces/aula";
 const ESTUDIANTEURL="http://localhost:8080/v1/api/estudiantes"
 
 const HTTPOPTIONS = {
@@ -41,8 +42,12 @@ export class EstudianteService {
     }
     return this.http.get<any>(ESTUDIANTEURL,options)
   }
-  getAulas(id:number):Observable<Option[]>{
+  getAula(id:number):Observable<Aula>{
     const url = `${ESTUDIANTEURL}/getAulas/${id}`
+    return this.http.get<Aula>(url)
+  }
+  getAulas():Observable<Option[]>{
+    const url = `${ESTUDIANTEURL}/getAulas`
     return this.http.get<Option[]>(url)
   }
   crearEstudiante(e:EstudianteForm):Observable<EstudianteRow>{
@@ -57,5 +62,9 @@ export class EstudianteService {
   deleteEstudiante(id:number){
     const url = `${ESTUDIANTEURL}/${id}`
     return this.http.delete(url, HTTPOPTIONS);
+  }
+  salirAula(id:number){
+    const url = `${ESTUDIANTEURL}/salirAula/${id}`
+    return this.http.delete(url,HTTPOPTIONS)
   }
 }

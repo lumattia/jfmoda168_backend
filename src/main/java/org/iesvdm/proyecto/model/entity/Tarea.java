@@ -18,13 +18,12 @@ import java.util.Set;
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 @Entity
-public class Tarea implements TareaRow,TareaDetail {
+public class Tarea implements TareaRow,TareaDetail,Comparable<Tarea> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     long id;
     String nombre;
-    Boolean visible;
     @ManyToOne
     Profesor propietario;
     @ManyToOne
@@ -34,9 +33,11 @@ public class Tarea implements TareaRow,TareaDetail {
     @JsonIgnore
     Set<TareaEstudiante> tareaEstudiantes=new HashSet<>();
     @OneToMany(mappedBy = "tarea",cascade = CascadeType.ALL,orphanRemoval = true)
-    Set<Fase> fases=new HashSet<>();
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    Set<Fase> fases;
     @JsonIgnore
     boolean eliminado;
+    Boolean visible=false;
     public String getRoute(){
         return this.tema.getRoute()+" "+this.nombre;
     }
@@ -51,4 +52,8 @@ public class Tarea implements TareaRow,TareaDetail {
         return this.tema.aula.getGrupo()+" "+this.tema.aula.getAnio();
     }
 
+    @Override
+    public int compareTo(Tarea o) {
+        return this.nombre.compareTo(o.getNombre());
+    }
 }

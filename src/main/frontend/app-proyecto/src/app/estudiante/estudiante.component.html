@@ -1,14 +1,1 @@
-<div class="container ">
-  <div class="row">
-    <div class="col me-auto">
-      <h1>Aulas</h1>
-    </div>
-  </div>
-  <div class="row g-2 row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4" >
-    <div class="btn-group col" *ngFor="let aula of aulas">
-      <button class="w-100 btn btn-primary text-start" [routerLink]="['/aulas',aula.id]">
-        {{aula.nombre}}
-      </button>
-    </div>
-  </div>
-</div>
+<router-outlet></router-outlet>

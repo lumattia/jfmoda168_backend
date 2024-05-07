@@ -5,7 +5,7 @@ import {EstudianteProfesorComponent} from "./estudiante/estudiante-profesor.comp
 import {RouterLink} from "@angular/router";
 
 @Component({
-  selector: 'app-usuarios',
+  selector: 'app-usuarios-profesor',
   standalone: true,
   imports: [
     ProfesorProfesorComponent,

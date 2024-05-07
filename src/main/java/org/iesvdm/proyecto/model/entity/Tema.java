@@ -7,7 +7,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import java.util.HashSet;
 import java.util.Set;
 
 @Data
@@ -18,7 +17,7 @@ import java.util.Set;
 @Table(uniqueConstraints={
         @UniqueConstraint(columnNames = {"aula_id", "nombre"})
 })
-public class Tema {
+public class Tema implements Comparable<Tema>{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
@@ -29,10 +28,15 @@ public class Tema {
     @JsonIgnore
     Aula aula;
     @OneToMany(mappedBy = "tema",cascade = CascadeType.ALL,orphanRemoval = true)
-    Set<Tarea> tareas=new HashSet<>();
+    Set<Tarea> tareas;
     @JsonIgnore
     boolean eliminado;
     public String getRoute(){
         return this.aula.getNombre()+" "+this.nombre;
+    }
+
+    @Override
+    public int compareTo(Tema o) {
+        return this.nombre.compareTo(o.getNombre());
     }
 }

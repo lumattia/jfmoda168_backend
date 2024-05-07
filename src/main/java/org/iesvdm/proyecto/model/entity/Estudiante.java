@@ -16,7 +16,7 @@ import java.util.Set;
 @Entity
 @Data
 @DiscriminatorValue("ESTUDIANTE")
-public class Estudiante extends Usuario{
+public class Estudiante extends Usuario implements EstudianteRow{
     String aula;
     @ManyToMany(mappedBy = "estudiantes")
     @JsonIgnore
@@ -24,32 +24,4 @@ public class Estudiante extends Usuario{
     @OneToMany(mappedBy = "id.estudiante")
     @JsonIgnore
     private Set<TareaEstudiante> tareaEstudiantes;
-    public EstudianteRow toEstudianteRow() {
-        return new EstudianteRow() {
-            @Override
-            public long getId() {
-                return Estudiante.this.getId();
-            }
-            @Override
-            public String getNombre() {
-                return Estudiante.this.getNombre();
-            }
-            @Override
-            public String getApellidos() {
-                return Estudiante.this.getApellidos();
-            }
-            @Override
-            public String getEmail() {
-                return Estudiante.this.getEmail();
-            }
-            @Override
-            public String getAula() {
-                return Estudiante.this.getAula();
-            }
-            @Override
-            public boolean isBlocked() {
-                return Estudiante.this.isBlocked();
-            }
-        };
-    }
 }

@@ -5,7 +5,7 @@ import {NgForOf, NgIf} from "@angular/common";
 import {NgbPagination} from "@ng-bootstrap/ng-bootstrap";
 import {Aula} from "../../../../interfaces/aula";
 import {AulaService} from "../../../../services/aula.service";
-import {TemaComponent} from "./tema/tema.component";
+import {TemaProfesorComponent} from "./tema/tema-profesor.component";
 import {Tema} from "../../../../interfaces/tema";
 
 @Component({
@@ -18,12 +18,12 @@ import {Tema} from "../../../../interfaces/tema";
     NgIf,
     NgbPagination,
     RouterLink,
-    TemaComponent
+    TemaProfesorComponent
   ],
-  templateUrl: './temas.component.html',
-  styleUrl: './temas.component.css'
+  templateUrl: './temas-profesor.component.html',
+  styleUrl: './temas-profesor.component.css'
 })
-export class TemasComponent {
+export class TemasProfesorComponent {
   aula: Aula=<Aula>{};
   temaACrear:string="";
   constructor(private aulaService:AulaService,private route:ActivatedRoute) {
@@ -32,7 +32,6 @@ export class TemasComponent {
       aulaService.getAula(id).subscribe({
         next: (a) => {
           this.aula = a;
-          this.aula.temas.sort((t1,t2)=>t1.nombre.localeCompare(t2.nombre))
         },
         error: (error) => {
           alert(error);

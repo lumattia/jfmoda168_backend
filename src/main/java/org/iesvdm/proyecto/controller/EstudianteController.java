@@ -1,6 +1,7 @@
 package org.iesvdm.proyecto.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import org.iesvdm.proyecto.model.entity.Aula;
 import org.iesvdm.proyecto.model.entity.Estudiante;
 import org.iesvdm.proyecto.model.view.EstudianteRow;
 import org.iesvdm.proyecto.model.view.Option;
@@ -9,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -46,9 +50,20 @@ public class EstudianteController {
     public Estudiante one(@PathVariable("id") long id) {
         return this.estudianteService.one(id);
     }
-    @GetMapping("/getAulas/{id}")
-    public Set<Option> getAulas(@PathVariable("id") long id) {
-        return this.estudianteService.getAulas(id);
+    @GetMapping("/getAulas")
+    public Set<Option> getAulas() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Estudiante e=estudianteService.one(auth.getName());
+        return this.estudianteService.getAulas(e.getId());
+    }
+    @GetMapping("/getAulas/{idAula}")
+    public Aula oneAUla(@PathVariable("idAula") long idAula) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Estudiante e=estudianteService.one(auth.getName());
+        if (e.getAulas().stream().noneMatch(aula -> aula.getId() == idAula)) {
+            throw new AccessDeniedException("No eres estudiante de esa aula.");
+        }
+        return this.estudianteService.getAula(idAula);
     }
     @PutMapping("/{id}")
     public Estudiante replace(@PathVariable("id") long id, @RequestBody Estudiante estudiante) {
@@ -60,4 +75,13 @@ public class EstudianteController {
     public void delete(@PathVariable("id") long id){
         this.estudianteService.delete(id);
     }
+    @ResponseBody
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping("/salirAula/{idAula}")
+    public void salirAula(@PathVariable("idAula") long idAula){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Estudiante e = estudianteService.one(auth.getName());
+        this.estudianteService.salirAula(e,idAula);
+    }
+
 }

@@ -6,7 +6,7 @@ import {ModalComponent} from "../../../../../util/modal/modal.component";
 import {FormModalComponent} from "../../../../../util/form-modal/form-modal.component";
 import {Tema} from "../../../../../interfaces/tema";
 import {TemaService} from "../../../../../services/tema.service";
-import {TareaComponent} from "./tarea/tarea.component";
+import {TareaProfesorComponent} from "./tarea/tarea-profesor.component";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {ImportTareasComponent} from "./import-tareas/import-tareas.component";
 import {ActivatedRoute} from "@angular/router";
@@ -17,12 +17,12 @@ import {ActivatedRoute} from "@angular/router";
     imports: [
         FormsModule,
         NgForOf,
-        TareaComponent
+        TareaProfesorComponent
     ],
-  templateUrl: './tema.component.html',
-  styleUrl: './tema.component.css'
+  templateUrl: './tema-profesor.component.html',
+  styleUrl: './tema-profesor.component.css'
 })
-export class TemaComponent {
+export class TemaProfesorComponent {
     private modalService = inject(NgbModal);
     @Input() tema: Tema = <Tema>{};
     @Output() delete = new EventEmitter<Tema>;

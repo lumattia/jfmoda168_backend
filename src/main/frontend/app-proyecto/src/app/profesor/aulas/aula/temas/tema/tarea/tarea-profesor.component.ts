@@ -13,10 +13,10 @@ import {NgClass} from "@angular/common";
   imports: [
     NgClass
   ],
-  templateUrl: './tarea.component.html',
-  styleUrl: './tarea.component.css'
+  templateUrl: './tarea-profesor.component.html',
+  styleUrl: './tarea-profesor.component.css'
 })
-export class TareaComponent {
+export class TareaProfesorComponent {
   private modalService = inject(NgbModal);
   @Input() tarea: TareaDetail = <TareaDetail>{};
   @Output() delete = new EventEmitter<Option>;

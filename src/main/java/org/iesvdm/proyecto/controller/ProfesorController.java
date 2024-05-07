@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -45,13 +47,17 @@ public class ProfesorController {
     public Profesor one(@PathVariable("id") long id) {
         return this.profesorService.one(id);
     }
-    @GetMapping("/getAulas/{id}")
-    public Set<Option> getAulas(@PathVariable("id") long id) {
-        return this.profesorService.getAulas(id);
+    @GetMapping("/getAulas")
+    public Set<Option> getAulas() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Profesor p=profesorService.one(auth.getName());
+        return this.profesorService.getAulas(p.getId());
     }
-    @GetMapping("/getClases/{id}")
-    public Set<Option> getClases(@PathVariable("id") long id) {
-        return this.profesorService.getClases(id);
+    @GetMapping("/getClases")
+    public Set<Option> getClases() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Profesor p=profesorService.one(auth.getName());
+        return this.profesorService.getClases(p.getId());
     }
     @PutMapping("/{id}")
     public Profesor replace(@PathVariable("id") long id, @RequestBody Profesor profesor) {

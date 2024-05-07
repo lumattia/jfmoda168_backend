@@ -1,7 +1,7 @@
 package org.iesvdm.proyecto.model.view;
 
 public interface ProfesorRow {
-    long getId();
+    Long getId();
     String getNombre();
     String getApellidos();
     String getEmail();

@@ -10,14 +10,18 @@ import {ProfesorFormComponent} from "./admin/usuarios/profesor/form/form.compone
 import {EstudianteFormComponent} from "./admin/usuarios/estudiante/form/form.component";
 import {ProfesorComponent} from "./profesor/profesor.component";
 import {EstudianteComponent} from "./estudiante/estudiante.component";
-import {AulasComponent} from "./profesor/aulas/aulas.component";
-import {AulaComponent} from "./profesor/aulas/aula/aula.component";
+import {AulasProfesorComponent} from "./profesor/aulas/aulas-profesor.component";
+import {AulaProfesorComponent} from "./profesor/aulas/aula/aula-profesor.component";
 import {UsuariosProfesorComponent} from "./profesor/aulas/aula/usuarios/usuarios-profesor.component";
-import {TemasComponent} from "./profesor/aulas/aula/temas/temas.component";
+import {TemasProfesorComponent} from "./profesor/aulas/aula/temas/temas-profesor.component";
 import {ClaseComponent} from "./admin/clases/clase/clase.component";
 import {ProfesoresClaseComponent} from "./admin/clases/clase/profesores/profesores-clase.component";
 import {TareasComponent} from "./admin/clases/clase/tareas/tareas.component";
 import {AulasClaseComponent} from "./admin/clases/clase/aulas/aulas-clase.component";
+import {AulasEstudianteComponent} from "./estudiante/aulas/aulas-estudiante.component";
+import {AulaEstudianteComponent} from "./estudiante/aulas/aula/aula-estudiante.component";
+import {TemasEstudianteComponent} from "./estudiante/aulas/aula/temas/temas-estudiante.component";
+import {UsuariosEstudianteComponent} from "./estudiante/aulas/aula/usuarios/usuarios-estudiante.component";
 
 export const routes: Routes = [
   {path:'login',component:LoginComponent},
@@ -40,9 +44,9 @@ export const routes: Routes = [
       ]
   },
   {path:'profesor',component:ProfesorComponent, canActivate: [canActivateProfesor],children:[
-      {path:'',component:AulasComponent},
-      {path:'aula/:id',component:AulaComponent,children:[
-          {path:'',component:TemasComponent},
+      {path:'',component:AulasProfesorComponent},
+      {path:'aula/:id',component:AulaProfesorComponent,children:[
+          {path:'',component:TemasProfesorComponent},
           {path:'usuarios',component:UsuariosProfesorComponent},
           {path:'**',pathMatch:'full',redirectTo:''}
         ]},
@@ -50,7 +54,13 @@ export const routes: Routes = [
     ]
   },
   {path:'estudiante',component:EstudianteComponent, canActivate: [canActivateEstudiante],children:[
-
+      {path:'',component:AulasEstudianteComponent},
+      {path:'aula/:id',component:AulaEstudianteComponent,children:[
+          {path:'',component:TemasEstudianteComponent},
+          {path:'usuarios',component:UsuariosEstudianteComponent},
+          {path:'**',pathMatch:'full',redirectTo:''}
+        ]},
+      {path:'**',pathMatch:'full',redirectTo:''}
     ]
   },
   {path:'**',pathMatch:'full',redirectTo:'login'}
