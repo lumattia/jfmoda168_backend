@@ -7,10 +7,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import org.iesvdm.proyecto.model.view.TareaDetail;
 import org.iesvdm.proyecto.model.view.TareaRow;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -18,7 +18,7 @@ import java.util.Set;
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 @Entity
-public class Tarea implements TareaRow,TareaDetail,Comparable<Tarea> {
+public class Tarea implements TareaRow,Comparable<Tarea> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
@@ -33,8 +33,7 @@ public class Tarea implements TareaRow,TareaDetail,Comparable<Tarea> {
     @JsonIgnore
     Set<TareaEstudiante> tareaEstudiantes=new HashSet<>();
     @OneToMany(mappedBy = "tarea",cascade = CascadeType.ALL,orphanRemoval = true)
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    Set<Fase> fases;
+    private List<Fase> fases;
     @JsonIgnore
     boolean eliminado;
     Boolean visible=false;

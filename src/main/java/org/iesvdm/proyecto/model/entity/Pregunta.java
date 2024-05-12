@@ -7,7 +7,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import java.util.Set;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -25,5 +25,5 @@ public class Pregunta {
     @JsonIgnore
     Fase fase;
     @OneToMany(mappedBy = "pregunta", cascade = CascadeType.ALL,orphanRemoval = true)
-    Set<Respuesta> respuesta;
+    List<Respuesta> respuestas;
 }

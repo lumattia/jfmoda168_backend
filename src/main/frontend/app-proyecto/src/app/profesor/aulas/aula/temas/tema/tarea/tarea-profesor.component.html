@@ -1,5 +1,5 @@
 <td class="row">
-    <div class="col me-auto">{{tarea.nombre}}</div>
+    <a class="col me-auto" [routerLink]="['../../tarea',tarea.id]">{{tarea.nombre}}</a>
     <div class="w-auto ">
         <a class="p-1" (click)="cambiarEstado()">
             <i class="fa" [ngClass]="tarea.visible?'fa-eye':'fa-eye-slash'"></i>

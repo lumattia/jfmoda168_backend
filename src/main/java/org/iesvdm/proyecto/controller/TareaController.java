@@ -1,9 +1,11 @@
 package org.iesvdm.proyecto.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import org.iesvdm.proyecto.mapper.MapStructMapper;
 import org.iesvdm.proyecto.model.entity.Profesor;
 import org.iesvdm.proyecto.model.entity.Tarea;
 import org.iesvdm.proyecto.model.view.TareaDetail;
+import org.iesvdm.proyecto.model.view.TareaFase;
 import org.iesvdm.proyecto.service.ProfesorService;
 import org.iesvdm.proyecto.service.TareaService;
 import org.springframework.http.HttpStatus;
@@ -17,10 +19,11 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/v1/api/tareas")
 public class TareaController {
-
+    private final MapStructMapper mapStructMapper;
     private final TareaService tareaService;
     private final ProfesorService profesorService;
-    public TareaController(TareaService tareaService, ProfesorService profesorService) {
+    public TareaController(MapStructMapper mapStructMapper, TareaService tareaService, ProfesorService profesorService) {
+        this.mapStructMapper = mapStructMapper;
         this.tareaService = tareaService;
         this.profesorService = profesorService;
     }
@@ -35,18 +38,24 @@ public class TareaController {
     }
 
     @GetMapping("/{id}")
-    public Tarea one(@PathVariable("id") long id) {
-        return this.tareaService.one(id);
+    public TareaFase one(@PathVariable("id") long id) {
+        return mapStructMapper.tareaToTareaFase(this.tareaService.one(id));
+    }
+    @PutMapping("/{id}/cambiarNombre")
+    public TareaDetail cambiarNombre(@PathVariable("id") long id, @RequestBody Tarea tarea) {
+        Tarea t=get(id);
+        comprobarAccesoAula(t.getTema().getAula().getId());
+        return mapStructMapper.tareaToTareaDetail(this.tareaService.cambiarNombre(t, tarea));
     }
     @PutMapping("/{id}")
-    public TareaDetail replace(@PathVariable("id") long id, @RequestBody Tarea tarea) {
-        Tarea t=one(id);
+    public TareaFase replace(@PathVariable("id") long id, @RequestBody Tarea tarea) {
+        Tarea t=get(id);
         comprobarAccesoAula(t.getTema().getAula().getId());
-        return this.tareaService.replace(t, tarea);
+        return mapStructMapper.tareaToTareaFase(this.tareaService.replace(t, tarea));
     }
     @PutMapping("/{id}/cambiarEstado")
     public boolean cambiarEstado(@PathVariable("id") long id) {
-        Tarea t=one(id);
+        Tarea t=get(id);
         comprobarAccesoAula(t.getTema().getAula().getId());
         return this.tareaService.cambiarEstado(t);
     }
@@ -55,8 +64,11 @@ public class TareaController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
     public void delete(@PathVariable("id") long id){
-        Tarea t=one(id);
+        Tarea t=get(id);
         comprobarAccesoAula(t.getTema().getAula().getId());
         this.tareaService.delete(t);
+    }
+    private Tarea get(long id) {
+        return this.tareaService.one(id);
     }
 }

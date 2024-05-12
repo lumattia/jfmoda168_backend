@@ -1,9 +1,9 @@
 import {Fase} from "./fase";
 
-export interface Tarea {
+export interface TareaFase {
   id:number,
   nombre:string,
-  facil:Fase[],
+  fases:Fase[],
 }
 export interface TareaDetail {
   id:number,

@@ -17,8 +17,6 @@ import {RouterLink} from "@angular/router";
   styleUrl: './usuarios-profesor.component.css'
 })
 export class UsuariosProfesorComponent {
-  constructor() {
-  }
 }
 
 

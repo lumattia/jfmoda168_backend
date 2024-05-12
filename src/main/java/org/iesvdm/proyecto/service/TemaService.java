@@ -6,12 +6,11 @@ import jakarta.transaction.Transactional;
 import org.iesvdm.proyecto.exeption.NotFoundException;
 import org.iesvdm.proyecto.model.entity.Tarea;
 import org.iesvdm.proyecto.model.entity.Tema;
-import org.iesvdm.proyecto.model.view.TareaDetail;
 import org.iesvdm.proyecto.repository.TemaRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 public class TemaService {
@@ -21,14 +20,14 @@ public class TemaService {
     public TemaService(TemaRepository temaRepository) {
         this.temaRepository = temaRepository;
     }
-    public TareaDetail createTarea(Tema t, Tarea tarea) {
+    public Tarea createTarea(Tema t, Tarea tarea) {
         tarea.setTema(t);
         t.getTareas().add(tarea);
         this.temaRepository.save(t);
         return t.getTareas().stream().sorted((o1, o2) -> Math.toIntExact(o2.getId() - o1.getId())).toList().get(0);
     }
     @Transactional
-    public Set<TareaDetail> addTareas(Tema t, Set<Tarea> tareas) {
+    public Set<Tarea> addTareas(Tema t, Set<Tarea> tareas) {
         tareas.forEach(tarea -> {
             em.detach(tarea);
             tarea.setId(0);
@@ -41,7 +40,7 @@ public class TemaService {
                 fase.getPreguntas().forEach(pregunta -> {
                     em.detach(pregunta);
                     pregunta.setId(0);
-                    pregunta.getRespuesta().forEach(respuesta -> {
+                    pregunta.getRespuestas().forEach(respuesta -> {
                         em.detach(respuesta);
                         respuesta.setId(0);
                     });
@@ -50,7 +49,7 @@ public class TemaService {
             t.getTareas().add(tarea);
             this.temaRepository.save(t);
         });
-        return t.getTareas().stream().map(tarea->(TareaDetail)tarea).collect(Collectors.toSet());
+        return new HashSet<>(t.getTareas());
     }
     public Tema one(long id) {
         return this.temaRepository.findById(id)

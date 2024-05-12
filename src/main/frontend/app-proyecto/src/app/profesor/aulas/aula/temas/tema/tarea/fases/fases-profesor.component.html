@@ -1,0 +1,41 @@
+<ul class="nav me-auto">
+  <li class="nav-item">
+    <a class="nav-link text-success" (click)="show=0">Facil</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link text-warning" (click)="show=1">Intermedio</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link text-danger" (click)="show=2">Dificil</a>
+  </li>
+</ul>
+<div ngbAccordion>
+  <div ngbAccordionItem [collapsed]="false" *ngFor="let pregunta of tarea.fases[show].preguntas; let i=index">
+    <h2 ngbAccordionHeader>
+      <button ngbAccordionButton>
+        <div class="form-floating w-100 me-2">
+          <textarea class="form-control" id="enunciado" name="enunciado" [(ngModel)]="pregunta.enunciado" placeholder="enunciado" aria-label="enunciado" required></textarea>
+          <label for="enunciado">Pregunta {{i+1}}</label>
+        </div>
+      </button>
+    </h2>
+    <div ngbAccordionCollapse>
+      <div ngbAccordionBody>
+        <ng-template>
+         <ol>
+           <li *ngFor="let respuesta of pregunta.respuestas">
+             <div class="input-group"><textarea class="form-control me-2" name="respuesta" [(ngModel)]="respuesta.respuesta" placeholder="respuesta" aria-label="respuesta" required></textarea>
+               <input class="form-check-input" type="checkbox" name="correcta" [(ngModel)]="respuesta.correcta"></div>
+           </li>
+           <li>
+             <button class="btn btn-primary" (click)="nuevaRespuesta(pregunta)">Nueva respuesta</button>
+           </li>
+         </ol>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+  <button class="btn btn-primary" (click)="nuevaPregunta()">Nueva Pregunta</button>
+</div>
+<button class="btn btn-primary" (click)="cancelar()">Cancelar</button>
+<button class="btn btn-primary" (click)="guardar()">Guardar</button>

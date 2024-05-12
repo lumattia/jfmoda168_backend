@@ -7,7 +7,7 @@ import {Option} from "../../../../interfaces/option";
 import {ClaseService} from "../../../../services/clase.service";
 import {ModalComponent} from "../../../../util/modal/modal.component";
 import {ProfesorRow} from "../../../../interfaces/profesor";
-import {TareaRow} from "../../../../interfaces/tarea";
+import {TareaRow} from "../../../../interfaces/tareaFase";
 
 @Component({
   selector: 'app-tareas',

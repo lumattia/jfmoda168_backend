@@ -1,6 +1,8 @@
 package org.iesvdm.proyecto.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import org.iesvdm.proyecto.mapper.MapStructMapper;
+import org.iesvdm.proyecto.model.entity.Fase;
 import org.iesvdm.proyecto.model.entity.Profesor;
 import org.iesvdm.proyecto.model.entity.Tarea;
 import org.iesvdm.proyecto.model.entity.Tema;
@@ -22,10 +24,12 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/v1/api/temas")
 public class TemaController {
+    private final MapStructMapper mapStructMapper;
     private final TemaService temaService;
     private final TareaService tareaService;
     private final ProfesorService profesorService;
-    public TemaController(TemaService temaService, TareaService tareaService, ProfesorService profesorService) {
+    public TemaController(MapStructMapper mapStructMapper, TemaService temaService, TareaService tareaService, ProfesorService profesorService) {
+        this.mapStructMapper = mapStructMapper;
         this.temaService = temaService;
         this.tareaService = tareaService;
         this.profesorService = profesorService;
@@ -50,8 +54,14 @@ public class TemaController {
         Tema t=this.temaService.one(id);
         Profesor p=comprobarAccesoAula(t.getAula().getId());
         tarea.setPropietario(p);
+        Fase facil=new Fase(tarea,1);
+        Fase intermedio=new Fase(tarea,2);
+        Fase dificil=new Fase(tarea,3);
+        tarea.getFases().add(facil);
+        tarea.getFases().add(intermedio);
+        tarea.getFases().add(dificil);
         log.info("Guardando una tarea");
-        return this.temaService.createTarea(t, tarea);
+        return mapStructMapper.tareaToTareaDetail(this.temaService.createTarea(t, tarea));
     }
     @PostMapping("/{id}/addTareas")
     public Set<TareaDetail> addTareas(@PathVariable("id") long id, @RequestBody Set<Long> ids) {
@@ -60,12 +70,15 @@ public class TemaController {
 
         long idClase=t.getAula().getClase().getId();
         Set<Tarea> tareas=ids.stream()
-                .map(tareaService::oneIncluding)
+                .map(tareaService::one)
                 .filter(tarea -> tarea.getTema().getAula().getClase().getId()==idClase)
                 .peek(tarea -> tarea.setPropietario(p))
                 .collect(Collectors.toSet());
         log.info("Guardando una aula");
-        return this.temaService.addTareas(t, tareas);
+        return this.temaService.addTareas(t, tareas)
+                .stream()
+                .map(mapStructMapper::tareaToTareaDetail)
+                .collect(Collectors.toSet());
     }
     @PutMapping("/{id}")
     public Tema replace(@PathVariable("id") long id, @RequestBody Tema tema) {

@@ -4,7 +4,7 @@ import {NgbActiveModal, NgbPagination} from "@ng-bootstrap/ng-bootstrap";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {ProfesorRow} from "../../../../../../interfaces/profesor";
 import {Option} from "../../../../../../interfaces/option";
-import {TareaRow} from "../../../../../../interfaces/tarea";
+import {TareaRow} from "../../../../../../interfaces/tareaFase";
 import {ClaseService} from "../../../../../../services/clase.service";
 import {AulaService} from "../../../../../../services/aula.service";
 

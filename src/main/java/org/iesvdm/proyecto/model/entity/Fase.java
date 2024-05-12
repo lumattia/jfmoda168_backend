@@ -7,13 +7,13 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import java.util.Set;
+import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 @Entity
-public class Fase {
+public class Fase implements Comparable<Fase>{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
@@ -24,5 +24,13 @@ public class Fase {
     short nivel;
     String nombreArchivo;
     @OneToMany(mappedBy = "fase", cascade = CascadeType.ALL,orphanRemoval = true)
-    Set<Pregunta> preguntas;
+    List<Pregunta> preguntas;
+    public Fase(Tarea tarea, int nivel){
+        this.tarea=tarea;
+        this.nivel=(short) nivel;
+    }
+    @Override
+    public int compareTo(Fase o) {
+        return this.nivel-o.nivel;
+    }
 }

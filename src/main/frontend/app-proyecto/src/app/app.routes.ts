@@ -22,6 +22,7 @@ import {AulasEstudianteComponent} from "./estudiante/aulas/aulas-estudiante.comp
 import {AulaEstudianteComponent} from "./estudiante/aulas/aula/aula-estudiante.component";
 import {TemasEstudianteComponent} from "./estudiante/aulas/aula/temas/temas-estudiante.component";
 import {UsuariosEstudianteComponent} from "./estudiante/aulas/aula/usuarios/usuarios-estudiante.component";
+import {FasesProfesorComponent} from "./profesor/aulas/aula/temas/tema/tarea/fases/fases-profesor.component";
 
 export const routes: Routes = [
   {path:'login',component:LoginComponent},
@@ -50,6 +51,7 @@ export const routes: Routes = [
           {path:'usuarios',component:UsuariosProfesorComponent},
           {path:'**',pathMatch:'full',redirectTo:''}
         ]},
+      {path:'tarea/:id',component:FasesProfesorComponent},
       {path:'**',pathMatch:'full',redirectTo:''}
     ]
   },

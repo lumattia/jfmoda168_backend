@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Option} from "../interfaces/option";
-import {TareaDetail} from "../interfaces/tarea";
+import {TareaDetail} from "../interfaces/tareaFase";
 
 const TEMAURL="http://localhost:8080/v1/api/temas"
 const HTTPOPTIONS = {

@@ -4,14 +4,16 @@ import {ModalComponent} from "../../../../../../util/modal/modal.component";
 import {FormModalComponent} from "../../../../../../util/form-modal/form-modal.component";
 import {TareaService} from "../../../../../../services/tarea.service";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {TareaDetail} from "../../../../../../interfaces/tarea";
+import {TareaDetail} from "../../../../../../interfaces/tareaFase";
 import {NgClass} from "@angular/common";
+import {RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-tarea',
   standalone: true,
   imports: [
-    NgClass
+    NgClass,
+    RouterLink
   ],
   templateUrl: './tarea-profesor.component.html',
   styleUrl: './tarea-profesor.component.css'
@@ -39,7 +41,7 @@ export class TareaProfesorComponent {
     });
   }
   editarTarea(o:Option){
-    this.tareaService.actualizarTarea(o).subscribe({
+    this.tareaService.cambiarNombre(o).subscribe({
       next: (data) => {
         this.tarea=data;
       },
