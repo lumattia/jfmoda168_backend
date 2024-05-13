@@ -9,6 +9,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.iesvdm.proyecto.model.view.TareaRow;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -32,8 +33,9 @@ public class Tarea implements TareaRow,Comparable<Tarea> {
     @OneToMany(mappedBy = "id.tarea",cascade = CascadeType.ALL,orphanRemoval = true)
     @JsonIgnore
     Set<TareaEstudiante> tareaEstudiantes=new HashSet<>();
-    @OneToMany(mappedBy = "tarea",cascade = CascadeType.ALL,orphanRemoval = true)
-    private List<Fase> fases;
+    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL,orphanRemoval = true)
+    @JoinColumn(name = "tarea_id")
+    List<Fase> fases=new ArrayList<>();
     @JsonIgnore
     boolean eliminado;
     Boolean visible=false;

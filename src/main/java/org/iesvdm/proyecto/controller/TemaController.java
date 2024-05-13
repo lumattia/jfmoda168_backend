@@ -54,9 +54,9 @@ public class TemaController {
         Tema t=this.temaService.one(id);
         Profesor p=comprobarAccesoAula(t.getAula().getId());
         tarea.setPropietario(p);
-        Fase facil=new Fase(tarea,1);
-        Fase intermedio=new Fase(tarea,2);
-        Fase dificil=new Fase(tarea,3);
+        Fase facil=new Fase(1);
+        Fase intermedio=new Fase(2);
+        Fase dificil=new Fase(3);
         tarea.getFases().add(facil);
         tarea.getFases().add(intermedio);
         tarea.getFases().add(dificil);

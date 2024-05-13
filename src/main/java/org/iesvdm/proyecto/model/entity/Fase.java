@@ -1,12 +1,12 @@
 package org.iesvdm.proyecto.model.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 @Data
 @AllArgsConstructor
@@ -18,15 +18,12 @@ public class Fase implements Comparable<Fase>{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     long id;
-    @ManyToOne
-    @JsonIgnore
-    Tarea tarea;
     short nivel;
     String nombreArchivo;
-    @OneToMany(mappedBy = "fase", cascade = CascadeType.ALL,orphanRemoval = true)
-    List<Pregunta> preguntas;
-    public Fase(Tarea tarea, int nivel){
-        this.tarea=tarea;
+    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL,orphanRemoval = true)
+    @JoinColumn(name = "fase_id")
+    List<Pregunta> preguntas=new ArrayList<>();
+    public Fase(int nivel){
         this.nivel=(short) nivel;
     }
     @Override

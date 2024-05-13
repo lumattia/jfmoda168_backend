@@ -1,3 +1,8 @@
+<div class="row">
+  <div class="col me-auto">
+    <h1>{{tarea.nombre}}</h1>
+  </div>
+</div>
 <ul class="nav me-auto">
   <li class="nav-item">
     <a class="nav-link text-success" (click)="show=0">Facil</a>
@@ -25,7 +30,7 @@
          <ol>
            <li *ngFor="let respuesta of pregunta.respuestas">
              <div class="input-group"><textarea class="form-control me-2" name="respuesta" [(ngModel)]="respuesta.respuesta" placeholder="respuesta" aria-label="respuesta" required></textarea>
-               <input class="form-check-input" type="checkbox" name="correcta" [(ngModel)]="respuesta.correcta"></div>
+               <input class="form-check-input" type="checkbox" name="correcta" [(ngModel)]="respuesta.correcta" required></div>
            </li>
            <li>
              <button class="btn btn-primary" (click)="nuevaRespuesta(pregunta)">Nueva respuesta</button>

@@ -1,6 +1,5 @@
 package org.iesvdm.proyecto.model.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,7 +18,4 @@ public class Respuesta {
     long id;
     String respuesta;
     boolean correcta;
-    @ManyToOne
-    @JsonIgnore
-    Pregunta pregunta;
 }

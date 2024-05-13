@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Data
@@ -28,7 +29,7 @@ public class Tema implements Comparable<Tema>{
     @JsonIgnore
     Aula aula;
     @OneToMany(mappedBy = "tema",cascade = CascadeType.ALL,orphanRemoval = true)
-    Set<Tarea> tareas;
+    Set<Tarea> tareas=new HashSet<>();
     @JsonIgnore
     boolean eliminado;
     public String getRoute(){

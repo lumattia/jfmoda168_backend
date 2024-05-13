@@ -1,12 +1,12 @@
 package org.iesvdm.proyecto.model.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -21,9 +21,7 @@ public class Pregunta {
     long id;
     String nombreArchivo;
     String enunciado;
-    @ManyToOne
-    @JsonIgnore
-    Fase fase;
-    @OneToMany(mappedBy = "pregunta", cascade = CascadeType.ALL,orphanRemoval = true)
-    List<Respuesta> respuestas;
+    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL,orphanRemoval = true)
+    @JoinColumn(name = "pregunta_id")
+    List<Respuesta> respuestas=new ArrayList<>();
 }

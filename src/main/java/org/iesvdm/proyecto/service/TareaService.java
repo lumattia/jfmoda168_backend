@@ -2,6 +2,7 @@ package org.iesvdm.proyecto.service;
 
 import org.iesvdm.proyecto.exeption.NotFoundException;
 import org.iesvdm.proyecto.model.entity.Tarea;
+import org.iesvdm.proyecto.repository.FaseRepository;
 import org.iesvdm.proyecto.repository.TareaRepository;
 import org.springframework.stereotype.Service;
 
@@ -9,8 +10,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class TareaService {
     private final TareaRepository tareaRepository;
-    public TareaService(TareaRepository tareaRepository) {
+    private final FaseRepository faseRepository;
+    public TareaService(TareaRepository tareaRepository, FaseRepository faseRepository) {
         this.tareaRepository = tareaRepository;
+        this.faseRepository = faseRepository;
     }
 
     public Tarea one(long id) {
@@ -19,8 +22,7 @@ public class TareaService {
     }
     public Tarea replace(Tarea t, Tarea tarea) {
         if (t.getId()==tarea.getId()){
-            t.setFases(tarea.getFases());
-            return this.tareaRepository.save(t);
+            faseRepository.saveAll(tarea.getFases());
         }
         return null;
     }
