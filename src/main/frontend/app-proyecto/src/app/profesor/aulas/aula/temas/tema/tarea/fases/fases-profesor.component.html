@@ -16,31 +16,48 @@
 </ul>
 <div ngbAccordion>
   <div ngbAccordionItem [collapsed]="false" *ngFor="let pregunta of tarea.fases[show].preguntas; let i=index">
-    <h2 ngbAccordionHeader>
-      <button ngbAccordionButton>
-        <div class="form-floating w-100 me-2">
-          <textarea class="form-control" id="enunciado" name="enunciado" [(ngModel)]="pregunta.enunciado" placeholder="enunciado" aria-label="enunciado" required></textarea>
-          <label for="enunciado">Pregunta {{i+1}}</label>
-        </div>
-      </button>
+    <h2 ngbAccordionHeader >
+      <div class="position-relative">
+        <button ngbAccordionButton>
+          <h4 class="me-auto">
+            Pregunta {{i+1}}
+          </h4>
+        </button>
+        <i class="fa-solid fa-x position-absolute translate-middle top-50 end-0 z-3 p-1 fs-4 text-danger" (click)="openEliminarModal(i)"></i>
+      </div>
     </h2>
     <div ngbAccordionCollapse>
       <div ngbAccordionBody>
         <ng-template>
-         <ol>
-           <li *ngFor="let respuesta of pregunta.respuestas">
-             <div class="input-group"><textarea class="form-control me-2" name="respuesta" [(ngModel)]="respuesta.respuesta" placeholder="respuesta" aria-label="respuesta" required></textarea>
-               <input class="form-check-input" type="checkbox" name="correcta" [(ngModel)]="respuesta.correcta" required></div>
-           </li>
-           <li>
-             <button class="btn btn-primary" (click)="nuevaRespuesta(pregunta)">Nueva respuesta</button>
-           </li>
-         </ol>
+          <textarea class="form-control" id="enunciado" name="enunciado" [(ngModel)]="pregunta.enunciado" placeholder="enunciado" aria-label="enunciado" required></textarea>
+          <ol>
+            <li *ngFor="let respuesta of pregunta.respuestas; let ir=index">
+              <div class="input-group">
+                <textarea class="form-control me-2" name="respuesta" [(ngModel)]="respuesta.respuesta" placeholder="respuesta" aria-label="respuesta" required></textarea>
+                <div>
+                  <div class="col-12">
+                    <input class="form-check-input" type="checkbox" name="correcta" [(ngModel)]="respuesta.correcta" required>
+                  </div>
+                  <div class="col-12">
+                     <i class="text-danger fa-solid fa-trash p-1 fs-5" (click)="EliminarRespuesta(i,ir)"></i>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li>
+               <button class="btn btn-primary" (click)="nuevaRespuesta(pregunta)">Nueva respuesta</button>
+            </li>
+          </ol>
         </ng-template>
       </div>
     </div>
   </div>
-  <button class="btn btn-primary" (click)="nuevaPregunta()">Nueva Pregunta</button>
+  <div class="justify-content-between d-flex my-5">
+    <button class="btn btn-primary" (click)="nuevaPregunta()">Nueva Pregunta</button>
+    <div>
+      <button class="btn btn-primary mx-2" (click)="cancelar()">Cancelar</button>
+      <button class="btn btn-primary" (click)="guardar()">Guardar</button>
+    </div>
+  </div>
 </div>
-<button class="btn btn-primary" (click)="cancelar()">Cancelar</button>
-<button class="btn btn-primary" (click)="guardar()">Guardar</button>
+
