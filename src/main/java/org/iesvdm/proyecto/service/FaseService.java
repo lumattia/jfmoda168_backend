@@ -11,7 +11,7 @@ public class FaseService {
     public FaseService(FaseRepository faseRepository) {
         this.faseRepository = faseRepository;
     }
-    public Fase one(long tareaId,short nivel) {
+    public Fase one(long tareaId, short nivel) {
         return this.faseRepository.findFaseByTarea(tareaId,nivel)
                 .orElseThrow(() -> new NotFoundException("Fase not found"));
     }

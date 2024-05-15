@@ -81,6 +81,7 @@ public class WebSecurityConfig {
                         .requestMatchers("/v1/api/aulas/**").hasAnyAuthority("PROFESOR")
                         .requestMatchers("/v1/api/temas/**").hasAnyAuthority("PROFESOR")
                         .requestMatchers("/v1/api/tareas/**").hasAnyAuthority("PROFESOR")
+                        .requestMatchers("/v1/api/fases/**").hasAnyAuthority("ESTUDIANTE")
                         .requestMatchers("/v1/api/**").permitAll()
                         .anyRequest().authenticated());
         http.authenticationProvider(authenticationProvider());

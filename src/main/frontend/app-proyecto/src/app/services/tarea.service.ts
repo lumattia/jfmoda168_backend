@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Option} from "../interfaces/option";
 import {TareaFase, TareaDetail} from "../interfaces/tareaFase";
+
 const TAREASURL="http://localhost:8080/v1/api/tareas"
 const HTTPOPTIONS = {
   headers: new HttpHeaders({

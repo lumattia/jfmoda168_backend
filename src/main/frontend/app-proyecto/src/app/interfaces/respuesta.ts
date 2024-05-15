@@ -1,7 +1,8 @@
 import {Option} from "./option";
 
 export interface Respuesta {
-  pregunta:Option,
+  id:number;
+  pregunta:Option;
   respuesta:string;
   correcta:boolean;
 }

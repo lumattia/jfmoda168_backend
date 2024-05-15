@@ -1,0 +1,15 @@
+<ul class="nav me-auto">
+  <li class="nav-item">
+    <a class="nav-link text-success" (click)="nivel=1" >Facil</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" (click)="nivel=2" [ngClass]="nivelMax<=2?'disabled':'text-warning'">Intermedio</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" (click)="nivel=3" [ngClass]="nivelMax<=3?'disabled':'text-text-danger'">Dificil</a>
+  </li>
+</ul>
+  <app-fase [nivel]="nivel" [idTarea]="idTarea" *ngIf="idTarea!=0"></app-fase>
+<button class="btn btn-primary mx-2" (click)="cancelar()">Cancelar</button>
+<button class="btn btn-primary">Guardar</button>
+
