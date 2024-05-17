@@ -35,11 +35,6 @@ export class FasesEstudianteComponent {
       })
     })
   }
-  changeLevel(level:number){
-    if (this.nivel!=level) {
-      this.nivel = level;
-    }
-  }
   entregar() {
     // Asegúrate de que childComponent esté inicializado
     if (this.childComponent) {
