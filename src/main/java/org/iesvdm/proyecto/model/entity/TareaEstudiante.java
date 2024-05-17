@@ -17,10 +17,6 @@ import java.io.Serializable;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 @Entity
 @JsonSerialize(using = TareaEstudianteSerializer.class)
-@Table(name = "tarea_estudiante",
-        uniqueConstraints={
-        @UniqueConstraint(columnNames = {"estudiante_id", "tarea_id"})
-})
 public class TareaEstudiante {
     @AllArgsConstructor
     @NoArgsConstructor
@@ -33,14 +29,15 @@ public class TareaEstudiante {
         private Estudiante estudiante;
     }
     @EmbeddedId
+    @EqualsAndHashCode.Include
     private TareaEstudianteId id;
     private byte fase=1;
     @Column
-    private Double puntuacionBasica=null;
+    private Double puntuacionBasica;
     @Column
-    private Double puntuacionIntermedia=null;
+    private Double puntuacionIntermedia;
     @Column
-    private Double puntuacionAvanzada=null;
+    private Double puntuacionAvanzada;
     public TareaEstudiante(TareaEstudianteId id){
         this.id=id;
     }

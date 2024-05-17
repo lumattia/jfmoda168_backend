@@ -17,7 +17,7 @@
                 {{respuesta.respuesta}}
                 <div>
                   <div class="col-12">
-                    <input class="form-check-input" type="checkbox" name="correcta" [(ngModel)]="respuesta.selected" required>
+                    <input type="checkbox" (change)="toggleSelection($event,respuesta.id)">
                   </div>
                 </div>
               </div>

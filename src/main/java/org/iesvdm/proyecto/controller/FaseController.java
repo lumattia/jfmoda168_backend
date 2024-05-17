@@ -13,6 +13,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.security.access.AccessDeniedException;
+
+import java.util.List;
+
 @Slf4j
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -38,7 +41,7 @@ public class FaseController {
         if (rol.equals("ESTUDIANTE")){
             Estudiante e=estudianteService.one(auth.getName());
             Tarea tarea=tareaService.one(TareaId);
-            return tareaEstudianteService.one(new TareaEstudiante.TareaEstudianteId(tarea,e)).getFase();
+            return (tareaEstudianteService.one(new TareaEstudiante.TareaEstudianteId(tarea,e))).getFase();
         }else{
             throw new AccessDeniedException("No autorizado");
         }
@@ -55,10 +58,20 @@ public class FaseController {
     }
 
     @PostMapping("/{id}/{nivel}")
-    public FaseEstudiante done(@PathVariable("id") long id,@PathVariable("id") byte nivel,@RequestBody Fase fase) {
-        Tarea tarea=tareaService.one(id);
-        if (nivel<1||nivel>3)
-            nivel=1;
-        return mapStructMapper.faseToFaseEstudiante(faseService.one(id,nivel));
+    public double done(@PathVariable("id") long TareaId,@PathVariable("nivel") byte nivel,@RequestBody List<Long> respuestas) {
+        byte nivelMax=get(TareaId);
+        if (nivel>nivelMax){
+            throw new AccessDeniedException("Demasiado difícil para tí");
+        }else {
+            Fase f=faseService.one(TareaId,nivel);
+            double result=faseService.entregar(f.getPreguntas(),respuestas);
+
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            Estudiante e=estudianteService.one(auth.getName());
+            Tarea tarea=tareaService.one(TareaId);
+            TareaEstudiante t=tareaEstudianteService.one(new TareaEstudiante.TareaEstudianteId(tarea,e));
+            tareaEstudianteService.saveResult(t,nivel,result);
+            return result;
+        }
     }
 }

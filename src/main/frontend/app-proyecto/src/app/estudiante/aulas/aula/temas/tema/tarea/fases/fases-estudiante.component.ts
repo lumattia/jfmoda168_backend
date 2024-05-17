@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {CommonModule, Location} from "@angular/common";
 import {ActivatedRoute} from "@angular/router";
 import {FaseService} from "../../../../../../../services/fase.service";
@@ -14,15 +14,18 @@ import {FaseComponent} from "./fase/fase.component";
   styleUrl: './fases-estudiante.component.css'
 })
 export class FasesEstudianteComponent {
+  @ViewChild(FaseComponent) childComponent!: FaseComponent;
+
   idTarea:number=0;
   nivelMax:number=1;
   nivel:number=1;
   constructor(route:ActivatedRoute,
-    private faseService:FaseService,private location: Location) {
+    faseService:FaseService,private location: Location) {
     route.params.subscribe(p => {
       this.idTarea = Number(p['id'])||0;
       faseService.getNivelMax(this.idTarea).subscribe({
         next: (n) => {
+          console.log(n)
           this.nivelMax = n;
           this.nivel=this.nivelMax;
         },
@@ -31,6 +34,20 @@ export class FasesEstudianteComponent {
         }
       })
     })
+  }
+  changeLevel(level:number){
+    if (this.nivel!=level) {
+      this.nivel = level;
+    }
+  }
+  entregar() {
+    // Asegúrate de que childComponent esté inicializado
+    if (this.childComponent) {
+      this.childComponent.entregar();
+      this.cancelar()
+    } else {
+      console.error('childComponent no está inicializado');
+    }
   }
   cancelar(){
     this.location.back()

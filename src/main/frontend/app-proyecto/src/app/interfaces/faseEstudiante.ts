@@ -10,5 +10,4 @@ export interface PreguntaEstudiante {
 export interface RespuestaEstudiante {
   id:number,
   respuesta:string;
-  selected:boolean;
 }
