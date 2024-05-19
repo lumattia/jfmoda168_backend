@@ -83,27 +83,6 @@ export class ImportTareasComponent {
       });
     }
   }
-  eliminarTema(id:number){
-    this.claseService.deleteTema(id).subscribe({
-      next: () => {
-        this.temas=this.temas.filter(t=>t.id!=id)
-        this.pageChanged();
-      },
-      error: (error) => {
-        alert(error);
-      }
-    });
-  }
-  eliminarTarea(id:number){
-    this.claseService.deleteTarea(id).subscribe({
-      next: () => {
-        this.pageChanged();
-      },
-      error: (error) => {
-        alert(error);
-      }
-    });
-  }
   pageChanged(){
     this.claseService.getTareas(this.idClase,this.aulaSeleccionado,this.temaSeleccionado,this.profesorSeleccionado,this.page,this.pageSize).subscribe({
       next:(data)=>{
@@ -117,9 +96,9 @@ export class ImportTareasComponent {
       }
     })
   }
-  toggleSelection(event: any, tarea: TareaRow): void {
+  toggleSelection(tarea: TareaRow): void {
     const index = this.selected.indexOf(tarea);
-    if (event.target.checked) {
+    if (!this.isSelected(tarea.id)) {
       this.selected.push(tarea);
     } else {
       this.selected.splice(index, 1);

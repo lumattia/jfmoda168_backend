@@ -60,8 +60,8 @@
       <td class="col overflow-hidden">{{tarea.temaNombre}}</td>
       <td class="col overflow-hidden">{{tarea.propietario}}</td>
     </tr>
-    <tr *ngFor="let tarea of selected">
-      <td><input type="checkbox" [checked]="isSelected(tarea.id)" (change)="toggleSelection($event,tarea)"></td>
+    <tr *ngFor="let tarea of selected" (click)="toggleSelection(tarea)">
+      <td><input type="checkbox" checked></td>
       <td class="col overflow-hidden">{{tarea.nombre}}</td>
       <td class="col overflow-hidden">{{tarea.aulaGrupoAnio}}</td>
       <td class="col overflow-hidden">{{tarea.temaNombre}}</td>
@@ -70,8 +70,8 @@
     <tr>
       Tareas.
     </tr>
-    <tr *ngFor="let tarea of tareas">
-      <td><input type="checkbox" [checked]="isSelected(tarea.id)" [disabled]="isAdded(tarea.id)" (change)="toggleSelection($event,tarea)"></td>
+    <tr *ngFor="let tarea of tareas" (click)="toggleSelection(tarea)">
+      <td><input type="checkbox" [checked]="isSelected(tarea.id)" [disabled]="isAdded(tarea.id)"></td>
       <td class="col overflow-hidden">{{tarea.nombre}}</td>
       <td class="col overflow-hidden">{{tarea.aulaGrupoAnio}}</td>
       <td class="col overflow-hidden">{{tarea.temaNombre}}</td>
