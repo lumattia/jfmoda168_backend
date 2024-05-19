@@ -53,13 +53,11 @@ export class FasesProfesorComponent {
   }
   nuevaRespuesta(pregunta:Pregunta){
     let r:Respuesta=<Respuesta>{};
-    r.pregunta= {id:pregunta.id,nombre:""};
     pregunta.respuestas.push(r)
   }
   nuevaPregunta(){
     let p:Pregunta=<Pregunta>{};
     p.respuestas=[];
-    p.fase= {id:this.tarea.fases[this.show].id,nombre:""};
     this.tarea.fases[this.show].preguntas.push(p)
   }
   openEliminarModal(i:number) {
