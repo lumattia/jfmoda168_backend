@@ -14,10 +14,12 @@
           <ol>
             <li *ngFor="let respuesta of pregunta.respuestas;">
               <div class="input-group">
-                {{respuesta.respuesta}}
+                <label for="{{respuesta.id}}">
+                  {{respuesta.respuesta}}
+                </label>
                 <div>
                   <div class="col-12">
-                    <input type="checkbox" (change)="toggleSelection($event,respuesta.id)">
+                    <input type="checkbox" id="{{respuesta.id}}" (change)="toggleSelection($event,respuesta.id)">
                   </div>
                 </div>
               </div>

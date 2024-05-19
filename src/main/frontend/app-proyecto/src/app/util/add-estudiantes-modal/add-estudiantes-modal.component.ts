@@ -69,11 +69,11 @@ export class AddEstudiantesModalComponent {
       }
     })
   }
-  toggleSelection(event: any, estudiante: EstudianteRow): void {
-    const index = this.selected.indexOf(estudiante);
-    if (event.target.checked) {
+  toggleSelection(estudiante: EstudianteRow): void {
+    if (this.isSelected(estudiante.id)) {
       this.selected.push(estudiante);
     } else {
+      const index = this.selected.indexOf(estudiante);
       this.selected.splice(index, 1);
     }
   }

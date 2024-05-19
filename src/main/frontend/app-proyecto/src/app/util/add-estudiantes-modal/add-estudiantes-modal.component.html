@@ -41,8 +41,8 @@
       <td class="col overflow-hidden">{{estudiante.email}}</td>
       <td class="col overflow-hidden">{{estudiante.aula}}</td>
     </tr>
-    <tr *ngFor="let estudiante of selected">
-      <td><input type="checkbox" [disabled]="isAdded(estudiante.id)" [checked]="isSelected(estudiante.id)" (change)="toggleSelection($event,estudiante)"></td>
+    <tr *ngFor="let estudiante of selected" (click)="toggleSelection(estudiante)">
+      <td><input type="checkbox" checked></td>
       <td class="col overflow-hidden">{{estudiante.nombre}}</td>
       <td class="col overflow-hidden">{{estudiante.apellidos}}</td>
       <td class="col overflow-hidden">{{estudiante.email}}</td>
@@ -51,8 +51,8 @@
     <tr>
       Estudiantes
     </tr>
-    <tr *ngFor="let estudiante of estudiantes">
-      <td><input type="checkbox" [checked]="isSelected(estudiante.id)" [disabled]="isAdded(estudiante.id)" (change)="toggleSelection($event,estudiante)"></td>
+    <tr *ngFor="let estudiante of estudiantes" (click)="toggleSelection(estudiante)">
+      <td><input type="checkbox" [checked]="isSelected(estudiante.id)" [disabled]="isAdded(estudiante.id)" ></td>
       <td class="col overflow-hidden">{{estudiante.nombre}}</td>
       <td class="col overflow-hidden">{{estudiante.apellidos}}</td>
       <td class="col overflow-hidden">{{estudiante.email}}</td>

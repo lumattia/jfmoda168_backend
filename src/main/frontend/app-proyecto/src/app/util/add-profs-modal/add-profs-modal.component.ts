@@ -56,12 +56,12 @@ export class AddProfsModalComponent {
       }
     })
   }
-  toggleSelection(event: any, profesor: ProfesorRow): void {
-    const index = this.selected.indexOf(profesor);
-    if (event.target.checked) {
+  toggleSelection(profesor: ProfesorRow): void {
+    if (!this.isSelected(profesor.id)) {
         this.selected.push(profesor);
       } else {
-        this.selected.splice(index, 1);
+      const index = this.selected.indexOf(profesor);
+      this.selected.splice(index, 1);
       }
   }
   isSelected(id:number): boolean {
