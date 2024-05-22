@@ -111,9 +111,9 @@ INSERT INTO fase (tarea_id,nombre_archivo,nivel) VALUES (1,'audio',3);
 -- Insertar datos en la tabla tarea_estudiante
 INSERT INTO tarea_estudiante (fase, estudiante_id, tarea_id)
 VALUES (1, 20, 2);
-INSERT INTO tarea_estudiante (fase, puntuacion_basica, puntuacion_intermedia, estudiante_id, tarea_id)
+INSERT INTO tarea_estudiante (fase, basico, intermedio, estudiante_id, tarea_id)
 VALUES (2, 85, 80, 21, 1);
-INSERT INTO tarea_estudiante (fase, puntuacion_basica, puntuacion_intermedia, puntuacion_avanzada, estudiante_id, tarea_id)
+INSERT INTO tarea_estudiante (fase, basico, intermedio, avanzado, estudiante_id, tarea_id)
 VALUES (3, 90, 85, 80, 22, 3);
 INSERT INTO pregunta (enunciado, nombre_archivo, fase_id) VALUES ('Enunciado pregunta 1', 'archivo1.jpg', 1);
 INSERT INTO pregunta (enunciado, nombre_archivo, fase_id) VALUES ('Enunciado pregunta 2', 'archivo2.mp3', 2);

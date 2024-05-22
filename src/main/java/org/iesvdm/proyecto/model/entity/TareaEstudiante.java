@@ -1,12 +1,13 @@
 package org.iesvdm.proyecto.model.entity;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import org.iesvdm.proyecto.serializer.TareaEstudianteSerializer;
+import org.iesvdm.proyecto.model.view.Option;
+import org.iesvdm.proyecto.model.view.PuntoTarea;
 
 import java.io.Serializable;
 
@@ -16,7 +17,6 @@ import java.io.Serializable;
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 @Entity
-@JsonSerialize(using = TareaEstudianteSerializer.class)
 public class TareaEstudiante {
     @AllArgsConstructor
     @NoArgsConstructor
@@ -30,15 +30,33 @@ public class TareaEstudiante {
     }
     @EmbeddedId
     @EqualsAndHashCode.Include
+    @JsonIgnore
     private TareaEstudianteId id;
     private byte fase=1;
     @Column
-    private Double puntuacionBasica;
+    private Double basico;
     @Column
-    private Double puntuacionIntermedia;
+    private Double intermedio;
     @Column
-    private Double puntuacionAvanzada;
+    private Double avanzado;
     public TareaEstudiante(TareaEstudianteId id){
         this.id=id;
+    }
+    public Option getEstudiante(){
+        return new Option() {
+            @Override
+            public Long getId() {
+                return TareaEstudiante.this.getId().getEstudiante().getId();
+            }
+            @Override
+            public String getNombre() {
+                return TareaEstudiante.this.getId().getEstudiante().getNombreCompleto();
+            }
+        };
+    }
+    public PuntoTarea.TareaDto getTarea(){
+        return new PuntoTarea.TareaDto(this.getId().getTarea().getId(),
+                this.getId().getTarea().getTema().getNombre(),
+                this.getId().getTarea().getNombre());
     }
 }

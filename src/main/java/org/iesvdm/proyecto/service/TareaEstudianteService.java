@@ -1,5 +1,6 @@
 package org.iesvdm.proyecto.service;
 
+import org.iesvdm.proyecto.exeption.NotFoundException;
 import org.iesvdm.proyecto.model.entity.TareaEstudiante;
 import org.iesvdm.proyecto.repository.TareaEstudianteRepository;
 import org.springframework.stereotype.Service;
@@ -17,11 +18,15 @@ public class TareaEstudianteService {
     public TareaEstudiante one(TareaEstudiante.TareaEstudianteId id) {
         return this.tareaEstudianteRepository.findById(id).orElseGet(() -> save(new TareaEstudiante(id)));
     }
-    public TareaEstudiante replace(TareaEstudiante.TareaEstudianteId id, byte fase) {
+    public byte replace(TareaEstudiante.TareaEstudianteId id, byte fase) {
         TareaEstudiante tareaEstudiante=one(id);
-        if (fase>=1&&fase<=3)
+        if (fase>=1&&fase<=3){
             tareaEstudiante.setFase(fase);
-        return tareaEstudiante;
+            tareaEstudianteRepository.save(tareaEstudiante);
+        }
+        else
+            throw new NotFoundException("No existe fases de ese nivel");
+        return fase;
     }
     public void saveResult(TareaEstudiante t, byte nivel, double result) {
         if (result>=5 && t.getFase()==nivel && nivel<3){
@@ -29,16 +34,16 @@ public class TareaEstudianteService {
         }
         switch (nivel){
             case 1:
-                if (t.getPuntuacionBasica()==null||t.getPuntuacionBasica()<result)
-                    t.setPuntuacionBasica(result);
+                if (t.getBasico()==null||t.getBasico()<result)
+                    t.setBasico(result);
                 break;
             case 2:
-                if (t.getPuntuacionIntermedia()==null||t.getPuntuacionIntermedia()<result)
-                    t.setPuntuacionIntermedia(result);
+                if (t.getIntermedio()==null||t.getIntermedio()<result)
+                    t.setIntermedio(result);
                 break;
             case 3:
-                if (t.getPuntuacionAvanzada()==null||t.getPuntuacionAvanzada()<result)
-                    t.setPuntuacionAvanzada(result);
+                if (t.getAvanzado()==null||t.getAvanzado()<result)
+                    t.setAvanzado(result);
                 break;
         }
         tareaEstudianteRepository.save(t);

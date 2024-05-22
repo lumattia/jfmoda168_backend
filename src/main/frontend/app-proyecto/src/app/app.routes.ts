@@ -24,6 +24,8 @@ import {TemasEstudianteComponent} from "./estudiante/aulas/aula/temas/temas-estu
 import {UsuariosEstudianteComponent} from "./estudiante/aulas/aula/usuarios/usuarios-estudiante.component";
 import {FasesProfesorComponent} from "./profesor/aulas/aula/temas/tema/tarea/fases/fases-profesor.component";
 import {FasesEstudianteComponent} from "./estudiante/aulas/aula/temas/tema/tarea/fases/fases-estudiante.component";
+import {ScoresComponent} from "./profesor/aulas/aula/temas/tema/tarea/scores/scores.component";
+import {ConfigComponent} from "./profesor/aulas/aula/temas/tema/tarea/config/config.component";
 
 export const routes: Routes = [
   {path:'login',component:LoginComponent},
@@ -50,6 +52,8 @@ export const routes: Routes = [
       {path:'aula/:id',component:AulaProfesorComponent,children:[
           {path:'',component:TemasProfesorComponent},
           {path:'usuarios',component:UsuariosProfesorComponent},
+          {path:'tarea/:id/scores',component:ScoresComponent},
+          {path:'tarea/:id/config',component:ConfigComponent},
           {path:'**',pathMatch:'full',redirectTo:''}
         ]},
       {path:'tarea/:id',component:FasesProfesorComponent},
