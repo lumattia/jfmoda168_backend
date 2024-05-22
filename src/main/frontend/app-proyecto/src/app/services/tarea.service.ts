@@ -3,7 +3,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Option} from "../interfaces/option";
 import {TareaFase, TareaDetail} from "../interfaces/tareaFase";
-import {TareaEstudiante} from "../interfaces/tarea-estudiante";
+import {PuntoEstudiante} from "../interfaces/tarea-estudiante";
 
 const TAREASURL="http://localhost:8080/v1/api/tareas"
 const HTTPOPTIONS = {
@@ -21,9 +21,9 @@ export class TareaService {
     const url = `${TAREASURL}/${id}`;
     return this.http.get<TareaFase>(url, HTTPOPTIONS);
   }
-  getPuntos(id:number):Observable<TareaEstudiante[]>{
+  getPuntos(id:number):Observable<PuntoEstudiante[]>{
     const url = `${TAREASURL}/${id}/puntos`;
-    return this.http.get<TareaEstudiante[]>(url, HTTPOPTIONS);
+    return this.http.get<PuntoEstudiante[]>(url, HTTPOPTIONS);
   }
   cambiarNombre(a:Option):Observable<TareaDetail>{
     const url = `${TAREASURL}/${a.id}/cambiarNombre`;

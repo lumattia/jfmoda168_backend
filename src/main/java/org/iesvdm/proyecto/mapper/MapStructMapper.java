@@ -7,7 +7,6 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface MapStructMapper {
     TareaFase tareaToTareaFase(Tarea tarea);
-    PuntoTarea.TareaDto tareaToTareaDto(Tarea tarea);
     TareaDetail tareaToTareaDetail(Tarea tarea);
     FaseEstudiante faseToFaseEstudiante(Fase fase);
     PreguntaEstudiante preguntaToPreguntaEstudiante(Pregunta pregunta);

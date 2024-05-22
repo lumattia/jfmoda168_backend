@@ -1,11 +1,14 @@
 package org.iesvdm.proyecto.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import org.iesvdm.proyecto.model.entity.Aula;
-import org.iesvdm.proyecto.model.entity.Estudiante;
+import org.iesvdm.proyecto.mapper.MapStructMapper;
+import org.iesvdm.proyecto.model.entity.*;
 import org.iesvdm.proyecto.model.view.EstudianteRow;
 import org.iesvdm.proyecto.model.view.Option;
+import org.iesvdm.proyecto.model.view.PuntoTarea;
+import org.iesvdm.proyecto.service.AulaService;
 import org.iesvdm.proyecto.service.EstudianteService;
+import org.iesvdm.proyecto.service.TareaEstudianteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,7 +19,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Set;
+import java.util.*;
 
 @Slf4j
 @CrossOrigin(origins = "http://localhost:4200")
@@ -25,6 +28,12 @@ import java.util.Set;
 public class EstudianteController {
     @Autowired
     private EstudianteService estudianteService;
+    @Autowired
+    private AulaService aulaService;
+    @Autowired
+    private TareaEstudianteService tareaEstudianteService;
+    @Autowired
+    private MapStructMapper mapStructMapper;
 
     @Autowired
     private PasswordEncoder encoder;
@@ -56,14 +65,55 @@ public class EstudianteController {
         Estudiante e=estudianteService.one(auth.getName());
         return this.estudianteService.getAulas(e.getId());
     }
-    @GetMapping("/getAulas/{idAula}")
-    public Aula oneAUla(@PathVariable("idAula") long idAula) {
+    @GetMapping("/getPuntos/{idAula}")
+    public Map<String,List<PuntoTarea>> getPuntos(@PathVariable("idAula") long idAula) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Estudiante e=estudianteService.one(auth.getName());
         if (e.getAulas().stream().noneMatch(aula -> aula.getId() == idAula)) {
             throw new AccessDeniedException("No eres estudiante de esa aula.");
         }
-        return this.estudianteService.getAula(idAula);
+        Aula a=aulaService.one(idAula);
+        return getStringListMap(a, e);
+    }
+
+    private Map<String, List<PuntoTarea>> getStringListMap(Aula a, Estudiante e) {
+        Set<Tema> temas= a.getTemas();
+        Map<String,List<PuntoTarea>> result=new HashMap<>();
+        temas.forEach(tema -> {
+            List<PuntoTarea> p=new ArrayList<>();
+            Set<Tarea> tareas=tema.getTareas();
+            tareas.forEach(tarea -> p.add(
+                    mapStructMapper.tareaEstudianteToPuntoTarea(
+                            tareaEstudianteService.one(
+                                    new TareaEstudiante.TareaEstudianteId(tarea, e)
+                            ))));
+            result.put(tema.getNombre(),p);
+        });
+        return result;
+    }
+
+    @GetMapping("/getAulas/{idAula}/nombre")
+    public Map<String, String> nombreAula(@PathVariable("idAula") long idAula) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Estudiante e=estudianteService.one(auth.getName());
+        if (e.getAulas().stream().noneMatch(aula -> aula.getId() == idAula)) {
+            throw new AccessDeniedException("No eres estudiante de esa aula.");
+        }
+        Aula a=this.estudianteService.getAula(idAula);
+        String nombreAula = a.getClase().getNombre() + " " + a.getGrupo() + " " + a.getAnio();
+
+        Map<String, String> response = new HashMap<>();
+        response.put("nombreAula", nombreAula);
+        return response;
+    }
+    @GetMapping("/getAulas/{idAula}/temas")
+    public Set<Tema> getTemas(@PathVariable("idAula") long idAula) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Estudiante e=estudianteService.one(auth.getName());
+        if (e.getAulas().stream().noneMatch(aula -> aula.getId() == idAula)) {
+            throw new AccessDeniedException("No eres estudiante de esa aula.");
+        }
+        return this.estudianteService.getAula(idAula).getTemas();
     }
     @PutMapping("/{id}")
     public Estudiante replace(@PathVariable("id") long id, @RequestBody Estudiante estudiante) {

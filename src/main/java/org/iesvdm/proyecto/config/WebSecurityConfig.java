@@ -72,7 +72,7 @@ public class WebSecurityConfig {
                         .requestMatchers(HttpMethod.GET,"/v1/api/clases/**").hasAnyAuthority("PROFESOR","ADMINISTRADOR")
                         .requestMatchers("/v1/api/clases/**").hasAnyAuthority("ADMINISTRADOR")
                         .requestMatchers("/v1/api/usuarios/**").hasAnyAuthority("ADMINISTRADOR")
-                        .requestMatchers("/v1/api/estudiantes/getAulas/**","/v1/api/estudiantes/salirAula/**").hasAnyAuthority("ESTUDIANTE")
+                        .requestMatchers("/v1/api/estudiantes/getAulas/**","/v1/api/estudiantes/salirAula/**","/v1/api/estudiantes/getPuntos/**").hasAnyAuthority("ESTUDIANTE")
                         .requestMatchers(HttpMethod.GET,"/v1/api/profesores/**").hasAnyAuthority("PROFESOR","ADMINISTRADOR")
                         .requestMatchers(HttpMethod.GET,"/v1/api/estudiantes/**").hasAnyAuthority("PROFESOR","ADMINISTRADOR")
                         .requestMatchers("/v1/api/profesores/**").hasAnyAuthority("ADMINISTRADOR")

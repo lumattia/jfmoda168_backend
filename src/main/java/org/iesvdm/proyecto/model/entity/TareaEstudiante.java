@@ -7,7 +7,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.iesvdm.proyecto.model.view.Option;
-import org.iesvdm.proyecto.model.view.PuntoTarea;
 
 import java.io.Serializable;
 
@@ -54,9 +53,16 @@ public class TareaEstudiante {
             }
         };
     }
-    public PuntoTarea.TareaDto getTarea(){
-        return new PuntoTarea.TareaDto(this.getId().getTarea().getId(),
-                this.getId().getTarea().getTema().getNombre(),
-                this.getId().getTarea().getNombre());
+    public Option getTarea(){
+        return new Option() {
+            @Override
+            public Long getId() {
+                return TareaEstudiante.this.getId().getTarea().getId();
+            }
+            @Override
+            public String getNombre() {
+                return TareaEstudiante.this.getId().getTarea().getNombre();
+            }
+        };
     }
 }

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import {RouterLink, RouterOutlet} from "@angular/router";
+import {ActivatedRoute, RouterLink, RouterOutlet} from "@angular/router";
+import {EstudianteService} from "../../../services/estudiante.service";
 
 @Component({
   selector: 'app-aula-estudiante',
@@ -12,4 +13,18 @@ import {RouterLink, RouterOutlet} from "@angular/router";
   styleUrl: './aula-estudiante.component.css'
 })
 export class AulaEstudianteComponent {
+  nombreAula: string="";
+  constructor(estudianteService:EstudianteService,private route:ActivatedRoute) {
+    this.route.params.subscribe(p => {
+      let id = Number(p['id'])||0;
+      estudianteService.getNombreAula(id).subscribe({
+        next: (a) => {
+          this.nombreAula=a.nombreAula
+        },
+        error: (error) => {
+          alert(error);
+        }
+      })
+    })
+  }
 }

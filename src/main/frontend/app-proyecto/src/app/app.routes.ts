@@ -26,6 +26,7 @@ import {FasesProfesorComponent} from "./profesor/aulas/aula/temas/tema/tarea/fas
 import {FasesEstudianteComponent} from "./estudiante/aulas/aula/temas/tema/tarea/fases/fases-estudiante.component";
 import {ScoresComponent} from "./profesor/aulas/aula/temas/tema/tarea/scores/scores.component";
 import {ConfigComponent} from "./profesor/aulas/aula/temas/tema/tarea/config/config.component";
+import {NotasComponent} from "./estudiante/aulas/aula/temas/notas/notas.component";
 
 export const routes: Routes = [
   {path:'login',component:LoginComponent},
@@ -65,6 +66,7 @@ export const routes: Routes = [
       {path:'aula/:id',component:AulaEstudianteComponent,children:[
           {path:'',component:TemasEstudianteComponent},
           {path:'usuarios',component:UsuariosEstudianteComponent},
+          {path:'notas',component:NotasComponent},
           {path:'**',pathMatch:'full',redirectTo:''}
         ]},
       {path:'tarea/:id',component:FasesEstudianteComponent},

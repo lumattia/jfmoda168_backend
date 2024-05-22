@@ -3,7 +3,8 @@ import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {EstudianteForm, EstudianteRow} from "../interfaces/estudiante";
 import {Option} from "../interfaces/option";
-import {Aula} from "../interfaces/aula";
+import {Tema} from "../interfaces/tema";
+import {PuntoTarea} from "../interfaces/tarea-estudiante";
 const ESTUDIANTEURL="http://localhost:8080/v1/api/estudiantes"
 
 const HTTPOPTIONS = {
@@ -42,13 +43,21 @@ export class EstudianteService {
     }
     return this.http.get<any>(ESTUDIANTEURL,options)
   }
-  getAula(id:number):Observable<Aula>{
-    const url = `${ESTUDIANTEURL}/getAulas/${id}`
-    return this.http.get<Aula>(url)
+  getNombreAula(id:number):Observable<any>{
+    const url = `${ESTUDIANTEURL}/getAulas/${id}/nombre`
+    return this.http.get<any>(url)
+  }
+  getTemas(aulaId:number):Observable<Tema[]>{
+    const url = `${ESTUDIANTEURL}/getAulas/${aulaId}/temas`
+    return this.http.get<Tema[]>(url)
   }
   getAulas():Observable<Option[]>{
     const url = `${ESTUDIANTEURL}/getAulas`
     return this.http.get<Option[]>(url)
+  }
+  getPuntos(idAula:number):Observable<{ [temaNombre: string]: PuntoTarea[] }[]>{
+    const url = `${ESTUDIANTEURL}/getPuntos/${idAula}`
+    return this.http.get<{ [temaNombre: string]: PuntoTarea[] }[]>(url)
   }
   crearEstudiante(e:EstudianteForm):Observable<EstudianteRow>{
     return this.http.post<EstudianteRow>(ESTUDIANTEURL, e,HTTPOPTIONS)

@@ -1,0 +1,21 @@
+<div ngbAccordion>
+  <div ngbAccordionItem [collapsed]="false" *ngFor="let temaNombre of puntos.keys()">
+    <h2 ngbAccordionHeader>
+      <button ngbAccordionButton>
+        <h4>{{ temaNombre }}</h4>
+      </button>
+    </h2>
+    <div ngbAccordionCollapse>
+      <div ngbAccordionBody>
+        <ng-template *ngFor="let puntoTarea of puntos.get(temaNombre)">
+          <ul>
+            <li>
+              <p>{{ puntoTarea.tarea.id }}</p>
+              <p>{{ puntoTarea.tarea.nombre }}</p>
+            </li>
+          </ul>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>

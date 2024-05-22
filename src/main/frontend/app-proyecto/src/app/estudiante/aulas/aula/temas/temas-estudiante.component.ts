@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import {ActivatedRoute, RouterLink} from "@angular/router";
+import {ActivatedRoute, RouterLink, RouterOutlet} from "@angular/router";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NgForOf, NgIf} from "@angular/common";
 import {NgbPagination} from "@ng-bootstrap/ng-bootstrap";
-import {Aula} from "../../../../interfaces/aula";
 import {TemaProfesorComponent} from "./tema/tema-profesor.component";
 import {EstudianteService} from "../../../../services/estudiante.service";
+import {Tema} from "../../../../interfaces/tema";
 
 @Component({
   selector: 'app-temas',
@@ -17,19 +17,20 @@ import {EstudianteService} from "../../../../services/estudiante.service";
     NgIf,
     NgbPagination,
     RouterLink,
-    TemaProfesorComponent
+    TemaProfesorComponent,
+    RouterOutlet
   ],
   templateUrl: './temas-estudiante.component.html',
   styleUrl: './temas-estudiante.component.css'
 })
 export class TemasEstudianteComponent {
-  aula: Aula=<Aula>{};
+  temas: Tema[]=[];
   constructor(estudianteService:EstudianteService,private route:ActivatedRoute) {
     this.route.params.subscribe(p => {
       let id = Number(p['id'])||0;
-      estudianteService.getAula(id).subscribe({
-        next: (a) => {
-          this.aula = a;
+      estudianteService.getTemas(id).subscribe({
+        next: (t) => {
+          this.temas = t;
         },
         error: (error) => {
           alert(error);
