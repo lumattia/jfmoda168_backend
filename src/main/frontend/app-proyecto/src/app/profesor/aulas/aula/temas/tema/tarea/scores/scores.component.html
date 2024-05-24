@@ -20,9 +20,9 @@
   </thead>
   <tbody>
   <tr *ngFor="let punto of puntos">
-    <td>{{punto.estudiante.nombre}}</td>
-    <td>
-      <button class="rounded-0 btn bg-success" (click)="onColorClick(punto.estudiante.id,1)">{{punto.fase==1?'v':'x'}}</button>
+    <td class="overflow-hidden text-nowrap">{{punto.estudiante.nombre}}</td>
+    <td class="text-nowrap">
+      <button class=" rounded-0 btn bg-success" (click)="onColorClick(punto.estudiante.id,1)">{{punto.fase==1?'v':'x'}}</button>
       <button class="rounded-0 btn bg-warning" (click)="onColorClick(punto.estudiante.id,2)">{{punto.fase==2?'v':'x'}}</button>
       <button class="rounded-0 btn bg-danger" (click)="onColorClick(punto.estudiante.id,3)">{{punto.fase==3?'v':'x'}}</button>
     </td>
