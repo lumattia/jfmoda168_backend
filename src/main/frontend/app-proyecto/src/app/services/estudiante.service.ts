@@ -55,9 +55,9 @@ export class EstudianteService {
     const url = `${ESTUDIANTEURL}/getAulas`
     return this.http.get<Option[]>(url)
   }
-  getPuntos(idAula:number):Observable<{ [temaNombre: string]: PuntoTarea[] }[]>{
+  getPuntos(idAula:number):Observable<Map<string,PuntoTarea[]>>{
     const url = `${ESTUDIANTEURL}/getPuntos/${idAula}`
-    return this.http.get<{ [temaNombre: string]: PuntoTarea[] }[]>(url)
+    return this.http.get<Map<string,PuntoTarea[]>>(url)
   }
   crearEstudiante(e:EstudianteForm):Observable<EstudianteRow>{
     return this.http.post<EstudianteRow>(ESTUDIANTEURL, e,HTTPOPTIONS)

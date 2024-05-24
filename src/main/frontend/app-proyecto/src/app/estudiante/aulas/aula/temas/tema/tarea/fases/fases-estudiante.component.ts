@@ -18,7 +18,7 @@ export class FasesEstudianteComponent {
 
   idTarea:number=0;
   nivelMax:number=1;
-  nivel:number=1;
+  nivel:number=0;
   constructor(route:ActivatedRoute,
     faseService:FaseService,private location: Location) {
     route.params.subscribe(p => {

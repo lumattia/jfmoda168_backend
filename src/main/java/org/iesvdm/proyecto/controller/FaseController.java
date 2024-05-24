@@ -41,7 +41,8 @@ public class FaseController {
         if (rol.equals("ESTUDIANTE")){
             Estudiante e=estudianteService.one(auth.getName());
             Tarea tarea=tareaService.one(TareaId);
-            return (tareaEstudianteService.one(new TareaEstudiante.TareaEstudianteId(tarea,e))).getFase();
+            TareaEstudiante t=tareaEstudianteService.one(new TareaEstudiante.TareaEstudianteId(tarea,e));
+            return t.getFase();
         }else{
             throw new AccessDeniedException("No autorizado");
         }

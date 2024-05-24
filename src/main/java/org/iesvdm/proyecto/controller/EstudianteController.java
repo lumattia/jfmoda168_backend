@@ -6,7 +6,6 @@ import org.iesvdm.proyecto.model.entity.*;
 import org.iesvdm.proyecto.model.view.EstudianteRow;
 import org.iesvdm.proyecto.model.view.Option;
 import org.iesvdm.proyecto.model.view.PuntoTarea;
-import org.iesvdm.proyecto.service.AulaService;
 import org.iesvdm.proyecto.service.EstudianteService;
 import org.iesvdm.proyecto.service.TareaEstudianteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +27,6 @@ import java.util.*;
 public class EstudianteController {
     @Autowired
     private EstudianteService estudianteService;
-    @Autowired
-    private AulaService aulaService;
     @Autowired
     private TareaEstudianteService tareaEstudianteService;
     @Autowired
@@ -72,23 +69,22 @@ public class EstudianteController {
         if (e.getAulas().stream().noneMatch(aula -> aula.getId() == idAula)) {
             throw new AccessDeniedException("No eres estudiante de esa aula.");
         }
-        Aula a=aulaService.one(idAula);
+        Aula a=this.estudianteService.getAula(idAula);
         return getStringListMap(a, e);
     }
 
     private Map<String, List<PuntoTarea>> getStringListMap(Aula a, Estudiante e) {
         Set<Tema> temas= a.getTemas();
         Map<String,List<PuntoTarea>> result=new HashMap<>();
-        temas.forEach(tema -> {
-            List<PuntoTarea> p=new ArrayList<>();
-            Set<Tarea> tareas=tema.getTareas();
-            tareas.forEach(tarea -> p.add(
-                    mapStructMapper.tareaEstudianteToPuntoTarea(
-                            tareaEstudianteService.one(
-                                    new TareaEstudiante.TareaEstudianteId(tarea, e)
-                            ))));
-            result.put(tema.getNombre(),p);
-        });
+        temas.forEach(tema ->
+            result.put(tema.getNombre(),
+                tema.getTareas().stream()
+                    .map(tarea -> new TareaEstudiante.TareaEstudianteId(tarea,e))
+                    .map(tareaEstudianteService::one)
+                    .map(mapStructMapper::tareaEstudianteToPuntoTarea)
+                    .toList()
+            )
+        );
         return result;
     }
 

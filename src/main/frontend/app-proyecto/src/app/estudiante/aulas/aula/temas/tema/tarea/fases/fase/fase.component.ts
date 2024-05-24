@@ -36,14 +36,16 @@ export class FaseComponent {
 
   }
   ngOnInit(){
-    this.faseService.getFase(this.idTarea,this.nivel).subscribe({
-      next: (data) => {
-        this.fase = data;
-      },
-      error: (error) => {
-        alert(error);
-      }
-    })
+    if (this.idTarea!=0&&this.nivel!=0){
+      this.faseService.getFase(this.idTarea,this.nivel).subscribe({
+        next: (data) => {
+          this.fase = data;
+        },
+        error: (error) => {
+          alert(error);
+        }
+      })
+    }
   }
   ngOnChanges(): void {
     this.ngOnInit()

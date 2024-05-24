@@ -9,7 +9,7 @@ export interface PuntoEstudiante {
 export interface PuntoTarea {
   tarea:Option;
   fase:number;
-  basico:number;
-  intermedio:number;
-  avanzado:number;
+  basico:number|null;
+  intermedio:number|null;
+  avanzado:number|null;
 }

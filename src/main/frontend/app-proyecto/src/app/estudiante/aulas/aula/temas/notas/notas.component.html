@@ -1,17 +1,18 @@
 <div ngbAccordion>
-  <div ngbAccordionItem [collapsed]="false" *ngFor="let temaNombre of puntos.keys()">
+  <div ngbAccordionItem [collapsed]="false" *ngFor="let punto of puntos|keyvalue">
     <h2 ngbAccordionHeader>
       <button ngbAccordionButton>
-        <h4>{{ temaNombre }}</h4>
+        <h4>{{ punto.key }}</h4>
       </button>
     </h2>
     <div ngbAccordionCollapse>
       <div ngbAccordionBody>
-        <ng-template *ngFor="let puntoTarea of puntos.get(temaNombre)">
-          <ul>
+        <ng-template *ngFor="let point of punto.value">
+          {{point}}
+        <ul>
             <li>
-              <p>{{ puntoTarea.tarea.id }}</p>
-              <p>{{ puntoTarea.tarea.nombre }}</p>
+              <p>{{ point.tarea.id }}</p>
+              <p>{{ point.tarea.nombre }}</p>
             </li>
           </ul>
         </ng-template>

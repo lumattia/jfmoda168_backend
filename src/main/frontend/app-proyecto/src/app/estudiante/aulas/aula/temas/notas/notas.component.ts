@@ -15,20 +15,20 @@ import {
   standalone: true,
   imports: [
     NgForOf,
+    NgIf,
     NgbAccordionBody,
     NgbAccordionButton,
     NgbAccordionCollapse,
     NgbAccordionDirective,
     NgbAccordionHeader,
     NgbAccordionItem,
-    NgIf,
     KeyValuePipe
   ],
   templateUrl: './notas.component.html',
   styleUrl: './notas.component.css'
 })
 export class NotasComponent {
-  puntos: { [temaNombre: string]: PuntoTarea[] }[]= [];
+  puntos: Map<string,PuntoTarea[]>=new Map<string, PuntoTarea[]>();
   constructor(estudianteService:EstudianteService,route:ActivatedRoute) {
     route.parent?.params.subscribe(p => {
       let idAula = Number(p['id'])||0;
@@ -36,6 +36,7 @@ export class NotasComponent {
         next: (t) => {
           console.log(t)
           this.puntos = t;
+          console.log(this.puntos)
         },
         error: (error) => {
           alert(error);
