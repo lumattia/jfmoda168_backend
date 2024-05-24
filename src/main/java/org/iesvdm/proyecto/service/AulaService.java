@@ -50,10 +50,18 @@ public class AulaService {
     }
     public Tema createTema(long id, Tema tema) {
         Aula a=get(id);
-        tema.setAula(a);
-        a.getTemas().add(tema);
-        this.aulaRepository.save(a);
-        return a.getTemas().stream().sorted((o1, o2) -> Math.toIntExact(o2.getId() - o1.getId())).toList().get(0);
+        Tema temaAlreadyExist=a.getTemas().stream().filter(t->t.getNombre().equals(tema.getNombre())&&t.isEliminado()).findFirst().orElse(null);
+        if (temaAlreadyExist!=null){
+            temaAlreadyExist.getTareas().forEach(tarea -> tarea.setEliminado(true));
+            temaAlreadyExist.setEliminado(false);
+            this.aulaRepository.save(a);
+            return temaAlreadyExist;
+        }else{
+            tema.setAula(a);
+            a.getTemas().add(tema);
+            this.aulaRepository.save(a);
+            return a.getTemas().stream().sorted((o1, o2) -> Math.toIntExact(o2.getId() - o1.getId())).toList().get(0);
+        }
     }
     public Set<ProfesorRow> addProf(long id, Set<Profesor> p) {
         Aula a=get(id);
