@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
+import {Component, QueryList, ViewChildren} from '@angular/core';
 import {ActivatedRoute, RouterLink} from "@angular/router";
 import {TareaService} from "../../../../../../../services/tarea.service";
-import {NgForOf, NgIf} from "@angular/common";
+import {NgClass, NgForOf, NgIf} from "@angular/common";
 import {PuntoEstudiante} from "../../../../../../../interfaces/tarea-estudiante";
-import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
+import {NgbModule, NgbPopover} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-scores',
@@ -11,12 +11,13 @@ import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
   imports: [
     RouterLink,
     NgForOf,
-    NgIf,NgbModule
+    NgIf, NgbModule, NgClass
   ],
   templateUrl: './scores.component.html',
   styleUrl: './scores.component.css'
 })
 export class ScoresComponent {
+  @ViewChildren(NgbPopover) popovers!: QueryList<NgbPopover>;
   id:number=0
   puntos:PuntoEstudiante[]=[]
   constructor(route:ActivatedRoute,private tareaService:TareaService) {

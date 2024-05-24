@@ -20,15 +20,15 @@
   </thead>
   <tbody>
   <tr *ngFor="let punto of puntos">
-    <td class="col overflow-hidden">{{punto.estudiante.nombre}}</td>
+    <td>{{punto.estudiante.nombre}}</td>
     <td>
-      <button class="rounded-0 btn" style="background-color: green;" (click)="onColorClick(punto.estudiante.id,1)">{{punto.fase==1?'v':'x'}}</button>
-      <button class="rounded-0 btn" style="background-color: yellow;" (click)="onColorClick(punto.estudiante.id,2)">{{punto.fase==2?'v':'x'}}</button>
-      <button class="rounded-0 btn" style="background-color: red;" (click)="onColorClick(punto.estudiante.id,3)">{{punto.fase==3?'v':'x'}}</button>
+      <button class="rounded-0 btn bg-success" (click)="onColorClick(punto.estudiante.id,1)">{{punto.fase==1?'v':'x'}}</button>
+      <button class="rounded-0 btn bg-warning" (click)="onColorClick(punto.estudiante.id,2)">{{punto.fase==2?'v':'x'}}</button>
+      <button class="rounded-0 btn bg-danger" (click)="onColorClick(punto.estudiante.id,3)">{{punto.fase==3?'v':'x'}}</button>
     </td>
-    <td class="col overflow-hidden">{{punto.basico}}</td>
-    <td class="col overflow-hidden">{{punto.intermedio}}</td>
-    <td class="col overflow-hidden">{{punto.avanzado}}</td>
+    <td>{{punto.basico}}</td>
+    <td>{{punto.intermedio}}</td>
+    <td>{{punto.avanzado}}</td>
   </tr>
   </tbody>
 </table>

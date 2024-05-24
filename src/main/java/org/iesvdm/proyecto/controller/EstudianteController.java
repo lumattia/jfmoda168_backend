@@ -19,6 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Slf4j
 @CrossOrigin(origins = "http://localhost:4200")
@@ -74,18 +75,14 @@ public class EstudianteController {
     }
 
     private Map<String, List<PuntoTarea>> getStringListMap(Aula a, Estudiante e) {
-        Set<Tema> temas= a.getTemas();
-        Map<String,List<PuntoTarea>> result=new HashMap<>();
-        temas.forEach(tema ->
-            result.put(tema.getNombre(),
-                tema.getTareas().stream()
-                    .map(tarea -> new TareaEstudiante.TareaEstudianteId(tarea,e))
-                    .map(tareaEstudianteService::one)
-                    .map(mapStructMapper::tareaEstudianteToPuntoTarea)
-                    .toList()
-            )
-        );
-        return result;
+        return  a.getTemas().stream()
+                .flatMap(tema -> tema.getTareas().stream()
+                        .map(t -> mapStructMapper.tareaEstudianteToPuntoTarea(tareaEstudianteService.one(new TareaEstudiante.TareaEstudianteId(t,e))))
+                        .map(puntoTarea -> new AbstractMap.SimpleEntry<>(tema.getNombre(), puntoTarea))
+                ).collect(Collectors.groupingBy(
+                        AbstractMap.SimpleEntry::getKey,
+                        Collectors.mapping(AbstractMap.SimpleEntry::getValue, Collectors.toList())
+                ));
     }
 
     @GetMapping("/getAulas/{idAula}/nombre")

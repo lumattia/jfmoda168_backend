@@ -3,18 +3,33 @@
     <h2 ngbAccordionHeader>
       <button ngbAccordionButton>
         <h4>{{ punto.key }}</h4>
+        <h4>{{ punto.value.length }}</h4>
       </button>
     </h2>
     <div ngbAccordionCollapse>
       <div ngbAccordionBody>
-        <ng-template *ngFor="let point of punto.value">
-          {{point}}
-        <ul>
-            <li>
-              <p>{{ point.tarea.id }}</p>
-              <p>{{ point.tarea.nombre }}</p>
-            </li>
-          </ul>
+        <ng-template>
+          <table class="table table-striped">
+            <thead>
+            <tr>
+              <th>Tarea</th>
+              <th>Nivel</th>
+              <th>Basico</th>
+              <th>Intermedio</th>
+              <th>Dificil</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let puntoTarea of punto.value">
+              <td>{{puntoTarea.tarea.nombre}}</td>
+              <td [ngClass]="puntoTarea.fase==1?'bg-success':puntoTarea.fase==2?'bg-warning':puntoTarea.fase==3?'bg-danger':''"></td>
+              <td>{{puntoTarea.fase}}</td>
+              <td>{{puntoTarea.basico}}</td>
+              <td>{{puntoTarea.intermedio}}</td>
+              <td>{{puntoTarea.avanzado}}</td>
+            </tr>
+            </tbody>
+          </table>
         </ng-template>
       </div>
     </div>

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import {EstudianteService} from "../../../../../services/estudiante.service";
 import {ActivatedRoute} from "@angular/router";
 import {PuntoTarea} from "../../../../../interfaces/tarea-estudiante";
-import {KeyValuePipe, NgForOf, NgIf} from "@angular/common";
+import {KeyValuePipe, NgClass, NgForOf, NgIf} from "@angular/common";
 import {
   NgbAccordionBody,
   NgbAccordionButton,
@@ -22,7 +22,8 @@ import {
     NgbAccordionDirective,
     NgbAccordionHeader,
     NgbAccordionItem,
-    KeyValuePipe
+    KeyValuePipe,
+    NgClass
   ],
   templateUrl: './notas.component.html',
   styleUrl: './notas.component.css'
