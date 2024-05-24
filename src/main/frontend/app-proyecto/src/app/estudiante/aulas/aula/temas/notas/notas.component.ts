@@ -35,9 +35,7 @@ export class NotasComponent {
       let idAula = Number(p['id'])||0;
       estudianteService.getPuntos(idAula).subscribe({
         next: (t) => {
-          console.log(t)
           this.puntos = t;
-          console.log(this.puntos)
         },
         error: (error) => {
           alert(error);

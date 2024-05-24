@@ -22,7 +22,6 @@
             <tr *ngFor="let puntoTarea of punto.value">
               <td class="overflow-hidden text-nowrap">{{puntoTarea.tarea.nombre}}</td>
               <td [ngClass]="puntoTarea.fase==1?'bg-success':puntoTarea.fase==2?'bg-warning':puntoTarea.fase==3?'bg-danger':''"></td>
-              <td>{{puntoTarea.fase}}</td>
               <td>{{puntoTarea.basico}}</td>
               <td>{{puntoTarea.intermedio}}</td>
               <td>{{puntoTarea.avanzado}}</td>
