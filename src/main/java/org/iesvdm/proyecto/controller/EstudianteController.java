@@ -75,6 +75,20 @@ public class EstudianteController {
     }
 
     private Map<String, List<PuntoTarea>> getStringListMap(Aula a, Estudiante e) {
+        /*Map<String,List<PuntoTarea>> result=new HashMap<>();
+        Set<Tema> temas= a.getTemas();
+        temas.forEach(tema->{
+            Set<Tarea> tareas=tema.getTareas();
+            List<PuntoTarea> list=new ArrayList<>();
+            tareas.forEach(tarea -> {
+                TareaEstudiante.TareaEstudianteId id=new TareaEstudiante.TareaEstudianteId(tarea,e);
+                TareaEstudiante tareaEstudiante=tareaEstudianteService.one(id);
+                PuntoTarea res=mapStructMapper.tareaEstudianteToPuntoTarea(tareaEstudiante);
+                list.add(res);
+            });
+            result.put(tema.getNombre(),list);
+        });
+        return result;*/
         return  a.getTemas().stream()
                 .flatMap(tema -> tema.getTareas().stream()
                         .map(t -> mapStructMapper.tareaEstudianteToPuntoTarea(tareaEstudianteService.one(new TareaEstudiante.TareaEstudianteId(t,e))))

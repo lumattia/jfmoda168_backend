@@ -21,7 +21,4 @@ public class Estudiante extends Usuario implements EstudianteRow{
     @ManyToMany(mappedBy = "estudiantes")
     @JsonIgnore
     Set<Aula> aulas;
-    @OneToMany(mappedBy = "id.estudiante")
-    @JsonIgnore
-    private Set<TareaEstudiante> tareaEstudiantes;
 }
