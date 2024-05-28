@@ -9,9 +9,13 @@ import {
 } from "@ng-bootstrap/ng-bootstrap";
 import {NgForOf, NgIf} from "@angular/common";
 import {ActivatedRoute} from "@angular/router";
-import {TareaFase} from "../../../../../../../interfaces/tareaFase";
+import {
+  PreguntaFormGroup,
+  RespuestaFormGroup,
+  TareaFormGroup
+} from "../../../../../../../interfaces/tareaFase";
 import {TareaService} from "../../../../../../../services/tarea.service";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {FormBuilder, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {Pregunta} from "../../../../../../../interfaces/pregunta";
 import {Respuesta} from "../../../../../../../interfaces/respuesta";
 import {ModalComponent} from "../../../../../../../util/modal/modal.component";
@@ -36,14 +40,14 @@ import {ModalComponent} from "../../../../../../../util/modal/modal.component";
 })
 export class FasesProfesorComponent {
   private modalService = inject(NgbModal);
-  tarea:TareaFase=<TareaFase>{};
+  tarea: TareaFormGroup=<TareaFormGroup>{};
   show:number=0;
-  constructor(route:ActivatedRoute,private tareaService:TareaService,private location: Location) {
-    route.params.subscribe(p => {
+  constructor(route:ActivatedRoute,private tareaService:TareaService,private location: Location,private fb: FormBuilder) {
+      route.params.subscribe(p => {
       let id = Number(p['id'])||0;
       tareaService.getTarea(id).subscribe({
         next: (t) => {
-          this.tarea = t as TareaFase;
+          this.tarea=new TareaFormGroup(fb,t);
         },
         error: (error) => {
           alert(error);
@@ -51,36 +55,36 @@ export class FasesProfesorComponent {
       })
     })
   }
-  nuevaRespuesta(pregunta:Pregunta){
+  nuevaRespuesta(pregunta:PreguntaFormGroup){
     let r:Respuesta=<Respuesta>{};
-    pregunta.respuestas.push(r)
+    pregunta.respuestas.push(new RespuestaFormGroup(this.fb,r))
   }
   nuevaPregunta(){
     let p:Pregunta=<Pregunta>{};
-    p.respuestas=[];
-    this.tarea.fases[this.show].preguntas.push(p)
+    p.respuestas=[]
+    this.tarea.fases.at(this.show).preguntas.push(new PreguntaFormGroup(this.fb, p));
   }
   openEliminarModal(i:number) {
     const modalRef = this.modalService.open(ModalComponent);
     modalRef.componentInstance.name = 'pregunta';
     modalRef.componentInstance.option = {nombre:"Pregunta "+(i+1)};
     modalRef.closed.subscribe(() => {
-      this.tarea.fases[this.show].preguntas.splice(i,1);
+      this.tarea.fases.at(this.show).preguntas.removeAt(i);
     });
   }
-  EliminarRespuesta(iPregunta:number,iRespuesta:number) {
+  eliminarRespuesta(iPregunta:number,iRespuesta:number) {
     const modalRef = this.modalService.open(ModalComponent);
     modalRef.componentInstance.name = 'pregunta';
     modalRef.componentInstance.option = {nombre:"Respuesta "+(iRespuesta+1)+" de la pregunta "+(iPregunta+1)};
     modalRef.closed.subscribe(() => {
-      this.tarea.fases[this.show].preguntas[iPregunta].respuestas.splice(iRespuesta,1);
+      this.tarea.fases.at(this.show).preguntas.at(iPregunta).respuestas.removeAt(iRespuesta)
     });
   }
   cancelar(){
     this.location.back()
   }
   guardar(){
-    this.tareaService.saveTarea(this.tarea).subscribe({
+    this.tareaService.saveTarea(this.tarea.value).subscribe({
       next: () => {
         this.location.back()
       },
@@ -88,5 +92,8 @@ export class FasesProfesorComponent {
         alert(error);
       }
     })
+  }
+  tieneRespuestaCorrecta(pregunta: PreguntaFormGroup): boolean {
+    return pregunta.respuestas.value.some(respuesta => respuesta.controls['correcta'].value);
   }
 }
