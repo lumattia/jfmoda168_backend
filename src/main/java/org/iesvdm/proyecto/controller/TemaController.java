@@ -16,6 +16,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -69,11 +70,11 @@ public class TemaController {
         Profesor p=comprobarAccesoAula(t.getAula().getId());
 
         long idClase=t.getAula().getClase().getId();
-        Set<Tarea> tareas=ids.stream()
+        List<Tarea> tareas=ids.stream()
                 .map(tareaService::one)
                 .filter(tarea -> tarea.getTema().getAula().getClase().getId()==idClase)
                 .peek(tarea -> tarea.setPropietario(p))
-                .collect(Collectors.toSet());
+                .toList();
         log.info("Guardando una aula");
         return this.temaService.addTareas(t, tareas)
                 .stream()

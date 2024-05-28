@@ -6,6 +6,8 @@ import jakarta.transaction.Transactional;
 import org.iesvdm.proyecto.model.entity.Aula;
 import org.iesvdm.proyecto.model.entity.Estudiante;
 import org.iesvdm.proyecto.exeption.NotFoundException;
+import org.iesvdm.proyecto.model.entity.Tarea;
+import org.iesvdm.proyecto.model.entity.Tema;
 import org.iesvdm.proyecto.model.view.EstudianteRow;
 import org.iesvdm.proyecto.model.view.Option;
 import org.iesvdm.proyecto.repository.EstudianteRepository;
@@ -13,9 +15,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.LinkedHashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 public class EstudianteService {
@@ -49,14 +49,12 @@ public class EstudianteService {
         if (a.isEliminado()){
             throw new NotFoundException("Aula eliminada");
         }
-        a.setTemas(a.getTemas().stream()
-                .filter(tema -> !tema.isEliminado())
-                .sorted()
-                .peek(tema -> tema.setTareas(tema.getTareas().stream()
-                        .filter(tarea -> !tarea.isEliminado()&& tarea.getVisible())
-                        .sorted()
-                        .collect(Collectors.toCollection(LinkedHashSet::new))))
-                .collect(Collectors.toCollection(LinkedHashSet::new)));
+        a.getTemas().removeIf(Tema::isEliminado);
+        a.getTemas().sort(Tema::compareTo);
+        a.getTemas().forEach(tema -> {
+            tema.getTareas().removeIf(tarea -> tarea.isEliminado()|| !tarea.getVisible());
+            tema.getTareas().sort(Tarea::compareTo);
+        });
         return a;
     }
     public Set<Option> getAulas(Long id) {

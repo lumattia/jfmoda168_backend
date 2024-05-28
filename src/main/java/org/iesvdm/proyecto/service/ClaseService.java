@@ -13,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -37,7 +38,7 @@ public class ClaseService {
     public Set<Option> getAulas(long id,String buscar) {
         return this.claseRepository.getAulas(id,buscar);
     }
-    public Set<Tema> getTemas(Long idAula) {
+    public List<Tema> getTemas(Long idAula) {
         return this.claseRepository.getTemas(idAula);
     }
     public Page<TareaRow> getTareas(Long claseId, Long idAula, Long idTema, Long idProfesor, Pageable pageable) {

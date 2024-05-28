@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.List;
 import java.util.Set;
 public interface ClaseRepository extends JpaRepository<Clase, Long> {
     @Query("SELECT c FROM Clase c " +
@@ -31,7 +32,7 @@ public interface ClaseRepository extends JpaRepository<Clase, Long> {
     @Query("SELECT te FROM Tema te " +
             "JOIN te.aula a " +
             "WHERE a.id=:aulaId")
-    Set<Tema> getTemas(Long aulaId);
+    List<Tema> getTemas(Long aulaId);
     @Query("SELECT ta FROM Tarea ta " +
             "WHERE :claseId=ta.tema.aula.clase.id " +
             "AND (:aulaId =-1 OR ta.tema.aula.id = :aulaId)"+

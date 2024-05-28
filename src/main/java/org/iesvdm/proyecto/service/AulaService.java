@@ -10,7 +10,6 @@ import org.iesvdm.proyecto.model.view.ProfesorRow;
 import org.iesvdm.proyecto.repository.AulaRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -32,14 +31,12 @@ public class AulaService {
     }
     public Aula one(long id) {
         Aula a=get(id);
-        a.setTemas(a.getTemas().stream()
-                .filter(tema -> !tema.isEliminado())
-                .sorted()
-                .peek(tema -> tema.setTareas(tema.getTareas().stream()
-                        .filter(tarea -> !tarea.isEliminado())
-                        .sorted()
-                        .collect(Collectors.toCollection(LinkedHashSet::new))))
-                .collect(Collectors.toCollection(LinkedHashSet::new)));
+        a.getTemas().removeIf(Tema::isEliminado);
+        a.getTemas().sort(Tema::compareTo);
+        a.getTemas().forEach(tema -> {
+            tema.getTareas().removeIf(Tarea::isEliminado);
+            tema.getTareas().sort(Tarea::compareTo);
+        });
         return a;
     }
     public Set<ProfesorRow> getProfesores(long id,String buscar) {

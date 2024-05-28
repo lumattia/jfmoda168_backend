@@ -15,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -60,7 +61,7 @@ public class ClaseController {
         return this.claseService.getAulas(id,buscar);
     }
     @GetMapping("/{id}/temas")
-    public Set<Tema> getTemas(@PathVariable("id") long id,
+    public List<Tema> getTemas(@PathVariable("id") long id,
                                @RequestParam(value = "aula") long idAula){
         if (one(id).getAulas().stream().anyMatch(aula -> aula.getId()==idAula))
             return this.claseService.getTemas(idAula);

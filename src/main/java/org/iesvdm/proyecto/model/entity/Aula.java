@@ -7,6 +7,7 @@ import lombok.*;
 import org.iesvdm.proyecto.model.view.Option;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -33,7 +34,7 @@ public class Aula {
     @ManyToOne(optional = false)
     private Clase clase;
     @OneToMany(mappedBy = "aula",cascade = CascadeType.ALL,orphanRemoval = true)
-    private Set<Tema> temas;
+    private List<Tema> temas;
     @JsonIgnore
     private boolean eliminado;
     @JsonProperty("clase")
