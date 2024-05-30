@@ -1,12 +1,6 @@
 import {Component, inject} from '@angular/core';
 import { Location } from '@angular/common';
-import {
-  NgbAccordionBody,
-  NgbAccordionButton, NgbAccordionCollapse,
-  NgbAccordionDirective,
-  NgbAccordionHeader,
-  NgbAccordionItem, NgbModal
-} from "@ng-bootstrap/ng-bootstrap";
+import {NgbAccordionModule, NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {NgForOf, NgIf} from "@angular/common";
 import {ActivatedRoute} from "@angular/router";
 import {
@@ -24,12 +18,7 @@ import {ModalComponent} from "../../../../../../../util/modal/modal.component";
   selector: 'app-fases-profesor',
   standalone: true,
   imports: [
-    NgbAccordionDirective,
-    NgbAccordionItem,
-    NgbAccordionHeader,
-    NgbAccordionButton,
-    NgbAccordionCollapse,
-    NgbAccordionBody,
+    NgbAccordionModule,
     NgIf,
     NgForOf,
     ReactiveFormsModule,
@@ -92,8 +81,5 @@ export class FasesProfesorComponent {
         alert(error);
       }
     })
-  }
-  tieneRespuestaCorrecta(pregunta: PreguntaFormGroup): boolean {
-    return pregunta.respuestas.value.some(respuesta => respuesta.controls['correcta'].value);
   }
 }

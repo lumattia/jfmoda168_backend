@@ -3,12 +3,7 @@ import {EstudianteService} from "../../../../../services/estudiante.service";
 import {ActivatedRoute} from "@angular/router";
 import {PuntoTarea} from "../../../../../interfaces/tarea-estudiante";
 import {KeyValuePipe, NgClass, NgForOf, NgIf} from "@angular/common";
-import {
-  NgbAccordionBody,
-  NgbAccordionButton,
-  NgbAccordionCollapse,
-  NgbAccordionDirective, NgbAccordionHeader, NgbAccordionItem
-} from "@ng-bootstrap/ng-bootstrap";
+import {NgbAccordionModule} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-notas',
@@ -16,12 +11,7 @@ import {
   imports: [
     NgForOf,
     NgIf,
-    NgbAccordionBody,
-    NgbAccordionButton,
-    NgbAccordionCollapse,
-    NgbAccordionDirective,
-    NgbAccordionHeader,
-    NgbAccordionItem,
+    NgbAccordionModule,
     KeyValuePipe,
     NgClass
   ],
