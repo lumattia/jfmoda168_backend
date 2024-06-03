@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {ActivatedRoute, RouterLink, RouterOutlet} from "@angular/router";
+import {ActivatedRoute, RouterLink, RouterLinkActive, RouterOutlet} from "@angular/router";
 import {ClaseService} from "../../../services/clase.service";
 import {Option} from "../../../interfaces/option";
 
@@ -8,7 +8,8 @@ import {Option} from "../../../interfaces/option";
   standalone: true,
   imports: [
     RouterOutlet,
-    RouterLink
+    RouterLink,
+    RouterLinkActive
   ],
   templateUrl: './clase.component.html',
   styleUrl: './clase.component.css'

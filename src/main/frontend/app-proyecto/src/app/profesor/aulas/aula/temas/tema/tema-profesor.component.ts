@@ -55,6 +55,7 @@ export class TemaProfesorComponent {
       modalRef.closed.subscribe((ids: number[]) => {
         this.addTareas(ids)
       });
+      console.log(this.tema.tareas)
     }
     editarTema(o: Option) {
         this.temaService.actualizarTema(o).subscribe({
@@ -88,6 +89,7 @@ export class TemaProfesorComponent {
         });
     }
     addTareas(ids:number[]){
+      console.log(ids)
       this.temaService.addTareas(this.tema.id,ids).subscribe({
         next: (data) => {
           this.tema.tareas=data;

@@ -55,12 +55,12 @@ public class TemaController {
         Tema t=this.temaService.one(id);
         Profesor p=comprobarAccesoAula(t.getAula().getId());
         tarea.setPropietario(p);
-        Fase facil=new Fase(1);
+        Fase basico=new Fase(1);
         Fase intermedio=new Fase(2);
-        Fase dificil=new Fase(3);
-        tarea.getFases().add(facil);
+        Fase avanzado=new Fase(3);
+        tarea.getFases().add(basico);
         tarea.getFases().add(intermedio);
-        tarea.getFases().add(dificil);
+        tarea.getFases().add(avanzado);
         log.info("Guardando una tarea");
         return mapStructMapper.tareaToTareaDetail(this.temaService.createTarea(t, tarea));
     }
@@ -78,6 +78,7 @@ public class TemaController {
         log.info("Guardando una aula");
         return this.temaService.addTareas(t, tareas)
                 .stream()
+                .filter(tarea -> !tarea.isEliminado())
                 .map(mapStructMapper::tareaToTareaDetail)
                 .collect(Collectors.toSet());
     }

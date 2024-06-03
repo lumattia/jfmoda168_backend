@@ -1,14 +1,15 @@
 import { Component } from '@angular/core';
-import {ActivatedRoute, RouterLink, RouterOutlet} from "@angular/router";
+import {ActivatedRoute, RouterLink, RouterLinkActive, RouterOutlet} from "@angular/router";
 import {EstudianteService} from "../../../services/estudiante.service";
 
 @Component({
   selector: 'app-aula-estudiante',
   standalone: true,
-  imports: [
-    RouterLink,
-    RouterOutlet
-  ],
+    imports: [
+        RouterLink,
+        RouterOutlet,
+        RouterLinkActive
+    ],
   templateUrl: './aula-estudiante.component.html',
   styleUrl: './aula-estudiante.component.css'
 })

@@ -37,6 +37,7 @@ export class FaseFormGroup extends FormGroup {
   constructor(private fb: FormBuilder, fase: Fase) {
     super({});
     this.addControl('id', this.fb.control(fase.id));
+    this.addControl('nivel', this.fb.control(fase.nivel));
     this.addControl('preguntas', this.fb.array(fase.preguntas.map(pregunta => new PreguntaFormGroup(fb, pregunta))));
   }
 

@@ -46,8 +46,8 @@ public class TemaService {
                 });
             });
             t.getTareas().add(tarea);
-            this.temaRepository.save(t);
         });
+        this.temaRepository.save(t);
         return t.getTareas();
     }
     public Tema one(long id) {

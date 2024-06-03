@@ -1,17 +1,17 @@
 <div class="row">
   <div class="col me-auto">
-    <h1>{{ tarea.get('nombre')?.value }} Nivel:{{ show == 0 ? "Facil" : show == 1 ? "Intermedio" : show == 2 ? "Dificil" : "Error" }}</h1>
+    <h1>{{ tarea.get('nombre')?.value }} Nivel: {{ show == 0 ? "Básico" : show == 1 ? "Intermedio" : show == 2 ? "Avanzado" : "Error" }}</h1>
   </div>
 </div>
 <ul class="nav me-auto">
   <li class="nav-item">
-    <a class="nav-link text-success" (click)="show=0">Facil</a>
+    <a class="nav-link text-success" (click)="show=0">Básico</a>
   </li>
   <li class="nav-item">
     <a class="nav-link text-warning" (click)="show=1">Intermedio</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link text-danger" (click)="show=2">Dificil</a>
+    <a class="nav-link text-danger" (click)="show=2">Avanzado</a>
   </li>
 </ul>
 <div ngbAccordion>

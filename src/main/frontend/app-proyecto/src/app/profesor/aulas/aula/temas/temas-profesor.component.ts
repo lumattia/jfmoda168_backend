@@ -27,7 +27,7 @@ export class TemasProfesorComponent {
   aula: Aula=<Aula>{};
   temaACrear:string="";
   constructor(private aulaService:AulaService,private route:ActivatedRoute) {
-    this.route.params.subscribe(p => {
+    this.route.parent?.params.subscribe(p => {
       let id = Number(p['id'])||0;
       aulaService.getAula(id).subscribe({
         next: (a) => {

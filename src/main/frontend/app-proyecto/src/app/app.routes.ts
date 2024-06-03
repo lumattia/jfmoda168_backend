@@ -33,10 +33,10 @@ export const routes: Routes = [
   {path:'admin',component:AdminComponent, canActivate: [canActivateAdmin],children:[
       {path:'clases',component:ClasesComponent},
       {path:'clases/:id',component:ClaseComponent,children:[
-          {path:'',component:TareasComponent},
+          {path:'tareas',component:TareasComponent},
           {path:'aulas',component:AulasClaseComponent},
           {path:'profesores',component:ProfesoresClaseComponent},
-          {path:'**',pathMatch:'full',redirectTo:''}
+          {path:'**',pathMatch:'full',redirectTo:'tareas'}
         ]},
       {path:'cursos',component:CursosComponent},
       {path:'asignaturas',component:AsignaturasComponent},
@@ -51,11 +51,11 @@ export const routes: Routes = [
   {path:'profesor',component:ProfesorComponent, canActivate: [canActivateProfesor],children:[
       {path:'',component:AulasProfesorComponent},
       {path:'aula/:id',component:AulaProfesorComponent,children:[
-          {path:'',component:TemasProfesorComponent},
+          {path:'tareas',component:TemasProfesorComponent},
           {path:'usuarios',component:UsuariosProfesorComponent},
           {path:'tarea/:id/scores',component:ScoresComponent},
           {path:'tarea/:id/config',component:ConfigComponent},
-          {path:'**',pathMatch:'full',redirectTo:''}
+          {path:'**',pathMatch:'full',redirectTo:'tareas'}
         ]},
       {path:'tarea/:id',component:FasesProfesorComponent},
       {path:'**',pathMatch:'full',redirectTo:''}
@@ -64,10 +64,10 @@ export const routes: Routes = [
   {path:'estudiante',component:EstudianteComponent, canActivate: [canActivateEstudiante],children:[
       {path:'',component:AulasEstudianteComponent},
       {path:'aula/:id',component:AulaEstudianteComponent,children:[
-          {path:'',component:TemasEstudianteComponent},
+          {path:'tareas',component:TemasEstudianteComponent},
           {path:'usuarios',component:UsuariosEstudianteComponent},
           {path:'notas',component:NotasComponent},
-          {path:'**',pathMatch:'full',redirectTo:''}
+          {path:'**',pathMatch:'full',redirectTo:'tareas'}
         ]},
       {path:'tarea/:id',component:FasesEstudianteComponent},
       {path:'**',pathMatch:'full',redirectTo:''}

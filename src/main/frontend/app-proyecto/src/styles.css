@@ -9,3 +9,6 @@ a{
 a i{
   color:var(--bs-primary);
 }
+.active{
+  border-bottom: 1px solid var(--bs-primary);
+}
