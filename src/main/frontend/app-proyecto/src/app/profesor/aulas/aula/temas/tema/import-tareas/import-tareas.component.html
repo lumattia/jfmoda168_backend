@@ -15,7 +15,7 @@
     <div *ngIf="aulaSeleccionado!=-1">
       <label>Tema</label>
       <select class="form-select" aria-label="Tema" name="temaSeleccionado" [(ngModel)]="temaSeleccionado" (change)="pageChanged()">
-        <option value="-1">Selecciona un tema</option><a href="">x</a>
+        <option value="-1">Selecciona un tema</option>
         <option *ngFor="let tema of temas" [value]="tema.id">{{tema.nombre}}</option>
       </select>
     </div>

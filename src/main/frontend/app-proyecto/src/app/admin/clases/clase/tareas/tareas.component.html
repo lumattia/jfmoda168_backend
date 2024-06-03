@@ -10,7 +10,7 @@
     <label>Tema</label>
     <div class="input-group">
       <select class="form-select" aria-label="Tema" name="temaSeleccionado" [(ngModel)]="temaSeleccionado" (change)="pageChanged()">
-        <option value="-1">Selecciona un tema</option><a href="">x</a>
+        <option value="-1">Selecciona un tema</option>
         <option *ngFor="let tema of temas" [value]="tema.id">{{tema.nombre}}</option>
       </select>
       <button *ngIf="temaSeleccionado!=-1" class="btn btn-danger" (click)="openModalTema()">Eliminar</button>
