@@ -1,13 +1,10 @@
 package org.iesvdm.proyecto;
-
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ProyectoApplication {
-
+public class WuBackendApplication {
     public static void main(String[] args) {
-        SpringApplication.run(ProyectoApplication.class, args);
+        SpringApplication.run(WuBackendApplication.class, args);
     }
-
 }
