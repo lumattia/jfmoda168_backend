@@ -22,7 +22,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
-@CrossOrigin(origins = "https://wu-backend.onrender.com")
+@CrossOrigin(origins = "https://wuh.vercel.app")
 @RestController
 @RequestMapping("/v1/api/estudiantes")
 public class EstudianteController {

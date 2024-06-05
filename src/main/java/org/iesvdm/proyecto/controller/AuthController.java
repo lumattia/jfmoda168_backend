@@ -20,7 +20,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
-@CrossOrigin(origins = "https://wu-backend.onrender.com")
+@CrossOrigin(origins = "https://wuh.vercel.app")
 @RequestMapping("/v1/api/auth")
 public class AuthController {
     @Autowired

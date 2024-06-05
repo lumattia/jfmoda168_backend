@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Set;
 
 @Slf4j
-@CrossOrigin(origins = "https://wu-backend.onrender.com")
+@CrossOrigin(origins = "https://wuh.vercel.app")
 @RestController
 @RequestMapping("/v1/api/tareas")
 public class TareaController {
