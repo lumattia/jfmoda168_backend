@@ -119,14 +119,14 @@ INSERT INTO pregunta (enunciado, nombre_archivo, fase_id) VALUES ('Enunciado pre
 INSERT INTO pregunta (enunciado, nombre_archivo, fase_id) VALUES ('Enunciado pregunta 2', 'archivo2.mp3', 2);
 INSERT INTO pregunta (enunciado, nombre_archivo, fase_id) VALUES ('Enunciado pregunta 3', 'archivo3.mp4', 3);
 -- Insertar datos en la tabla respuesta
-INSERT INTO respuesta (correcta, respuesta, pregunta_id) VALUES (1, 'Respuesta correcta 1', 1);
-INSERT INTO respuesta (correcta, respuesta, pregunta_id) VALUES (0, 'Respuesta incorrecta 1', 1);
-INSERT INTO respuesta (correcta, respuesta, pregunta_id) VALUES (0, 'Respuesta incorrecta 2', 1);
+INSERT INTO respuesta (correcta, respuesta, pregunta_id) VALUES (true, 'Respuesta correcta 1', 1);
+INSERT INTO respuesta (correcta, respuesta, pregunta_id) VALUES (false, 'Respuesta incorrecta 1', 1);
+INSERT INTO respuesta (correcta, respuesta, pregunta_id) VALUES (false, 'Respuesta incorrecta 2', 1);
 
-INSERT INTO respuesta (correcta, respuesta, pregunta_id) VALUES (0, 'Respuesta incorrecta 1', 2);
-INSERT INTO respuesta (correcta, respuesta, pregunta_id) VALUES (1, 'Respuesta correcta 2', 2);
-INSERT INTO respuesta (correcta, respuesta, pregunta_id) VALUES (0, 'Respuesta incorrecta 3', 2);
+INSERT INTO respuesta (correcta, respuesta, pregunta_id) VALUES (false, 'Respuesta incorrecta 1', 2);
+INSERT INTO respuesta (correcta, respuesta, pregunta_id) VALUES (true, 'Respuesta correcta 2', 2);
+INSERT INTO respuesta (correcta, respuesta, pregunta_id) VALUES (false, 'Respuesta incorrecta 3', 2);
 
-INSERT INTO respuesta (correcta, respuesta, pregunta_id) VALUES (0, 'Respuesta incorrecta 1', 3);
-INSERT INTO respuesta (correcta, respuesta, pregunta_id) VALUES (0, 'Respuesta incorrecta 2', 3);
-INSERT INTO respuesta (correcta, respuesta, pregunta_id) VALUES (1, 'Respuesta correcta 3', 3);
+INSERT INTO respuesta (correcta, respuesta, pregunta_id) VALUES (false, 'Respuesta incorrecta 1', 3);
+INSERT INTO respuesta (correcta, respuesta, pregunta_id) VALUES (false, 'Respuesta incorrecta 2', 3);
+INSERT INTO respuesta (correcta, respuesta, pregunta_id) VALUES (true, 'Respuesta correcta 3', 3);
