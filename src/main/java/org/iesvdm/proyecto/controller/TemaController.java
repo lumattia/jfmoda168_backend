@@ -21,7 +21,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Slf4j
-@CrossOrigin(origins = "https://wuh.vercel.app")
+@CrossOrigin(origins = "https://wu-backend.onrender.com")
 @RestController
 @RequestMapping("/v1/api/temas")
 public class TemaController {
