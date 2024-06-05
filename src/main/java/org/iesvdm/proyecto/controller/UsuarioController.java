@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @Slf4j
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "https://wuh.vercel.app")
 @RestController
 @RequestMapping("/v1/api/usuarios")
 public class UsuarioController {

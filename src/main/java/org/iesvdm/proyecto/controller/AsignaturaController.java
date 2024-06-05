@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Slf4j
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "https://wuh.vercel.app")
 @RestController
 @RequestMapping("/v1/api/asignaturas")
 public class AsignaturaController {

@@ -20,7 +20,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Slf4j
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "https://wuh.vercel.app")
 @RestController
 @RequestMapping("/v1/api/clases")
 public class ClaseController {
