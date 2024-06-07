@@ -27,7 +27,6 @@ public class Clase {
     @ManyToOne(optional = false)
     private Asignatura asignatura;
     @ManyToOne(optional = false)
-    @JsonIgnore
     private Curso curso;
     @ManyToMany
     @JsonIgnore
