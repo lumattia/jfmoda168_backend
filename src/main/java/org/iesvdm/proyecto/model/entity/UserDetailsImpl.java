@@ -8,10 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @AllArgsConstructor
 @Data
@@ -20,27 +17,20 @@ public class UserDetailsImpl implements UserDetails {
 
     private Long id;
 
-    private String nombre;
-    private String apellidos;
-
-    private String email;
+    private String username;
 
     @JsonIgnore
     private String password;
-    private boolean accountNonLocked;
+
     private Collection<? extends GrantedAuthority> authorities;
 
-
-    public static UserDetailsImpl build(Usuario user) {
-        List<GrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority(user.getRol()));
+    public static UserDetailsImpl build(User user) {
+        List<GrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority("ADMIN"));
 
         return new UserDetailsImpl(
                 user.getId(),
-                user.getNombre(),
-                user.getApellidos(),
-                user.getEmail(),
+                user.getUsername(),
                 user.getPassword(),
-                !user.isBlocked(),
                 authorities);
     }
 
@@ -53,12 +43,6 @@ public class UserDetailsImpl implements UserDetails {
     public String getPassword() {
         return password;
     }
-
-    @Override
-    public String getUsername() {
-        return email;
-    }
-
     @Override
     public boolean isAccountNonExpired() {
         return true;
@@ -66,7 +50,7 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return accountNonLocked;
+        return true;
     }
 
     @Override

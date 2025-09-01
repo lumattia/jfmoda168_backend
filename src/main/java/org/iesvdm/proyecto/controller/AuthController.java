@@ -1,11 +1,9 @@
 package org.iesvdm.proyecto.controller;
 
 import jakarta.validation.Valid;
-import org.iesvdm.proyecto.exeption.NotFoundException;
-import org.iesvdm.proyecto.model.entity.Usuario;
-import org.iesvdm.proyecto.security.TokenUtils;
+import org.iesvdm.proyecto.model.entity.User;
 import org.iesvdm.proyecto.model.entity.UserDetailsImpl;
-import org.iesvdm.proyecto.service.UsuarioService;
+import org.iesvdm.proyecto.security.TokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -13,33 +11,24 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
-@CrossOrigin(origins = "https://wuh.vercel.app")
 @RequestMapping("/v1/api/auth")
 public class AuthController {
     @Autowired
     AuthenticationManager authenticationManager;
-
-    @Autowired
-    UsuarioService usuarioService;
-
-    @Autowired
-    PasswordEncoder encoder;
-
     @Autowired
     TokenUtils tokenUtils;
 
     @PostMapping("/login")
-    public ResponseEntity<Map<String, Object>> authenticateUser(@Valid @RequestBody Usuario usuario) {
+    public ResponseEntity<Map<String, Object>> authenticateUser(@Valid @RequestBody User usuario) {
 
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(usuario.getEmail(), usuario.getPassword()));
+                new UsernamePasswordAuthenticationToken(usuario.getUsername(), usuario.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String token = tokenUtils.generateToken(authentication);
@@ -57,23 +46,6 @@ public class AuthController {
 
         return ResponseEntity.ok(response);
 
-    }
-
-    @PostMapping("/crearAdmin")
-    public ResponseEntity<?> registerUser() {
-        try{
-            usuarioService.one(1L);
-            return ResponseEntity.badRequest().body("Error: no se ha podido crear el usuario administrador");
-        }catch (NotFoundException f){
-            Usuario u=new Usuario();
-            u.setId(1L);
-            u.setEmail("admin@g.educaand.es");
-            u.setNombre("admin");
-            u.setApellidos("admin");
-            u.setPassword(encoder.encode("123456"));
-            usuarioService.save(u);
-            return ResponseEntity.ok("Usuario registrado correctamente!");
-        }
     }
 }
 

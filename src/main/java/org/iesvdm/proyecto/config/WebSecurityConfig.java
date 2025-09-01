@@ -20,6 +20,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 @EnableWebSecurity
@@ -55,7 +58,18 @@ public class WebSecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.addAllowedOrigin("http://localhost:4200"); // 前端地址
+        configuration.addAllowedMethod("*"); // GET, POST, PUT, DELETE
+        configuration.addAllowedHeader("*"); // 允许所有请求头
+        configuration.setAllowCredentials(true); // 如果需要发送 cookie
 
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.cors(Customizer.withDefaults())
@@ -63,31 +77,12 @@ public class WebSecurityConfig {
                 .exceptionHandling(httpSecurityExceptionHandlingConfigurer -> httpSecurityExceptionHandlingConfigurer.authenticationEntryPoint(unauthorizedHandler) )
                 .sessionManagement(httpSecuritySessionManagementConfigurer -> httpSecuritySessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> authorizationManagerRequestMatcherRegistry
-                        //PARA LAS PETICIONES preflight OPTIONS DEL NAVEGADOR :p
-                        //Ver https://stackoverflow.com/questions/76682586/allow-cors-with-spring-security-6-1-1-with-authenticated-requests
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                        .requestMatchers("/v1/api/usuarios/cambiarContrasenia").authenticated()
-                        .requestMatchers("/v1/api/asignaturas/**").hasAnyAuthority("ADMINISTRADOR")
-                        .requestMatchers("/v1/api/cursos/**").hasAnyAuthority("ADMINISTRADOR")
-                        .requestMatchers(HttpMethod.GET,"/v1/api/clases/**").hasAnyAuthority("PROFESOR","ADMINISTRADOR")
-                        .requestMatchers("/v1/api/clases/**").hasAnyAuthority("ADMINISTRADOR")
-                        .requestMatchers("/v1/api/usuarios/**").hasAnyAuthority("ADMINISTRADOR")
-                        .requestMatchers("/v1/api/estudiantes/getAulas/**","/v1/api/estudiantes/salirAula/**","/v1/api/estudiantes/getPuntos/**").hasAnyAuthority("ESTUDIANTE")
-                        .requestMatchers(HttpMethod.GET,"/v1/api/profesores/**").hasAnyAuthority("PROFESOR","ADMINISTRADOR")
-                        .requestMatchers(HttpMethod.GET,"/v1/api/estudiantes/**").hasAnyAuthority("PROFESOR","ADMINISTRADOR")
-                        .requestMatchers("/v1/api/profesores/**").hasAnyAuthority("ADMINISTRADOR")
-                        .requestMatchers("/v1/api/estudiantes/**").hasAnyAuthority("ADMINISTRADOR")
-                        .requestMatchers(HttpMethod.GET,"/v1/api/aulas/**").hasAnyAuthority("PROFESOR","ESTUDIANTE")
-                        .requestMatchers("/v1/api/aulas/**").hasAnyAuthority("PROFESOR")
-                        .requestMatchers("/v1/api/temas/**").hasAnyAuthority("PROFESOR")
-                        .requestMatchers("/v1/api/tareas/**").hasAnyAuthority("PROFESOR")
-                        .requestMatchers("/v1/api/fases/**").hasAnyAuthority("ESTUDIANTE")
-                        .requestMatchers("/v1/api/**").permitAll()
+                        .requestMatchers("/images/**").permitAll()
+                        .requestMatchers("/v1/api/auth/**").permitAll()
                         .anyRequest().authenticated());
         http.authenticationProvider(authenticationProvider());
         http.addFilterBefore(authenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class);
-        //https://stackoverflow.com/questions/59302026/spring-security-why-adding-the-jwt-filter-before-usernamepasswordauthenticatio
-        //http.addFilterAfter(authenticationJwtTokenFilter(), ExceptionTranslationFilter.class);
         return http.build();
     }
 }
