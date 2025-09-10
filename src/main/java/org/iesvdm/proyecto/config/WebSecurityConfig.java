@@ -62,6 +62,7 @@ public class WebSecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.addAllowedOrigin("http://localhost:4200"); // 前端地址
+        configuration.addAllowedOrigin("http://192.168.1.8:4200");
         configuration.addAllowedMethod("*"); // GET, POST, PUT, DELETE
         configuration.addAllowedHeader("*"); // 允许所有请求头
         configuration.setAllowCredentials(true); // 如果需要发送 cookie
