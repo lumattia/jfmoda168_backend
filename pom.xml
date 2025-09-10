@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.example</groupId>
-    <artifactId>wu-backend</artifactId>
+    <artifactId>jfmoda168</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>wu-backend</name>
-    <description>wu-backend</description>
+    <name>jfmoda168</name>
+    <description>jfmoda168</description>
     <properties>
         <java.version>24</java.version>
     </properties>
@@ -88,7 +88,7 @@
     </dependencies>
 
     <build>
-        <finalName>wu-backend</finalName>
+        <finalName>jfmoda168</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

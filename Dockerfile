@@ -4,6 +4,6 @@ COPY . .
 RUN mvn clean package -DskipTests
 
 FROM amazoncorretto:21-alpine
-COPY --from=build /target/wu-backend.jar wu-backend.jar
+COPY --from=build /target/jfmoda168.jar jfmoda168.jar
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar","wu-backend.jar"]
+ENTRYPOINT ["java", "-jar","jfmoda168.jar"]
