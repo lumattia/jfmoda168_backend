@@ -39,7 +39,7 @@ public class LogService {
     }
     public List<Log> getAllStat(LogFilter filter) {
         String code = filter.getProductCode() != null ? filter.getProductCode() : "";
-        return  logRepository.findAllByColor_Material_Product_CodeContainingIgnoreCaseAndLogDateBetweenAndAction(code, filter.getDateFrom(), filter.getDateTo(), Log.Action.ADD);
+        return  logRepository.findAllByColor_Material_Product_CodeContainingIgnoreCaseAndLogDateBetweenAndAction(code, filter.getDateFrom(), filter.getDateTo(), Log.Action.REMOVE);
     }
     public void undo(long logId) {
         Log log = logRepository.findById(logId).orElseThrow(() -> new NotFoundException("未找到该记录"));
