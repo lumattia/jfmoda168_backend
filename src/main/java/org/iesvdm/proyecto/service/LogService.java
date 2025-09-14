@@ -10,6 +10,8 @@ import org.iesvdm.proyecto.spec.LogSpecification;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class LogService {
     private final ColorRepository colorRepository;
@@ -34,6 +36,10 @@ public class LogService {
         Pageable newPageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sort);
 
         return logRepository.findAll(LogSpecification.filter(filter), newPageable);
+    }
+    public List<Log> getAllStat(LogFilter filter) {
+        String code = filter.getProductCode() != null ? filter.getProductCode() : "";
+        return  logRepository.findAllByColor_Material_Product_CodeContainingIgnoreCaseAndLogDateBetweenAndAction(code, filter.getDateFrom(), filter.getDateTo(), Log.Action.ADD);
     }
     public void undo(long logId) {
         Log log = logRepository.findById(logId).orElseThrow(() -> new NotFoundException("未找到该记录"));
