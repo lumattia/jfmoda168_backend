@@ -33,7 +33,7 @@ public class ExceptionController {
     public ResponseEntity<String> handleConstraintViolation(Exception e) {
         String message = e.getMessage();
         String userMessage = message;
-        String name = "该值";
+        String name;
         if (message.contains("Duplicate entry")) {
             int start = message.indexOf("Duplicate entry '") + "Duplicate entry '".length();
             int end = message.indexOf("'", start);
